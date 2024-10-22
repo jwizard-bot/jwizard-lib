@@ -1,0 +1,77 @@
+name: Release new version
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Clean build directory
+        run : ./gradlew clean
+
+      - name: Publish artifact
+        run: ./gradlew build publish
+        env:
+          MAVEN_NAME: ${{ secrets.MAVEN_NAME }}
+          MAVEN_SECRET: ${{ secrets.MAVEN_SECRET }}
+
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate Changelog
+        run: |
+          echo "## JWizard Library, version ${{ github.ref_name }}" > changelog.md
+          echo "" >> changelog.md
+          echo "[KDoc docs for this release](https://docs.jwizard.pl/jwl/${{ github.ref_name }})" >> changelog.md
+          echo "" >> changelog.md
+          git log --oneline --no-merges $(git describe --tags --abbrev=0)..HEAD >> changelog.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body_path: changelog.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  generate-docs:
+    runs-on: self-hosted
+    env:
+      ROOT_PATH: "/var/www/jwizard-docs/jwl/${{ github.ref_name }}"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate KDoc documentation
+        run: ./gradlew dokkaHtml
+
+      - name: Copy HTML documentation into http server
+        run: |
+          rm -rf $ROOT_PATH/*
+          rm -rf $ROOT_PATH/{*,.[!.]*,..?*} 2> /dev/null
+          cp -r docs/* $ROOT_PATH

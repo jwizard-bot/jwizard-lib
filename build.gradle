@@ -1,0 +1,142 @@
+/*
+ * Copyright (c) 2024 by JWizard
+ * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
+ */
+import org.codehaus.groovy.runtime.GStringImpl
+import org.jetbrains.dokka.DokkaConfiguration
+
+import java.time.Year
+
+plugins {
+	alias libs.plugins.kotlinJvm
+	alias libs.plugins.dokka
+	id 'maven-publish'
+}
+
+group = 'pl.jwizard'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation libs.kotlin
+	implementation libs.kotlinReflect
+	implementation libs.slf4jApi
+	implementation libs.springContext
+	testImplementation libs.kotlinTest
+}
+
+tasks.register('sourcesJar', Jar) {
+	archiveClassifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+tasks.register('dokkaJavadocJar', Jar.class) {
+	group = 'documentation'
+	dependsOn(dokkaJavadoc)
+	from(dokkaJavadoc)
+	archiveClassifier.set('javadoc')
+}
+
+dokkaHtml {
+	outputDirectory = file("$projectDir/docs")
+	moduleName = "JWizard Lib"
+	suppressInheritedMembers = true
+
+	def assets = [
+		'dokka/logo-icon.svg',
+		'dokka/logo-nav.svg',
+		'dokka/dokka-styles.css',
+		'dokka/banner.png',
+	]
+	def definedDokkaAssets = assets
+		.collect { "\"${file(it).absolutePath.replace("\\", "\\\\")}\"" }
+		.join(',')
+
+	def dokkaCopyright
+		= ("&copy; ${Year.now().value} by JWizard"
+		+ ". On $license license"
+		+ ". Snap SHA: ${getEnv('BUILD_VERSION', 'DEVELOPMENT')}") as GStringImpl
+
+	pluginsMapConfiguration.set([
+		'org.jetbrains.dokka.base.DokkaBase': """
+    {
+      "customAssets": [${definedDokkaAssets}],
+      "footerMessage": "${dokkaCopyright}",
+      "separateInheritedMembers": false
+    }
+  """
+	])
+	dokkaSourceSets.configureEach {
+		documentedVisibilities.set([
+			DokkaConfiguration.Visibility.PUBLIC,
+			DokkaConfiguration.Visibility.PRIVATE,
+			DokkaConfiguration.Visibility.PROTECTED
+		])
+		includes.from('dokka/README-DOCS.md')
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = group
+			artifactId = 'jwizard-lib'
+			version = version
+
+			from components.java
+			artifact tasks.sourcesJar
+			artifact tasks.dokkaJavadocJar
+
+			pom {
+				name = "JWizard library"
+				description = "JWizard library storing classes and functions for JWizard Core and API projects."
+				url = "https://jwizard.pl/docs/jwl"
+				licenses {
+					license {
+						name = 'The AGPL-3.0 License'
+						url = 'https://www.gnu.org/licenses/agpl-3.0.en.html'
+					}
+				}
+				developers {
+					developer {
+						id = 'milosz08'
+						name = 'Miłosz Gilga'
+						email = 'personal@miloszgilga.pl'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://github.com/jwizard-bot/jwizard-lib.git'
+					developerConnection = 'scm:git:ssh://github.com/jwizard-bot/jwizard-lib.git'
+					url = 'https://jwizard.pl/docs/jwl'
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			def isSnapshot = version.endsWith('-SNAPSHOT')
+			def buildDir = isSnapshot ? 'snapshots' : 'releases'
+			name = "jwizardRepository"
+			url = uri("https://m2.miloszgilga.pl/$buildDir")
+			credentials {
+				username = getEnv("MAVEN_NAME")
+				password = getEnv("MAVEN_SECRET")
+			}
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+kotlin {
+	jvmToolchain(jvmVersion.toInteger())
+}
+
+static def getEnv(String name, Object defValue = '') {
+	return System.getenv("JWIZARD_LIB_$name") ?: defValue.toString()
+}

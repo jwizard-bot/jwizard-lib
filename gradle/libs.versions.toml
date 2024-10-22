@@ -1,0 +1,16 @@
+[versions]
+kotlinVersion = "2.0.20"
+springVersion = "6.1.14"
+slf4jApiVersion = "2.0.16"
+dokkaVersion = "1.9.20"
+
+[libraries]
+kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
+kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
+kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinVersion" }
+springContext = { module = "org.springframework:spring-context", version.ref = "springVersion" }
+slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
+
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
