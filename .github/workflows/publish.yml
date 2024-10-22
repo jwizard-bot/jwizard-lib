@@ -7,9 +7,10 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up JDK
         uses: actions/setup-java@v1
@@ -29,10 +30,12 @@ jobs:
           JWIZARD_LIB_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    needs: publish
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Generate Changelog
         run: |
@@ -53,11 +56,13 @@ jobs:
 
   generate-docs:
     runs-on: self-hosted
+    needs: publish
     env:
       ROOT_PATH: "/var/www/jwizard-docs/jwl/${{ github.ref_name }}"
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up JDK
         uses: actions/setup-java@v1
