@@ -25,8 +25,8 @@ jobs:
       - name: Publish artifact
         run: ./gradlew build publish
         env:
-          MAVEN_NAME: ${{ secrets.MAVEN_NAME }}
-          MAVEN_SECRET: ${{ secrets.MAVEN_SECRET }}
+          JWIZARD_LIB_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
+          JWIZARD_LIB_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
 
   release:
     runs-on: ubuntu-latest
