@@ -72,6 +72,5 @@ jobs:
 
       - name: Copy HTML documentation into http server
         run: |
-          rm -rf $ROOT_PATH/*
-          rm -rf $ROOT_PATH/{*,.[!.]*,..?*} 2> /dev/null
+          mkdir -p $ROOT_PATH
           cp -r docs/* $ROOT_PATH
