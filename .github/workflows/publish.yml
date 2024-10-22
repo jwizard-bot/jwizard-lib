@@ -27,11 +27,12 @@ jobs:
       - name: Publish artifact
         run: ./gradlew build publish
         env:
+          JWIZARD_LIB_VERSION: ${{ github.ref_name }}
           JWIZARD_LIB_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
           JWIZARD_LIB_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
 
   release:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: publish
 
     steps:
