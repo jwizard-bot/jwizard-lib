@@ -22,10 +22,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Clean build directory
-        run : ./gradlew clean
+        run : ./gradlew clean --no-daemon
 
       - name: Publish artifact
-        run: ./gradlew build publish
+        run: ./gradlew publish --no-daemon
         env:
           JWIZARD_LIB_VERSION: ${{ github.ref_name }}
           JWIZARD_LIB_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
@@ -51,7 +51,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Generate KDoc documentation
-        run: ./gradlew dokkaHtml
+        run: ./gradlew dokkaHtml --no-daemon
 
       - name: Copy HTML documentation into http server
         run: |
