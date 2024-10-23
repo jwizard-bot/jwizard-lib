@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -66,13 +66,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Determinate tags range
+        run: |
+          tags_range=$(current=$(git describe --tags --abbrev=0) \
+            && prev=$(git describe --tags --abbrev=0 "$current"^ 2>/dev/null) \
+            && [ -n "$prev" ] && echo "$prev..$current" || echo "$current")
+          echo "tags_range=$tags_range" >> $GITHUB_ENV
+
       - name: Generate Changelog
         run: |
-          echo "## JWizard Library, version ${{ github.ref_name }}" > changelog.md
+          echo "## Release version: ${{ github.ref_name }}" > changelog.md
           echo "" >> changelog.md
-          echo "[KDoc docs for this release](https://docs.jwizard.pl/jwl/${{ github.ref_name }})" >> changelog.md
+          echo "[KDoc for this release](https://docs.jwizard.pl/jwl/${{ github.ref_name }})" >> changelog.md
           echo "" >> changelog.md
-          git log --oneline --no-merges $(git describe --tags --abbrev=0)..HEAD >> changelog.md
+          echo "### Changes" >> changelog.md
+          git log --oneline --no-merges --pretty=format:"* (%h) %s" $tags_range >> changelog.md
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
