@@ -91,9 +91,9 @@ publishing {
 			artifact tasks.dokkaJavadocJar
 
 			pom {
-				name = "JWizard library"
-				description = "JWizard library storing classes and functions for JWizard Core and API projects."
-				url = "https://jwizard.pl/docs/jwl"
+				name = 'JWizard library'
+				description = 'JWizard library storing classes and functions for JWizard Core and API projects.'
+				url = "https://docs.jwizard.pl/jwl/v$version"
 				licenses {
 					license {
 						name = 'The AGPL-3.0 License'
@@ -110,7 +110,7 @@ publishing {
 				scm {
 					connection = 'scm:git:git://github.com/jwizard-bot/jwizard-lib.git'
 					developerConnection = 'scm:git:ssh://github.com/jwizard-bot/jwizard-lib.git'
-					url = 'https://jwizard.pl/docs/jwl'
+					url = "https://docs.jwizard.pl/jwl/v$version"
 				}
 			}
 		}
@@ -119,7 +119,7 @@ publishing {
 		maven {
 			def isSnapshot = version.endsWith('-SNAPSHOT')
 			def buildDir = isSnapshot ? 'snapshots' : 'releases'
-			name = "jwizardRepository"
+			name = 'jwizardRepository'
 			url = uri("https://m2.miloszgilga.pl/$buildDir")
 			credentials {
 				username = getEnv("MAVEN_NAME")
