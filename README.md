@@ -18,7 +18,7 @@ TBD
 
 ## Documentation
 
-For detailed documentation, please visit [JWizard Library documentation](https://docs.jwizard.pl/jwl).
+For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
 
 ## Contributing
 
