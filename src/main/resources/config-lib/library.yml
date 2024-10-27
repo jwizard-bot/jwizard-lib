@@ -1,0 +1,58 @@
+deployment:
+  build-version: ${env:JWIZARD_BUILD_VERSION:UNKNOWN}
+  last-build-date: ${env:JWIZARD_BUILD_DATE:UNKNOWN}
+
+db:
+  username: ${vault:V_MYSQL_USERNAME}
+  password: ${vault:V_MYSQL_PASSWORD}
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+vault:
+  kv:
+    backend: jwizard
+    default-context: common
+
+player:
+  default:
+    max-volume: 1000
+
+guild:
+  default:
+    voting-percentage-ratio: 50
+    time-to-finish-voting-sec: 50
+    dj-role-name: DJWizard
+    max-repeats-of-track: 30
+    leave-empty-channel-sec: 120
+    leave-no-tracks-channel-sec: 120
+    default-volume: 100
+    random-auto-choose-track: true
+    time-after-auto-choose-sec: 30
+    tracks-to-choose-max: 10
+    default-legacy-prefix: '?'
+    default-slash-enabled: true
+    min-repeats-of-track: 2
+
+jda:
+  permissions:
+    - MANAGE_CHANNEL
+    - VIEW_CHANNEL
+    - MANAGE_ROLES
+    - MESSAGE_ADD_REACTION
+    - MESSAGE_SEND
+    - MESSAGE_MANAGE
+    - MESSAGE_EMBED_LINKS
+    - MESSAGE_ATTACH_FILES
+    - MESSAGE_HISTORY
+    - MESSAGE_EXT_EMOJI
+    - USE_APPLICATION_COMMANDS
+    - VOICE_CONNECT
+    - VOICE_SPEAK
+    - VOICE_DEAF_OTHERS
+
+s3:
+  region: eu-central-1
+  path-style-access-enabled: true
+  public-api-url: https://cdn.jwizard.pl
+
+i18n:
+  default-language: pl

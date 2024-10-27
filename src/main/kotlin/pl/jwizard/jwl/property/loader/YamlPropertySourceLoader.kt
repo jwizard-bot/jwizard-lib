@@ -6,6 +6,7 @@ package pl.jwizard.jwl.property.loader
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean
 import org.springframework.core.io.ClassPathResource
+import pl.jwizard.jwl.SpringKtContextFactory
 import pl.jwizard.jwl.property.PropertySourceData
 import pl.jwizard.jwl.util.logger
 
@@ -29,32 +30,30 @@ class YamlPropertySourceLoader(
 		private const val DEFAULT_YAML_PREFIX = "config/application"
 
 		/**
+		 * Prefix for library-specific YAML configuration files.
+		 */
+		private const val LIBRARY_YAML_PREFIX = "/config-lib/library"
+
+		/**
 		 * Available YAML file extensions.
 		 */
 		private val YAML_EXTENSIONS = arrayOf("yaml", "yml")
 	}
 
 	/**
-	 * Loads properties from YAML configuration files.
+	 * Loads and merges application and library-specific YAML configuration files based on the current runtime profiles.
+	 * This method creates a map of properties from all valid YAML files matching the current runtime profiles.
 	 *
-	 * This method reads properties from YAML files located on the classpath. It loads a default YAML file and additional
-	 * files based on runtime modes. The files are searched with `.yaml` and `.yml` extensions.
-	 *
-	 * Logs the names of the YAML files and the number of properties loaded.
-	 *
-	 * @return A map of properties where keys are property names and values are property values. Returns an empty map
-	 *         if no properties are found.
+	 * @return A map containing the merged properties from the loaded YAML files.
 	 */
 	override fun setProperties(): Map<Any, Any> {
 		val yamlPropertiesFactoryBean = YamlPropertiesFactoryBean()
 
-		val defaultProperties = getExistingYamlFile()
-		val runtimeProperties = runtimeProfiles.map { getExistingYamlFile(".$it") }
-
-		val fileContents = mutableListOf<ClassPathResource>()
-		defaultProperties?.let { fileContents.add(it) }
-		runtimeProperties.forEach { propertiesMode -> propertiesMode?.let { fileContents.add(it) } }
-
+		val appProperties = loadDefaultAndRuntimeDependentProperties(DEFAULT_YAML_PREFIX) { ClassPathResource(it) }
+		val libProperties = loadDefaultAndRuntimeDependentProperties(LIBRARY_YAML_PREFIX) {
+			ClassPathResource(it, SpringKtContextFactory::class.java)
+		}
+		val fileContents = appProperties + libProperties
 		yamlPropertiesFactoryBean.setResources(*fileContents.toTypedArray())
 		log.info("Load YAML configuration files: {}.", fileContents.map { it.filename })
 
@@ -63,12 +62,38 @@ class YamlPropertySourceLoader(
 	}
 
 	/**
-	 * Finds an existing YAML configuration file with the given suffix.
+	 * Loads YAML configuration files based on the default and runtime-specific profiles.
 	 *
-	 * @param suffix The suffix to append to the default YAML file prefix.
-	 * @return A [ClassPathResource] for the existing YAML file, or null if not found.
+	 * This method creates a list of [ClassPathResource] objects by attempting to load YAML files for both default and
+	 * runtime-specific profiles.
+	 *
+	 * @param prefix The prefix for the YAML file paths.
+	 * @param resourceCallback A callback function to generate [ClassPathResource] instances for each file path.
+	 * @return A list of [ClassPathResource] objects representing valid YAML files for the current configuration.
 	 */
-	private fun getExistingYamlFile(suffix: String = ""): ClassPathResource? = YAML_EXTENSIONS
-		.map { ClassPathResource("$DEFAULT_YAML_PREFIX$suffix.$it") }
+	private fun loadDefaultAndRuntimeDependentProperties(
+		prefix: String,
+		resourceCallback: (String) -> ClassPathResource,
+	): List<ClassPathResource> {
+		val fileContents = mutableListOf<ClassPathResource>()
+
+		val defaultProperties = getExistingYamlFile { resourceCallback("$prefix.$it") }
+		val runtimeProperties = runtimeProfiles.map { profile ->
+			getExistingYamlFile { resourceCallback("$prefix.$profile.$it") }
+		}
+		defaultProperties?.let { fileContents.add(it) }
+		runtimeProperties.forEach { propertiesMode -> propertiesMode?.let { fileContents.add(it) } }
+
+		return fileContents
+	}
+
+	/**
+	 * Retrieves the first existing YAML file that matches the specified file extensions.
+	 *
+	 * @param resourceCallback A callback function to generate [ClassPathResource] instances based on file extension.
+	 * @return The first [ClassPathResource] that exists, or null if no matching file is found.
+	 */
+	private fun getExistingYamlFile(resourceCallback: (String) -> ClassPathResource) = YAML_EXTENSIONS
+		.map { resourceCallback(it) }
 		.firstOrNull { it.exists() }
 }

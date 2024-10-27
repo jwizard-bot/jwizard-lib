@@ -4,6 +4,7 @@
  */
 package pl.jwizard.jwl.property
 
+import pl.jwizard.jwl.property.AppBaseListProperty.JDA_PERMISSIONS
 import pl.jwizard.jwl.property.AppBaseListProperty.RUNTIME_PROFILES
 import kotlin.reflect.KClass
 
@@ -13,6 +14,8 @@ import kotlin.reflect.KClass
  * Defining following properties:
  * - [RUNTIME_PROFILES]: Application runtime profiles. Defined all others configurations and Spring Context loaders.
  *   Accepted: *dev*, *prod*. Default: *empty array*.
+ * - [JDA_PERMISSIONS]: Permissions required by the JDA (Java Discord API) library for accessing and interacting with
+ *   Discord.
  *
  * @property key The key used to retrieve the property value.
  * @property listElementsType The type of elements in the list represented by this property.
@@ -30,5 +33,10 @@ enum class AppBaseListProperty(
 	 * Accepted: *dev*, *prod*. Default: *empty array*.
 	 */
 	RUNTIME_PROFILES("runtime.profiles", ","),
+
+	/**
+	 * Permissions required by the JDA (Java Discord API) library for accessing and interacting with Discord.
+	 */
+	JDA_PERMISSIONS("jda.permissions"),
 	;
 }

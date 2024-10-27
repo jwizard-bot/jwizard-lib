@@ -20,11 +20,6 @@ class EnvPropertyValueExtractor(
 	private val envFileEnabled: Boolean,
 ) : PropertyValueExtractor(EnvPropertyValueExtractor::class) {
 
-	/**
-	 * Dotenv instance for reading .env file.
-	 */
-	private val dotEnv = Dotenv.load()
-
 	companion object {
 		private val log = logger<EnvPropertyValueExtractor>()
 
@@ -33,6 +28,11 @@ class EnvPropertyValueExtractor(
 		 */
 		private const val ENV_FILE_NAME = ".env"
 	}
+
+	/**
+	 * Dotenv instance for reading .env file.
+	 */
+	private val dotEnv = Dotenv.load()
 
 	/**
 	 * Reads properties from the .env file if it exists and loading from the file is enabled.

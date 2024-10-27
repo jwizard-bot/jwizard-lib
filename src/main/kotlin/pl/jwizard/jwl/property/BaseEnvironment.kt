@@ -4,7 +4,6 @@
  */
 package pl.jwizard.jwl.property
 
-import jakarta.annotation.PostConstruct
 import org.springframework.core.env.StandardEnvironment
 import pl.jwizard.jwl.SpringKtContextFactory
 import pl.jwizard.jwl.property.extractor.EnvPropertyValueExtractor
@@ -15,8 +14,7 @@ import pl.jwizard.jwl.util.logger
 
 /**
  * Manages environment-specific property sources, loading configurations from YAML files, environment variables, and
- * Vault secrets. This class provides mechanisms for accessing single and multi-value properties and supports custom
- * property sources through the [setAdditionalSourceLoaders] method.
+ * Vault secrets.
  *
  * @property springKtContextFactory Factory for creating the Spring context used to initialize properties.
  * @author Miłosz Gilga
@@ -38,18 +36,9 @@ abstract class BaseEnvironment(private val springKtContextFactory: SpringKtConte
 	/**
 	 * An instance of [PropertiesEnvironment] that manages and resolves property sources.
 	 */
-	lateinit var propertiesEnv: PropertiesEnvironment
-		private set
+	val propertiesEnv = PropertiesEnvironment(environment.propertySources)
 
-	/**
-	 * Initializes the property sources and loads properties from YAML files, environment variables, Vault, etc.
-	 *
-	 * This method is annotated with [PostConstruct] to ensure it is executed after the dependent bean(s) from
-	 * [setAdditionalSourceLoaders] has been created.
-	 */
-	@PostConstruct
-	internal fun initProperties() {
-		propertiesEnv = PropertiesEnvironment(environment.propertySources)
+	init {
 		propertiesEnv.createResolver()
 
 		val runtimeProfiles = getListProperty<String>(AppBaseListProperty.RUNTIME_PROFILES)
@@ -68,7 +57,6 @@ abstract class BaseEnvironment(private val springKtContextFactory: SpringKtConte
 				vaultKvApplicationName = getProperty(AppBaseProperty.VAULT_KV_APPLICATION_NAME),
 			)
 		)
-		setAdditionalSourceLoaders().forEach { propertiesEnv.addSource(it) }
 		log.info("Load: {} properties from sources: {}.", propertiesEnv.size, propertiesEnv.propertySourceNames)
 	}
 
@@ -119,14 +107,4 @@ abstract class BaseEnvironment(private val springKtContextFactory: SpringKtConte
 			?: throw PropertyNotFoundException(this::class, appProperty.key)
 		return castToValue(rawValue, appProperty.type)
 	}
-
-	/**
-	 * Provides additional property source loaders, allowing subclasses to add custom sources.
-	 *
-	 * Override this method to return a list of additional [PropertySourceData] loaders, which will be incorporated into
-	 * the property environment.
-	 *
-	 * @return A list of [PropertySourceData] loaders to add additional sources to the environment.
-	 */
-	open fun setAdditionalSourceLoaders(): List<PropertySourceData> = emptyList()
 }
