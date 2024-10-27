@@ -11,7 +11,7 @@ import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
 import pl.jwizard.jwl.SpringKtContextFactory
-import pl.jwizard.jwl.i18n.spi.LanguageSupplier
+import pl.jwizard.jwl.persistence.sql.handler.LanguageSupplierBean
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets
@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets
  * @property environmentBean A Spring-managed bean that provides environment-specific properties used to configure the
  *           message source.
  * @author Miłosz Gilga
- * @see LanguageSupplier
  */
 @Component
 class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
@@ -46,7 +45,7 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 	 * @return The configured [MessageSource] bean.
 	 */
 	@Bean
-	fun messageSource(languageSupplier: LanguageSupplier): MessageSource {
+	fun messageSource(languageSupplier: LanguageSupplierBean): MessageSource {
 		languages.putAll(languageSupplier.getLanguages())
 
 		val libI18nSource = getMessageDirectories(ClassPathResource("/i18n-lib", SpringKtContextFactory::class.java))

@@ -32,6 +32,9 @@ dependencies {
 	implementation libs.springVaultCore
 	implementation libs.jeeAnnotationApi
 	implementation libs.commonsVfs
+	implementation libs.springJdbc
+	implementation libs.mysqlConnector
+	implementation libs.hikariCp
 
 	testImplementation libs.kotlinTest
 }
