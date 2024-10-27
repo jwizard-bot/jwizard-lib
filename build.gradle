@@ -25,6 +25,14 @@ dependencies {
 	implementation libs.kotlinReflect
 	implementation libs.slf4jApi
 	implementation libs.springContext
+	implementation libs.dotEnv
+	implementation libs.jacksonKotlin
+	implementation libs.jacksonDatabind
+	implementation libs.jacksonDataformatYaml
+	implementation libs.springVaultCore
+	implementation libs.jeeAnnotationApi
+	implementation libs.commonsVfs
+
 	testImplementation libs.kotlinTest
 }
 
