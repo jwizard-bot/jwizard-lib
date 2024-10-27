@@ -68,9 +68,9 @@ class VaultPropertyValueExtractor(
 	private fun readKvSecrets(kvStore: String): Properties {
 		val properties = Properties()
 		val qualifiedKvStorePath = "$vaultKvBackend/$kvStore"
-		val kvSecrets: VaultResponse = vaultTemplate.read(qualifiedKvStorePath)
+		val kvSecrets: VaultResponse? = vaultTemplate.read(qualifiedKvStorePath)
 
-		kvSecrets.let { response ->
+		kvSecrets?.let { response ->
 			response.data?.forEach { properties[it.key] = it.value }
 			log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
 		}
