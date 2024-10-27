@@ -29,30 +29,30 @@ import pl.jwizard.jwl.property.Property
 enum class I18nDynamicMod(override val key: String) : Property {
 
 	/**
-	 * The pattern is `jw.module.%s`, where `%s` is replaced with the module identifier.
+	 * The pattern is `jwl.module.%s`, where `%s` is replaced with the module identifier.
 	 */
-	MODULES_MOD("jw.module.%s"),
+	MODULES_MOD("jwl.module.%s"),
 
 	/**
-	 * The pattern is `jw.arg.%s`, where `%s` is replaced with the argument identifier.
+	 * The pattern is `jwl.arg.%s`, where `%s` is replaced with the argument identifier.
 	 */
-	ARGS_MOD("jw.arg.%s"),
+	ARGS_MOD("jwl.arg.%s"),
 
 	/**
-	 * The pattern is `jw.arg.combined.%s`, where `%s` is replaced with the combined argument identifier
+	 * The pattern is `jwl.arg.combined.%s`, where `%s` is replaced with the combined argument identifier
 	 * (multiple arguments definition per command).
 	 */
-	ARG_PER_COMMAND_MOD("jw.arg.combined.%s"),
+	ARG_PER_COMMAND_MOD("jwl.arg.combined.%s"),
 
 	/**
-	 * The pattern is `jw.arg.option.%s.%s`, where the first `%s` is replaced with the command identifier and the
+	 * The pattern is `jwl.arg.option.%s.%s`, where the first `%s` is replaced with the command identifier and the
 	 * second `%s` is replaced with the option identifier.
 	 */
-	ARG_OPTION_MOD("jw.arg.option.%s.%s"),
+	ARG_OPTION_MOD("jwl.arg.option.%s.%s"),
 
 	/**
-	 * The pattern is `jw.command.%s`, where `%s` is replaced with the command identifier.
+	 * The pattern is `jwl.command.%s`, where `%s` is replaced with the command identifier.
 	 */
-	COMMANDS_MOD("jw.command.%s"),
+	COMMANDS_MOD("jwl.command.%s"),
 	;
 }
