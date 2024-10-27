@@ -18,7 +18,7 @@ import pl.jwizard.jwl.file.ClasspathFileLoader
  */
 class FancyTitlePrinter(
 	private val fileClasspathLocation: String,
-	private val printer: Printer
+	private val printer: Printer,
 ) : AbstractPrinter(printer) {
 
 	override fun setBodyContent(): String {
