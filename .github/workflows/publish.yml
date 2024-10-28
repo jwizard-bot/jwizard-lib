@@ -91,13 +91,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Determinate revision tag
-        id: revision
-        run: |
-          echo "revision_tag=${REVISION_TAG:1}" >> "$GITHUB_OUTPUT"
-        env:
-          REVISION_TAG: ${{ github.ref_name }}
-
       - name: Push repository tags
         run: git push --tags
 
