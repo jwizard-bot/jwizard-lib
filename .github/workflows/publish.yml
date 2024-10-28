@@ -34,8 +34,6 @@ jobs:
   generate-docs:
     runs-on: ubuntu-latest
     needs: publish
-    env:
-      ROOT_PATH: "/var/www/jwizard-docs/jwl/${{ github.ref_name }}"
 
     steps:
       - name: Checkout repository
