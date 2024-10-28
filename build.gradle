@@ -14,7 +14,7 @@ plugins {
 }
 
 group = 'pl.jwizard'
-version = getEnv('JWIZARD_LIB_VERSION', 'DEVELOPMENT')
+version = getEnv('VERSION', 'DEVELOPMENT')
 
 repositories {
 	mavenCentral()
