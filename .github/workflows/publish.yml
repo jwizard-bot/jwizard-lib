@@ -34,8 +34,6 @@ jobs:
   generate-docs:
     runs-on: ubuntu-latest
     needs: publish
-    env:
-      ROOT_PATH: "/var/www/jwizard-docs/jwl"
 
     steps:
       - name: Checkout repository
@@ -60,8 +58,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: docs/
-          target: $ROOT_PATH
+          source: docs/*
+          target: /var/www/jwizard-docs/jwl
           rm: true
           strip_components: 1
 
