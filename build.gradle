@@ -69,7 +69,7 @@ dokkaHtml {
 	def dokkaCopyright
 		= ("&copy; ${Year.now().value} by JWizard"
 		+ ". On $license license"
-		+ ". Snap SHA: ${getEnv('BUILD_VERSION', 'DEVELOPMENT')}") as GStringImpl
+		+ ". Version: ${getEnv('VERSION', 'DEVELOPMENT')}") as GStringImpl
 
 	pluginsMapConfiguration.set([
 		'org.jetbrains.dokka.base.DokkaBase': """
@@ -95,7 +95,7 @@ publishing {
 		mavenJava(MavenPublication) {
 			groupId = group
 			artifactId = 'jwizard-lib'
-			version = version
+			version = getEnv('VERSION', 'DEVELOPMENT')
 
 			from components.java
 			artifact tasks.sourcesJar
@@ -138,10 +138,6 @@ publishing {
 			}
 		}
 	}
-}
-
-test {
-	useJUnitPlatform()
 }
 
 kotlin {
