@@ -8,17 +8,54 @@ WebSockets.
 ## Table of content
 
 * [Clone and install](#clone-and-install)
+* [Package and versioning](#package-and-versioning)
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [License](#license)
 
 ## Clone and install
 
-TBD
+1. Make sure you have at least JVM 17 and Kotlin 2.0.
+2. Clone this repository via:
+
+```shell
+$ git clone https://github.com/jwizard-bot/jwizard-lib
+```
+
+## Package and versioning
+
+1. To package library to maven local, type:
+
+- for UNIX based systems:
+
+```bash
+$ ./gradlew clean
+$ ./gradlew publishToMavenLocal
+```
+
+- for Windows systems:
+
+```bash
+.\gradlew clean
+.\gradlew publishToMavenLocal
+```
+
+### Versioning Strategy
+
+This project follows Semantic Versioning guidelines, using a three-part version number: `MAJOR.MINOR.PATCH`.
+
+- `MAJOR`: Increases for incompatible API changes.
+- `MINOR`: Increases for new functionality that is backward compatible.
+- `PATCH`: Increases for backward-compatible bug fixes.
 
 ## Documentation
 
 For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
+
+Documentation for latest version you will find [here](https://docs.jwizard/jwl) - in KDoc format.
+<br>
+Documentation for all versions you will find at
+my [M2 OSS center](https://m2.miloszgilga.pl/#/releases/pl/jwizard/jwizard-lib) - in JavaDoc format.
 
 ## Contributing
 
