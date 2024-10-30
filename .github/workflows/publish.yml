@@ -35,9 +35,9 @@ jobs:
       - name: Publish artifact
         run: ./gradlew publish --no-daemon
         env:
-          JWIZARD_LIB_VERSION: ${{ steps.revision.outputs.revision_tag }}
-          JWIZARD_LIB_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
-          JWIZARD_LIB_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
+          JWIZARD_VERSION: ${{ steps.revision.outputs.revision_tag }}
+          JWIZARD_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
+          JWIZARD_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
 
   generate-docs:
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
       - name: Generate KDoc documentation
         run: ./gradlew dokkaHtml --no-daemon
         env:
-          JWIZARD_LIB_VERSION: ${{ steps.revision.outputs.revision_tag }}
+          JWIZARD_VERSION: ${{ steps.revision.outputs.revision_tag }}
 
       - name: Copy generated content on server
         uses: appleboy/scp-action@v0.1.7
