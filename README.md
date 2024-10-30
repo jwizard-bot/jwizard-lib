@@ -15,7 +15,7 @@ WebSockets.
 
 ## Clone and install
 
-1. Make sure you have at least JVM 17 and Kotlin 2.0.
+1. Make sure you have at least JDK 17 and Kotlin 2.0.
 2. Clone this repository via:
 
 ```shell
