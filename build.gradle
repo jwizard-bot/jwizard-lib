@@ -14,7 +14,7 @@ plugins {
 }
 
 group = 'pl.jwizard'
-version = getEnv('VERSION', 'DEVELOPMENT')
+version = getEnv('VERSION', 'latest')
 
 repositories {
 	mavenCentral()
@@ -69,7 +69,7 @@ dokkaHtml {
 	def dokkaCopyright
 		= ("&copy; ${Year.now().value} by JWizard"
 		+ ". On $license license"
-		+ ". Version: ${getEnv('VERSION', 'DEVELOPMENT')}") as GStringImpl
+		+ ". Build SHA: ${getEnv('VERSION', 'latest')}") as GStringImpl
 
 	pluginsMapConfiguration.set([
 		'org.jetbrains.dokka.base.DokkaBase': """
@@ -95,7 +95,7 @@ publishing {
 		mavenJava(MavenPublication) {
 			groupId = group
 			artifactId = 'jwizard-lib'
-			version = getEnv('VERSION', 'DEVELOPMENT')
+			version = getEnv('VERSION', 'latest')
 
 			from components.java
 			artifact tasks.sourcesJar
@@ -103,8 +103,7 @@ publishing {
 
 			pom {
 				name = 'JWizard library'
-				description = 'JWizard library storing classes and functions for JWizard Core and API projects.'
-				url = "https://docs.jwizard.pl/jwl/v$version"
+				url = "https://docs.jwizard.pl/jwl"
 				licenses {
 					license {
 						name = 'The AGPL-3.0 License'
@@ -121,17 +120,15 @@ publishing {
 				scm {
 					connection = 'scm:git:git://github.com/jwizard-bot/jwizard-lib.git'
 					developerConnection = 'scm:git:ssh://github.com/jwizard-bot/jwizard-lib.git'
-					url = "https://docs.jwizard.pl/jwl/v$version"
+					url = "https://docs.jwizard.pl/jwl"
 				}
 			}
 		}
 	}
 	repositories {
 		maven {
-			def isSnapshot = version.endsWith('-SNAPSHOT')
-			def buildDir = isSnapshot ? 'snapshots' : 'releases'
 			name = 'jwizardRepository'
-			url = uri("https://m2.miloszgilga.pl/$buildDir")
+			url = uri("https://m2.miloszgilga.pl/private")
 			credentials {
 				username = getEnv("MAVEN_NAME")
 				password = getEnv("MAVEN_SECRET")

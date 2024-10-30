@@ -2,8 +2,16 @@ name: Release new version
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - master
+    paths:
+      - ".github/workflows/**"
+      - "dokka/**"
+      - "gradle/libs.versions.toml"
+      - "src/**"
+      - "build.gradle"
+      - "gradle.properties"
+      - "settings.gradle"
 
 jobs:
   publish:
@@ -19,13 +27,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Determinate revision tag
-        id: revision
-        run: |
-          echo "revision_tag=${REVISION_TAG:1}" >> "$GITHUB_OUTPUT"
-        env:
-          REVISION_TAG: ${{ github.ref_name }}
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -35,9 +36,8 @@ jobs:
       - name: Publish artifact
         run: ./gradlew publish --no-daemon
         env:
-          JWIZARD_VERSION: ${{ steps.revision.outputs.revision_tag }}
-          JWIZARD_MAVEN_NAME: ${{ secrets.JWIZARD_LIB_MAVEN_NAME }}
-          JWIZARD_MAVEN_SECRET: ${{ secrets.JWIZARD_LIB_MAVEN_SECRET }}
+          JWIZARD_MAVEN_NAME: ${{ secrets.MVN_LIB_PUBLISHER_NAME }}
+          JWIZARD_MAVEN_SECRET: ${{ secrets.MVN_LIB_PUBLISHER_SECRET }}
 
   generate-docs:
     runs-on: ubuntu-latest
@@ -53,12 +53,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Determinate revision tag
-        id: revision
-        run: |
-          echo "revision_tag=${REVISION_TAG:1}" >> "$GITHUB_OUTPUT"
-        env:
-          REVISION_TAG: ${{ github.ref_name }}
+      - name: Determinate build version
+        id: version
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -66,7 +63,7 @@ jobs:
       - name: Generate KDoc documentation
         run: ./gradlew dokkaHtml --no-daemon
         env:
-          JWIZARD_VERSION: ${{ steps.revision.outputs.revision_tag }}
+          JWIZARD_VERSION: ${{ steps.version.outputs.sha_short }}
 
       - name: Copy generated content on server
         uses: appleboy/scp-action@v0.1.7
@@ -80,37 +77,3 @@ jobs:
           target: /var/www/jwizard-docs/jwl
           rm: true
           strip_components: 1
-
-  release:
-    runs-on: ubuntu-latest
-    needs: generate-docs
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Push repository tags
-        run: git push --tags
-
-      - name: Determinate tags range
-        run: |
-          tags_range=$(current=${{ github.ref_name }} \
-            && prev=$(git describe --tags --abbrev=0 "$current"^ 2>/dev/null) \
-            && [ -n "$prev" ] && echo "$prev..$current" || echo "$current")
-          echo "tags_range=$tags_range" >> $GITHUB_ENV
-
-      - name: Generate Changelog
-        run: |
-          echo "### Changes" >> changelog.md
-          git log --oneline --no-merges --pretty=format:"* %h - %s" $tags_range >> changelog.md
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: ${{ github.ref_name }}
-          body_path: changelog.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
