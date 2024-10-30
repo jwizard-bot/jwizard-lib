@@ -2,9 +2,6 @@ deployment:
   build-version: ${env:JWIZARD_BUILD_VERSION:UNKNOWN}
   last-build-date: ${env:JWIZARD_BUILD_DATE:UNKNOWN}
 
-release:
-  latest-tag: ${env:JWIZARD_LATEST_RELEASE_TAG:UNKNOWN}
-
 db:
   username: ${vault:V_MYSQL_USERNAME}
   password: ${vault:V_MYSQL_PASSWORD}
