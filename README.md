@@ -52,7 +52,7 @@ This project follows Semantic Versioning guidelines, using a three-part version 
 
 For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
 
-Documentation for latest version you will find [here](https://docs.jwizard/jwl) - in KDoc format.
+Documentation for latest version you will find [here](https://docs.jwizard.pl/jwl) - in KDoc format.
 <br>
 Documentation for all versions you will find at
 my [M2 OSS center](https://m2.miloszgilga.pl/#/releases/pl/jwizard/jwizard-lib) - in JavaDoc format.
