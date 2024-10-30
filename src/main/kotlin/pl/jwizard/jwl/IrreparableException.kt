@@ -5,13 +5,9 @@
 package pl.jwizard.jwl
 
 import org.slf4j.LoggerFactory
-import kotlin.collections.forEach
-import kotlin.jvm.java
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 import kotlin.system.exitProcess
-import kotlin.text.format
-import kotlin.text.isNotEmpty
 
 /**
  * Exception class defining irreparable issues, which are critical problems that will terminate the whole
@@ -27,7 +23,7 @@ import kotlin.text.isNotEmpty
 open class IrreparableException(
 	private val clazz: KClass<*>,
 	private val messageContent: String = "",
-	private vararg val args: Any,
+	private vararg val args: Any?,
 ) : RuntimeException(String.format(messageContent, *args)) {
 
 	/**

@@ -4,6 +4,7 @@
  */
 package pl.jwizard.jwl.property
 
+import jakarta.annotation.PostConstruct
 import org.springframework.core.env.StandardEnvironment
 import pl.jwizard.jwl.SpringKtContextFactory
 import pl.jwizard.jwl.property.extractor.EnvPropertyValueExtractor
@@ -38,7 +39,21 @@ abstract class BaseEnvironment(private val springKtContextFactory: SpringKtConte
 	 */
 	val propertiesEnv = PropertiesEnvironment(environment.propertySources)
 
-	init {
+	/**
+	 * Initializes the environment properties by loading various property sources.
+	 *
+	 * This method is automatically called after the bean's construction. It prepares and adds multiple property sources,
+	 * such as YAML files for runtime profiles, environment variables, and Vault secrets, to the application's property
+	 * environment.
+	 *
+	 * - Loads and resolves runtime profiles specified by [AppBaseListProperty.RUNTIME_PROFILES].
+	 * - Adds environment file properties if [AppBaseProperty.ENV_ENABLED] is set to true.
+	 * - Retrieves and adds secrets from HashiCorp Vault, based on the configured context and application names.
+	 *
+	 * Logs the count of properties and the sources from which they were loaded.
+	 */
+	@PostConstruct
+	internal fun postConstruct() {
 		propertiesEnv.createResolver()
 
 		val runtimeProfiles = getListProperty<String>(AppBaseListProperty.RUNTIME_PROFILES)
@@ -50,9 +65,7 @@ abstract class BaseEnvironment(private val springKtContextFactory: SpringKtConte
 
 		propertiesEnv.addSource(
 			VaultPropertyValueExtractor(
-				vaultServerUri = getProperty(AppBaseProperty.VAULT_URL),
-				vaultToken = getProperty(AppBaseProperty.VAULT_TOKEN),
-				vaultKvBackend = getProperty(AppBaseProperty.VAULT_KV_BACKEND),
+				environment = this,
 				vaultKvDefaultContext = getProperty(AppBaseProperty.VAULT_KV_DEFAULT_CONTEXT),
 				vaultKvApplicationName = getProperty(AppBaseProperty.VAULT_KV_APPLICATION_NAME),
 			)

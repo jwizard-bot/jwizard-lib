@@ -5,6 +5,7 @@
 package pl.jwizard.jwl.property
 
 import pl.jwizard.jwl.property.AppBaseProperty.*
+import pl.jwizard.jwl.property.vault.VaultAuthenticationType
 import kotlin.reflect.KClass
 
 /**
@@ -19,7 +20,11 @@ import kotlin.reflect.KClass
  * - [DB_PASSWORD]: Database password.
  * - [DB_DRIVER_CLASS_NAME]: Database driver class name (full qualified path).
  * - [VAULT_URL]: Vault key storage URL.
+ * - [VAULT_AUTHENTICATION_TYPE]: Vault key storage authentication type.
  * - [VAULT_TOKEN]: Vault key storage access token.
+ * - [VAULT_USERNAME]: Vault key storage username.
+ * - [VAULT_PASSWORD]: Vault key storage password.
+ * - [VAULT_KV_VERSION]: Vault key storage KV version.
  * - [VAULT_KV_BACKEND]: Vault key storage KV backend name.
  * - [VAULT_KV_DEFAULT_CONTEXT]: Vault key storage KV default context. Load default secrets independently of
  *   application name.
@@ -97,14 +102,35 @@ enum class AppBaseProperty(
 	VAULT_URL("vault.url"),
 
 	/**
+	 * Vault key storage authentication type.
+	 * @see VaultAuthenticationType
+	 */
+	VAULT_AUTHENTICATION_TYPE("vault.authentication.type"),
+
+	/**
 	 * Vault key storage access token.
 	 */
 	VAULT_TOKEN("vault.token"),
 
 	/**
+	 * Vault key storage username.
+	 */
+	VAULT_USERNAME("vault.username"),
+
+	/**
+	 * Vault key storage password.
+	 */
+	VAULT_PASSWORD("vault.password"),
+
+	/**
 	 * Vault key storage KV backend name.
 	 */
 	VAULT_KV_BACKEND("vault.kv.backend"),
+
+	/**
+	 * Vault key storage KV backend version.
+	 */
+	VAULT_KV_VERSION("vault.kv.version", Int::class),
 
 	/**
 	 * Vault key storage KV default context. Load default secrets independently of application name.

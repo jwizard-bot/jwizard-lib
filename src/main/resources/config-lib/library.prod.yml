@@ -3,7 +3,10 @@ db:
 
 vault:
   url: ${env:JWIZARD_VAULT_SERVER}
-  token: ${env:JWIZARD_VAULT_TOKEN}
+  username: ${env:JWIZARD_VAULT_USERNAME}
+  password: ${env:JWIZARD_VAULT_PASSWORD}
+  authentication:
+    type: USERPASS
 
 s3:
   host-url: https://s3.api.miloszgilga.pl

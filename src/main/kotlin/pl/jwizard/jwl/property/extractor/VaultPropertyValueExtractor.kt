@@ -4,47 +4,31 @@
  */
 package pl.jwizard.jwl.property.extractor
 
-import org.springframework.vault.authentication.TokenAuthentication
-import org.springframework.vault.client.VaultEndpoint
-import org.springframework.vault.core.VaultTemplate
-import org.springframework.vault.support.VaultResponse
-import pl.jwizard.jwl.util.logger
-import java.util.*
+import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.property.vault.VaultClient
 
 /**
  * Extractor for property values from HashiCorp Vault.
  *
- * @property vaultServerUri The URI of the Vault server.
- * @property vaultToken The token used to authenticate with Vault.
- * @property vaultKvBackend The KV backend path.
- * @property vaultKvDefaultContext The default context for KV secrets.
- * @property vaultKvApplicationName The application name context for KV secrets.
+ * @property environment The environment configuration used to initialize the Vault client.
+ * @property vaultKvDefaultContext The default context path in Vault for key-value secrets.
+ * @property vaultKvApplicationName The application-specific path in Vault for key-value secrets.
  * @author Miłosz Gilga
  * @see PropertyValueExtractor
  */
 class VaultPropertyValueExtractor(
-	private val vaultServerUri: String,
-	private val vaultToken: String,
-	private val vaultKvBackend: String,
+	private val environment: BaseEnvironment,
 	private val vaultKvDefaultContext: String,
 	private val vaultKvApplicationName: String,
 ) : PropertyValueExtractor(VaultPropertyValueExtractor::class) {
 
-	companion object {
-		private val log = logger<VaultPropertyValueExtractor>()
-	}
-
 	/**
-	 * Template used to interact with Vault. This field holds an instance of [VaultTemplate] configured with the
-	 * provided Vault server URI and authentication token.
+	 * A Vault client instance used to interact with the HashiCorp Vault.
 	 */
-	private val vaultTemplate: VaultTemplate
+	private val vaultClient = VaultClient(environment)
 
 	init {
-		log.info("Connecting with vault KV server: {}.", vaultServerUri)
-
-		val vaultEndpoint = VaultEndpoint.from(vaultServerUri)
-		vaultTemplate = VaultTemplate(vaultEndpoint, TokenAuthentication(vaultToken))
+		vaultClient.init()
 	}
 
 	/**
@@ -55,27 +39,8 @@ class VaultPropertyValueExtractor(
 	 *
 	 * @return A map of properties where keys are property names and values are property values.
 	 */
-	override fun setProperties(): Map<Any, Any> {
-		return readKvSecrets(vaultKvDefaultContext) + readKvSecrets(vaultKvApplicationName)
-	}
-
-	/**
-	 * Reads secrets from a KV store in Vault.
-	 *
-	 * @param kvStore The KV store path.
-	 * @return A map of secrets read from the KV store.
-	 */
-	private fun readKvSecrets(kvStore: String): Properties {
-		val properties = Properties()
-		val qualifiedKvStorePath = "$vaultKvBackend/$kvStore"
-		val kvSecrets: VaultResponse? = vaultTemplate.read(qualifiedKvStorePath)
-
-		kvSecrets?.let { response ->
-			response.data?.forEach { properties[it.key] = it.value }
-			log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
-		}
-		return properties
-	}
+	override fun setProperties() =
+		vaultClient.readKvSecrets(vaultKvDefaultContext) + vaultClient.readKvSecrets(vaultKvApplicationName)
 
 	override val extractionKey = "vault"
 }

@@ -11,6 +11,7 @@ vault:
   kv:
     backend: jwizard
     default-context: common
+    version: 1
 
 player:
   default:
