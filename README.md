@@ -8,7 +8,7 @@ WebSockets.
 ## Table of content
 
 * [Clone and install](#clone-and-install)
-* [Package and versioning](#package-and-versioning)
+* [Package on local environments](#package-on-local-environments)
 * [Documentation](#documentation)
 * [Contributing](#contributing)
 * [License](#license)
@@ -22,7 +22,7 @@ WebSockets.
 $ git clone https://github.com/jwizard-bot/jwizard-lib
 ```
 
-## Package and versioning
+## Package on local environments
 
 1. To package library to maven local, type:
 
@@ -39,14 +39,6 @@ $ ./gradlew publishToMavenLocal
 .\gradlew clean
 .\gradlew publishToMavenLocal
 ```
-
-### Versioning Strategy
-
-This project follows Semantic Versioning guidelines, using a three-part version number: `MAJOR.MINOR.PATCH`.
-
-- `MAJOR`: Increases for incompatible API changes.
-- `MINOR`: Increases for new functionality that is backward compatible.
-- `PATCH`: Increases for backward-compatible bug fixes.
 
 ## Documentation
 
