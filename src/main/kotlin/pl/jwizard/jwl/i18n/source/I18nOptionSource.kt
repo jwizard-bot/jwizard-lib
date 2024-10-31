@@ -13,10 +13,10 @@ import pl.jwizard.jwl.i18n.I18nLocaleSource
  * @see I18nLocaleSource
  */
 enum class I18nOptionSource(override val placeholder: String) : I18nLocaleSource {
-	RADIO_RMF_FM("jw.arg.option.radio.rmfFm"),
-	RADIO_RMF_MAXX("jw.arg.option.radio.rmfMaxx"),
-	RADIO_ZET("jw.arg.option.radio.zet"),
-	RADIO_MELO("jw.arg.option.radio.melo"),
-	RADIO_ANTY("jw.arg.option.radio.anty"),
+	RADIO_STATION_RMF_FM("jw.arg.option.radio.rmfFm"),
+	RADIO_STATION_RMF_MAXX("jw.arg.option.radio.rmfMaxx"),
+	RADIO_STATION_ZET("jw.arg.option.radio.zet"),
+	RADIO_STATION_MELO("jw.arg.option.radio.melo"),
+	RADIO_STATION_ANTY("jw.arg.option.radio.anty"),
 	;
 }
