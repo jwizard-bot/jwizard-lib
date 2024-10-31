@@ -44,12 +44,12 @@ import kotlin.reflect.KClass
  * - [GUILD_MAX_REPEATS_OF_TRACK]: Maximum number of repeats allowed for a track in guilds.
  * - [GUILD_LEAVE_EMPTY_CHANNEL_SEC]: Time in seconds after which the bot leaves an empty channel in guilds.
  * - [GUILD_LEAVE_NO_TRACKS_SEC]: Time in seconds after which the bot leaves a channel with no tracks in guilds.
- * - [GUILD_DEFAULT_VOLUME]: Default volume level for guilds.
+ * - [GUILD_PLAYER_VOLUME]: Default volume level for guilds.
  * - [GUILD_RANDOM_AUTO_CHOOSE_TRACK]: Indicates whether to randomly auto-choose tracks in guilds.
  * - [GUILD_TIME_AFTER_AUTO_CHOOSE_SEC]: Time in seconds after which the bot automatically chooses a track in guilds.
  * - [GUILD_MAX_TRACKS_TO_CHOOSE]: Maximum number of tracks to choose from in guilds.
- * - [GUILD_DEFAULT_LEGACY_PREFIX]: Default legacy command prefix used in guild.
- * - [GUILD_DEFAULT_SLASH_ENABLED]: Determines if the slash command system is enabled by default in guild.
+ * - [GUILD_LEGACY_PREFIX]: Default legacy command prefix used in guild.
+ * - [GUILD_SLASH_ENABLED]: Determines if the slash command system is enabled by default in guild.
  * - [PLAYER_MAX_VOLUME]: Max discord player volume (in units).
  * - [I18N_DEFAULT_LANGUAGE]: I18n default language (as language tag, without localization property).
  *
@@ -214,9 +214,9 @@ enum class AppBaseProperty(
 	GUILD_LEAVE_NO_TRACKS_SEC("guild.default.leave-no-tracks-channel-sec", Long::class),
 
 	/**
-	 * Default volume level for guilds.
+	 * Default player volume level for guilds.
 	 */
-	GUILD_DEFAULT_VOLUME("guild.default.default-volume", Int::class),
+	GUILD_PLAYER_VOLUME("guild.default.player-volume", Int::class),
 
 	/**
 	 * Indicates whether to randomly auto-choose tracks in guilds.
@@ -236,12 +236,12 @@ enum class AppBaseProperty(
 	/**
 	 * Default legacy command prefix used in guild.
 	 */
-	GUILD_DEFAULT_LEGACY_PREFIX("guild.default.default-legacy-prefix"),
+	GUILD_LEGACY_PREFIX("guild.default.legacy-prefix"),
 
 	/**
 	 * Determines if the slash command system is enabled by default in guild.
 	 */
-	GUILD_DEFAULT_SLASH_ENABLED("guild.default.default-slash-enabled", Boolean::class),
+	GUILD_SLASH_ENABLED("guild.default.slash-enabled", Boolean::class),
 
 	/**
 	 * Max discord player volume (in units).

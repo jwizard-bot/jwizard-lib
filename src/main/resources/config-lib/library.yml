@@ -25,12 +25,12 @@ guild:
     max-repeats-of-track: 30
     leave-empty-channel-sec: 120
     leave-no-tracks-channel-sec: 120
-    default-volume: 100
+    player-volume: 100
     random-auto-choose-track: true
     time-after-auto-choose-sec: 30
     tracks-to-choose-max: 10
-    default-legacy-prefix: '?'
-    default-slash-enabled: true
+    legacy-prefix: '?'
+    slash-enabled: true
     min-repeats-of-track: 2
 
 jda:
@@ -57,3 +57,6 @@ s3:
 
 i18n:
   default-language: pl
+  languages:
+    - en
+    - pl

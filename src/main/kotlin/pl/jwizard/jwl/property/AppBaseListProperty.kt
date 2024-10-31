@@ -4,8 +4,7 @@
  */
 package pl.jwizard.jwl.property
 
-import pl.jwizard.jwl.property.AppBaseListProperty.JDA_PERMISSIONS
-import pl.jwizard.jwl.property.AppBaseListProperty.RUNTIME_PROFILES
+import pl.jwizard.jwl.property.AppBaseListProperty.*
 import kotlin.reflect.KClass
 
 /**
@@ -16,6 +15,7 @@ import kotlin.reflect.KClass
  *   Accepted: *dev*, *prod*. Default: *empty array*.
  * - [JDA_PERMISSIONS]: Permissions required by the JDA (Java Discord API) library for accessing and interacting with
  *   Discord.
+ * - [I18N_LANGUAGES]: The placeholder for the available languages in internationalization.
  *
  * @property key The key used to retrieve the property value.
  * @property listElementsType The type of elements in the list represented by this property.
@@ -38,5 +38,10 @@ enum class AppBaseListProperty(
 	 * Permissions required by the JDA (Java Discord API) library for accessing and interacting with Discord.
 	 */
 	JDA_PERMISSIONS("jda.permissions"),
+
+	/**
+	 * The placeholder for the available languages in internationalization.
+	 */
+	I18N_LANGUAGES("i18n.languages"),
 	;
 }

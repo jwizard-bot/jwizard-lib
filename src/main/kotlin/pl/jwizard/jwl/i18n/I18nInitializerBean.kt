@@ -11,7 +11,6 @@ import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
 import pl.jwizard.jwl.SpringKtContextFactory
-import pl.jwizard.jwl.persistence.sql.handler.LanguageSupplierBean
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets
@@ -32,22 +31,13 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 	}
 
 	/**
-	 * A map of languages loaded from the remote source, where the key is the language tag (ex. *en*) and the value
-	 * is the language name.
-	 */
-	val languages = mutableMapOf<String, String>()
-
-	/**
 	 * Configures the [MessageSource] bean, setting up the required properties including base names, remote bundles,
 	 * and encoding.
 	 *
-	 * @param languageSupplier A supplier that provides available languages.
 	 * @return The configured [MessageSource] bean.
 	 */
 	@Bean
-	fun messageSource(languageSupplier: LanguageSupplierBean): MessageSource {
-		languages.putAll(languageSupplier.getLanguages())
-
+	fun messageSource(): MessageSource {
 		val libI18nSource = getMessageDirectories(ClassPathResource("/i18n-lib", SpringKtContextFactory::class.java))
 		val classpathI18nSources = getMessageDirectories(ClassPathResource("i18n"))
 		val sources = libI18nSource + classpathI18nSources

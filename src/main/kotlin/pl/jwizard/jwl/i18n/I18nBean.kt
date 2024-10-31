@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource
 import org.springframework.context.NoSuchMessageException
 import org.springframework.stereotype.Component
 import pl.jwizard.jwl.i18n.source.I18nDynamicMod
+import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import java.util.*
@@ -18,14 +19,14 @@ import java.util.*
  *
  * @property messageSource The [MessageSource] used to resolve messages.
  * @property environmentBean An [BaseEnvironment] that provides environment-specific properties with i18n configuration.
- * @property i18NInitializerBean The [I18nInitializerBean] component storing global configuration for i18n.
+ * @property i18nInitializerBean The [I18nInitializerBean] component storing global configuration for i18n.
  * @author Miłosz Gilga
  */
 @Component
 class I18nBean(
 	private val messageSource: MessageSource,
 	private val environmentBean: BaseEnvironment,
-	private val i18NInitializerBean: I18nInitializerBean,
+	private val i18nInitializerBean: I18nInitializerBean,
 ) {
 
 	companion object {
@@ -67,8 +68,9 @@ class I18nBean(
 	 * @param args Arguments to format the key pattern.
 	 * @return A map where the keys are language tags and the values are the formatted localized messages.
 	 */
-	fun tRaw(i18nDynamicMod: I18nDynamicMod, args: Array<String?>) = i18NInitializerBean.languages.keys.associateWith {
-		tRaw(i18nDynamicMod, args, it)
+	fun tRaw(i18nDynamicMod: I18nDynamicMod, args: Array<String?>): Map<String, String> {
+		val languages = environmentBean.getListProperty<String>(AppBaseListProperty.I18N_LANGUAGES)
+		return languages.associateWith { tRaw(i18nDynamicMod, args, it) }
 	}
 
 	/**
