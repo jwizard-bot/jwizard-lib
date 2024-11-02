@@ -100,4 +100,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run packages grabber
-        run: exec/run packages_grabber "${{ secrets.CONFIG_FILE_CONTENT }}" --repo="${{ github.repository }}"
+        run: exec/run-with-config packages_grabber \
+          "${{ secrets.CONFIG_FILE_CONTENT }}" \
+          --repo="${{ github.repository }}"
