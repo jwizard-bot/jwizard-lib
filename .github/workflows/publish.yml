@@ -93,10 +93,11 @@ jobs:
       - name: Setup Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.12'
+          cache: 'pip'
 
-      - name: Create Python virtual environment
-        run: exec/prepare
+      - name: Install requirements
+        run: pip install -r requirements.txt
 
       - name: Update packages
         run: exec/run packages_grabber "${{ secrets.CONFIG_FILE_CONTENT }}" --repo="${{ github.repository }}"
