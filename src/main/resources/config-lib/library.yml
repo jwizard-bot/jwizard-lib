@@ -3,6 +3,7 @@ deployment:
   last-build-date: ${env:JWIZARD_BUILD_DATE:UNKNOWN}
 
 db:
+  jdbc: jdbc:mysql://${vault:V_MYSQL_HOST}/${vault:V_MYSQL_DB_NAME}
   username: ${vault:V_MYSQL_USERNAME}
   password: ${vault:V_MYSQL_PASSWORD}
   driver-class-name: com.mysql.cj.jdbc.Driver
