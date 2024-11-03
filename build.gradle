@@ -39,6 +39,7 @@ dependencies {
 	implementation libs.mysqlConnector
 	implementation libs.hikariCp
 	implementation libs.vault
+	implementation libs.javalin
 
 	testImplementation libs.kotlinTest
 }

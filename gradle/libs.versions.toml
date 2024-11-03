@@ -10,6 +10,7 @@ jacksonVersion = "2.18.0"
 jeeAnnotationApiVersion = "3.0.0"
 commonsVfsVersion = "2.9.0"
 vaultVersion = "5.2.0"
+javalinVersion = "6.3.0"
 
 [libraries]
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
@@ -27,6 +28,7 @@ jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dat
 jeeAnnotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jeeAnnotationApiVersion" }
 commonsVfs = { module = "org.apache.commons:commons-vfs2", version.ref = "commonsVfsVersion" }
 vault = { module = "io.github.jopenlibs:vault-java-driver", version.ref = "vaultVersion" }
+javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
