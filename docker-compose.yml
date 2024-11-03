@@ -39,7 +39,7 @@ services:
       - '${JWIZARD_MYSQL_PORT}:3306'
     environment:
       MYSQL_ROOT_PASSWORD: ${JWIZARD_MYSQL_PASSWORD}
-      MYSQL_DATABASE: jwizard-db
+      MYSQL_DATABASE: ${JWIZARD_MYSQL_DB_NAME}
     volumes:
       - ./.volumes/mysql/mysql-volume:/var/lib/mysql
       - ./.volumes/mysql/init:/docker-entrypoint-initdb.d
