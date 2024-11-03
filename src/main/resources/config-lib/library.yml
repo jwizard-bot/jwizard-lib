@@ -51,11 +51,6 @@ jda:
     - VOICE_SPEAK
     - VOICE_DEAF_OTHERS
 
-s3:
-  region: eu-central-1
-  path-style-access-enabled: true
-  public-api-url: https://cdn.jwizard.pl
-
 i18n:
   default-language: pl
   languages:
