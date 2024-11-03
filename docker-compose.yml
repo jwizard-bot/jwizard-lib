@@ -1,0 +1,145 @@
+name: jwizard
+
+services:
+  jwizard-vault:
+    container_name: jwizard-vault
+    image: milosz08/vault-dev:latest
+    ports:
+      - '${JWIZARD_VAULT_PORT}:8200'
+    environment:
+      VAULT_AUTO_INIT_ROOT_TOKEN: ${JWIZARD_VAULT_ROOT_TOKEN}
+      VAULT_AUTO_INIT_KV_ENGINE: jwizard
+      # KV storages
+      KV_STORAGE_0: common
+      KV_STORAGE_1: core
+      KV_STORAGE_2: api
+      # KV secrets
+      V_JWT_SECRET_KEY_0: ${JWIZARD_JWT_SECRET_KEY}
+      V_MYSQL_HOST_0: localhost:${JWIZARD_MYSQL_PORT}
+      V_MYSQL_DB_NAME_0: ${JWIZARD_MYSQL_DB_NAME}
+      V_MYSQL_USERNAME_0: ${JWIZARD_MYSQL_USERNAME}
+      V_MYSQL_PASSWORD_0: ${JWIZARD_MYSQL_PASSWORD}
+      V_S3_USERNAME_0: ${JWIZARD_S3_USERNAME}
+      V_S3_PASSWORD_0: ${JWIZARD_S3_PASSWORD}
+      V_JDA_APP_ID_1: ${JWIZARD_JDA_APP_ID}
+      V_JDA_SECRET_1: ${JWIZARD_JDA_SECRET}
+      V_LAVA_NODE_1_TOKEN_1: ${JWIZARD_LAVA_NODE_TOKEN}
+      V_LAVA_NODE_2_TOKEN_1: ${JWIZARD_LAVA_NODE_TOKEN}
+      V_OIDC_APP_ID_2: ${JWIZARD_OIDC_APP_ID}
+      V_OIDC_SECRET_2: ${JWIZARD_OIDC_SECRET}
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - jwizard-network
+
+  jwizard-mysql-db:
+    container_name: jwizard-mysql-db
+    image: mysql:8.0.32
+    ports:
+      - '${JWIZARD_MYSQL_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${JWIZARD_MYSQL_PASSWORD}
+      MYSQL_DATABASE: jwizard-db
+    volumes:
+      - ./.volumes/mysql/mysql-volume:/var/lib/mysql
+      - ./.volumes/mysql/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: "mysqladmin ping -u root -p${JWIZARD_MYSQL_PASSWORD}"
+    networks:
+      - jwizard-network
+
+  jwizard-lava-node-1:
+    container_name: jwizard-lava-node-1
+    image: ghcr.io/lavalink-devs/lavalink:latest
+    user: root
+    ports:
+      - '${JWIZARD_LAVA_NODE_1_PORT}:${JWIZARD_LAVA_NODE_1_PORT}'
+    expose:
+      - ${JWIZARD_LAVA_NODE_1_PORT}
+    environment:
+      _JAVA_OPTIONS: -Xmx2G
+      SERVER_PORT: ${JWIZARD_LAVA_NODE_1_PORT}
+      # plugins
+      LAVALINK_PLUGINS_0_DEPENDENCY: dev.lavalink.youtube:youtube-plugin:${JWIZARD_LAVA_YT_SOURCE_VERSION}
+      # server
+      LAVALINK_SERVER_PASSWORD: ${JWIZARD_LAVA_NODE_TOKEN}
+      LAVALINK_SERVER_SOURCES_YOUTUBE: false
+      # filters
+      LAVALINK_SERVER_FILTERS_VOLUME: true
+      LAVALINK_SERVER_BUFFER_DURATION_MS: 400
+      LAVALINK_SERVER_FRAME_BUFFER_DURATION_MS: 5000
+      LAVALINK_SERVER_OPUS_ENCODING_QUALITY: 10
+      LAVALINK_SERVER_RESAMPLING_QUALITY: MEDIUM
+      LAVALINK_SERVER_TRACK_STUCK_THRESHOLD_MS: 10000
+      LAVALINK_SERVER_USE_SEEK_GHOSTING: true
+      # logging
+      LOGGING_REQUEST_ENABLED: true
+      LOGGING_REQUEST_INCLUDE_CLIENT_INFO: true
+      LOGGING_REQUEST_INCLUDE_HEADERS: false
+      LOGGING_REQUEST_INCLUDE_QUERY_STRING: true
+      LOGGING_REQUEST_INCLUDE_PAYLOAD: true
+      LOGGING_REQUEST_MAX_PAYLOAD_LENGTH: 10000
+      # yt plugin
+      PLUGINS_YOUTUBE_ENABLED: true
+      PLUGINS_YOUTUBE_OAUTH_ENABLED: true
+      PLUGINS_YOUTUBE_OAUTH_REFRESH_TOKEN: ${JWIZARD_LAVA_NODE_1_YT_REFRESH_TOKEN}
+      PLUGINS_YOUTUBE_ALLOW_SEARCH: true
+      PLUGINS_YOUTUBE_ALLOW_DIRECT_VIDEO_IDS: true
+      PLUGINS_YOUTUBE_ALLOW_DIRECT_PLAYLIST_IDS: true
+      PLUGINS_YOUTUBE_CLIENTS_0: MUSIC
+      PLUGINS_YOUTUBE_CLIENTS_1: ANDROID_TESTSUITE
+      PLUGINS_YOUTUBE_CLIENTS_2: WEB
+      PLUGINS_YOUTUBE_CLIENTS_3: TVHTML5EMBEDDED
+    volumes:
+      - ./.volumes/lavalink/lavalink-1-volume/plugins:/opt/Lavalink/plugins/
+    networks:
+      - jwizard-network
+
+  jwizard-lava-node-2:
+    container_name: jwizard-lava-node-2
+    image: ghcr.io/lavalink-devs/lavalink:latest
+    user: root
+    ports:
+      - '${JWIZARD_LAVA_NODE_2_PORT}:${JWIZARD_LAVA_NODE_2_PORT}'
+    environment:
+      _JAVA_OPTIONS: -Xmx2G
+      SERVER_PORT: ${JWIZARD_LAVA_NODE_2_PORT}
+      # plugins
+      LAVALINK_PLUGINS_0_DEPENDENCY: dev.lavalink.youtube:youtube-plugin:${JWIZARD_LAVA_YT_SOURCE_VERSION}
+      # server
+      LAVALINK_SERVER_PASSWORD: ${JWIZARD_LAVA_NODE_TOKEN}
+      LAVALINK_SERVER_SOURCES_YOUTUBE: false
+      # filters
+      LAVALINK_SERVER_FILTERS_VOLUME: true
+      LAVALINK_SERVER_BUFFER_DURATION_MS: 400
+      LAVALINK_SERVER_FRAME_BUFFER_DURATION_MS: 5000
+      LAVALINK_SERVER_OPUS_ENCODING_QUALITY: 10
+      LAVALINK_SERVER_RESAMPLING_QUALITY: MEDIUM
+      LAVALINK_SERVER_TRACK_STUCK_THRESHOLD_MS: 10000
+      LAVALINK_SERVER_USE_SEEK_GHOSTING: true
+      # logging
+      LOGGING_REQUEST_ENABLED: true
+      LOGGING_REQUEST_INCLUDE_CLIENT_INFO: true
+      LOGGING_REQUEST_INCLUDE_HEADERS: false
+      LOGGING_REQUEST_INCLUDE_QUERY_STRING: true
+      LOGGING_REQUEST_INCLUDE_PAYLOAD: true
+      LOGGING_REQUEST_MAX_PAYLOAD_LENGTH: 10000
+      # yt plugin
+      PLUGINS_YOUTUBE_ENABLED: true
+      PLUGINS_YOUTUBE_OAUTH_ENABLED: true
+      PLUGINS_YOUTUBE_OAUTH_REFRESH_TOKEN: ${JWIZARD_LAVA_NODE_2_YT_REFRESH_TOKEN}
+      PLUGINS_YOUTUBE_ALLOW_SEARCH: true
+      PLUGINS_YOUTUBE_ALLOW_DIRECT_VIDEO_IDS: true
+      PLUGINS_YOUTUBE_ALLOW_DIRECT_PLAYLIST_IDS: true
+      PLUGINS_YOUTUBE_CLIENTS_0: MUSIC
+      PLUGINS_YOUTUBE_CLIENTS_1: ANDROID_TESTSUITE
+      PLUGINS_YOUTUBE_CLIENTS_2: WEB
+      PLUGINS_YOUTUBE_CLIENTS_3: TVHTML5EMBEDDED
+    volumes:
+      - ./.volumes/lavalink/lavalink-2-volume/plugins:/opt/Lavalink/plugins/
+    networks:
+      - jwizard-network
+
+networks:
+  jwizard-network:
+    driver: bridge

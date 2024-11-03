@@ -10,3 +10,6 @@ build/
 .kotlin/
 out/
 docs/
+.volumes/**/*volume/
+
+.env
