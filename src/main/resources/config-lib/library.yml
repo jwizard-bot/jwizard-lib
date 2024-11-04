@@ -1,6 +1,11 @@
-deployment:
-  build-version: ${env:JWIZARD_BUILD_VERSION:UNKNOWN}
-  last-build-date: ${env:JWIZARD_BUILD_DATE:UNKNOWN}
+vcs:
+  organization-name: jwizard-bot
+  repository:
+    jw-core: jwizard-core
+    jw-api: jwizard-api
+    jw-lib: jwizard-lib
+    jw-web: jwizard-web
+    jw-tools: jwizard-tools
 
 db:
   jdbc: jdbc:mysql://${vault:V_MYSQL_HOST}/${vault:V_MYSQL_DB_NAME}

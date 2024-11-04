@@ -4,6 +4,7 @@
  */
 package pl.jwizard.jwl.property
 
+import pl.jwizard.jwl.property.AppBaseProperty.*
 import pl.jwizard.jwl.property.vault.VaultAuthenticationType
 import kotlin.reflect.KClass
 
@@ -13,6 +14,12 @@ import kotlin.reflect.KClass
  * Defining following properties:
  * - [ENV_ENABLED]: Determines if the application should load environment variables from a .env file at startup.
  * - [SERVER_PORT]: Server port used for standalone Jetty server.
+ * - [VCS_ORGANIZATION_NAME]: Version Control System organization name. Used for create links refer to online repository.
+ * - [VCS_REPOSITORY_JW_CORE]: Name of the `jw-core` version control system repository.
+ * - [VCS_REPOSITORY_JW_API]: Name of the `jw-api` version control system repository.
+ * - [VCS_REPOSITORY_JW_LIB]: Name of the `jw-lib` version control system repository.
+ * - [VCS_REPOSITORY_JW_WEB]: Name of the `jw-web` version control system repository.
+ * - [VCS_REPOSITORY_JW_TOOLS]: Name of the `jw-tools` version control system repository.
  * - [DB_URL]: Database JDBC URL provider.
  * - [DB_USERNAME]: Database username.
  * - [DB_PASSWORD]: Database password.
@@ -62,6 +69,36 @@ enum class AppBaseProperty(
 	 * Server port used for standalone Jetty server.
 	 */
 	SERVER_PORT("server.port", Int::class),
+
+	/**
+	 * Version Control System organization name. Used for create links refer to online repository.
+	 */
+	VCS_ORGANIZATION_NAME("vcs.organization-name"),
+
+	/**
+	 * Name of the `jw-core` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_CORE("vcs.repository.jw-core"),
+
+	/**
+	 * Name of the `jw-api` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_API("vcs.repository.jw-api"),
+
+	/**
+	 * Name of the `jw-lib` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_LIB("vcs.repository.jw-lib"),
+
+	/**
+	 * Name of the `jw-web` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_WEB("vcs.repository.jw-web"),
+
+	/**
+	 * Name of the `jw-tools` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_TOOLS("vcs.repository.jw-tools"),
 
 	/**
 	 * Database JDBC url provider.
