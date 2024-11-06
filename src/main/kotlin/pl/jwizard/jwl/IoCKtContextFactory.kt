@@ -56,6 +56,15 @@ class IoCKtContextFactory(clazz: KClass<*>) : AnnotationConfigApplicationContext
 		getBeansWithAnnotation(U::class.java).map { it.value as T }
 
 	/**
+	 * Retrieves all Spring beans in the application context that are subclasses of the specified supertype [T].
+	 * Useful for obtaining beans that implement or extend a common interface or base class.
+	 *
+	 * @param T The supertype of the beans to retrieve.
+	 * @return A list of beans that are instances of the specified supertype [T].
+	 */
+	inline fun <reified T : Any> getBeansWithSupertype() = getBeansOfType(T::class.java).map { it.value as T }
+
+	/**
 	 * Cleans up the Spring context before JVM shutdown. Invokes the [close] method to release any resources held by
 	 * the Spring container.
 	 */
