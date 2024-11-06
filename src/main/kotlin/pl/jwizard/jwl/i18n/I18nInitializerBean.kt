@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.SpringKtContextFactory
+import pl.jwizard.jwl.IoCKtContextFactory
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets
@@ -38,7 +38,7 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 	 */
 	@Bean
 	fun messageSource(): MessageSource {
-		val libI18nSource = getMessageDirectories(ClassPathResource("/i18n-lib", SpringKtContextFactory::class.java))
+		val libI18nSource = getMessageDirectories(ClassPathResource("/i18n-lib", IoCKtContextFactory::class.java))
 		val classpathI18nSources = getMessageDirectories(ClassPathResource("i18n"))
 		val sources = libI18nSource + classpathI18nSources
 		log.info("Load: {} i18n message sources: {}.", sources.size, sources)

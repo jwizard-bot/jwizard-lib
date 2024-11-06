@@ -5,26 +5,24 @@
 package pl.jwizard.jwl
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import org.springframework.context.annotation.Configuration
 import pl.jwizard.jwl.jvm.JvmDisposable
 import pl.jwizard.jwl.jvm.JvmDisposableHook
 import pl.jwizard.jwl.util.logger
 import kotlin.reflect.KClass
-import org.springframework.context.annotation.Configuration
 
 /**
- * A kotlin factory class for creating and managing a Spring application context, extending
+ * A kotlin factory class for creating and managing a DI application context, extending
  * [AnnotationConfigApplicationContext]. It allows initializing the context based on a provided configuration class.
- *
- * @constructor Creates an instance of the Spring context factory using the provided configuration class.
- *
+
  * @param clazz The configuration class (annotated with [Configuration] or other appropriate annotations) used to
  *        initialize the Spring context.
  * @author Miłosz Gilga
  */
-class SpringKtContextFactory(clazz: KClass<*>) : AnnotationConfigApplicationContext(clazz.java), JvmDisposable {
+class IoCKtContextFactory(clazz: KClass<*>) : AnnotationConfigApplicationContext(clazz.java), JvmDisposable {
 
 	companion object {
-		private val log = logger<SpringKtContextFactory>()
+		private val log = logger<IoCKtContextFactory>()
 	}
 
 	/**

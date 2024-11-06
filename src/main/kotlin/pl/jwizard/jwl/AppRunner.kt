@@ -36,9 +36,9 @@ abstract class AppRunner {
 	}
 
 	/**
-	 * Spring Kotlin Context instance.
+	 * Kotlin IoC context container instance.
 	 */
-	private lateinit var context: SpringKtContextFactory
+	private lateinit var context: IoCKtContextFactory
 
 	/**
 	 * Runs the application with the given class as the base configuration class for the Spring context. This method
@@ -57,8 +57,8 @@ abstract class AppRunner {
 		AbstractPrinter.printContent(printers)
 		try {
 			try {
-				context = SpringKtContextFactory(clazz)
-				log.info("Init Spring Context with base class: {}. Init packages tree: {}.", clazz.qualifiedName, BASE_PACKAGE)
+				context = IoCKtContextFactory(clazz)
+				log.info("Init IoC Context with base class: {}. Init packages tree: {}.", clazz.qualifiedName, BASE_PACKAGE)
 
 				runWithContext(context)
 
@@ -80,5 +80,5 @@ abstract class AppRunner {
 	 *
 	 * @param context The initialized Spring Kotlin context.
 	 */
-	protected abstract fun runWithContext(context: SpringKtContextFactory)
+	protected abstract fun runWithContext(context: IoCKtContextFactory)
 }

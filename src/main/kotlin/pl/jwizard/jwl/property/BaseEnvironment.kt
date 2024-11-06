@@ -6,7 +6,7 @@ package pl.jwizard.jwl.property
 
 import jakarta.annotation.PostConstruct
 import org.springframework.core.env.StandardEnvironment
-import pl.jwizard.jwl.SpringKtContextFactory
+import pl.jwizard.jwl.IoCKtContextFactory
 import pl.jwizard.jwl.property.extractor.EnvPropertyValueExtractor
 import pl.jwizard.jwl.property.extractor.VaultPropertyValueExtractor
 import pl.jwizard.jwl.property.loader.YamlPropertySourceLoader
@@ -17,10 +17,10 @@ import pl.jwizard.jwl.util.logger
  * Manages environment-specific property sources, loading configurations from YAML files, environment variables, and
  * Vault secrets.
  *
- * @property springKtContextFactory Factory for creating the Spring context used to initialize properties.
+ * @property IoCKtContextFactory Factory for creating the IoC DI container context used to initialize properties.
  * @author Miłosz Gilga
  */
-abstract class BaseEnvironment(private val springKtContextFactory: SpringKtContextFactory) {
+abstract class BaseEnvironment(private val IoCKtContextFactory: IoCKtContextFactory) {
 
 	companion object {
 		private val log = logger<BaseEnvironment>()

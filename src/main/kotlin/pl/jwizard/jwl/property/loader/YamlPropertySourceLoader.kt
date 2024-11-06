@@ -6,7 +6,7 @@ package pl.jwizard.jwl.property.loader
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean
 import org.springframework.core.io.ClassPathResource
-import pl.jwizard.jwl.SpringKtContextFactory
+import pl.jwizard.jwl.IoCKtContextFactory
 import pl.jwizard.jwl.property.PropertySourceData
 import pl.jwizard.jwl.util.logger
 
@@ -51,7 +51,7 @@ class YamlPropertySourceLoader(
 
 		val appProperties = loadDefaultAndRuntimeDependentProperties(DEFAULT_YAML_PREFIX) { ClassPathResource(it) }
 		val libProperties = loadDefaultAndRuntimeDependentProperties(LIBRARY_YAML_PREFIX) {
-			ClassPathResource(it, SpringKtContextFactory::class.java)
+			ClassPathResource(it, IoCKtContextFactory::class.java)
 		}
 		val fileContents = appProperties + libProperties
 		yamlPropertiesFactoryBean.setResources(*fileContents.toTypedArray())
