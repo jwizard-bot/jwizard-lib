@@ -91,7 +91,7 @@ dokkaHtml {
 			DokkaConfiguration.Visibility.PRIVATE,
 			DokkaConfiguration.Visibility.PROTECTED
 		])
-		includes.from('dokka/README-DOCS.md')
+		includes.from(file('dokka/README-DOCS.md'))
 	}
 }
 
