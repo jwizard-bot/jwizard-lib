@@ -6,7 +6,7 @@ package pl.jwizard.jwl.property.loader
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean
 import org.springframework.core.io.ClassPathResource
-import pl.jwizard.jwl.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.property.PropertySourceData
 import pl.jwizard.jwl.util.logger
 

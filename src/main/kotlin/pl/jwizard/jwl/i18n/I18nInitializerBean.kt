@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets

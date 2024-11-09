@@ -2,7 +2,7 @@
  * Copyright (c) 2024 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
-package pl.jwizard.jwl
+package pl.jwizard.jwl.ioc
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Configuration

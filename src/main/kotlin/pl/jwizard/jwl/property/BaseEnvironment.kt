@@ -6,7 +6,7 @@ package pl.jwizard.jwl.property
 
 import jakarta.annotation.PostConstruct
 import org.springframework.core.env.StandardEnvironment
-import pl.jwizard.jwl.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.property.extractor.EnvPropertyValueExtractor
 import pl.jwizard.jwl.property.extractor.VaultPropertyValueExtractor
 import pl.jwizard.jwl.property.loader.YamlPropertySourceLoader

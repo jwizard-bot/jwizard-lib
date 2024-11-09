@@ -5,6 +5,7 @@
 package pl.jwizard.jwl
 
 import org.springframework.context.annotation.ComponentScan
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.printer.AbstractPrinter
 import pl.jwizard.jwl.printer.ConsolePrinter
 import pl.jwizard.jwl.printer.FancyFramePrinter

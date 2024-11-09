@@ -8,9 +8,9 @@ import io.javalin.Javalin
 import io.javalin.config.JavalinConfig
 import org.springframework.beans.factory.DisposableBean
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.IoCKtContextFactory
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.server.attribute.CommonServerAttribute
