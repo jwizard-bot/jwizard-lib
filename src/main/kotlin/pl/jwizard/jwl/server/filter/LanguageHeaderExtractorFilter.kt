@@ -6,7 +6,7 @@ package pl.jwizard.jwl.server.filter
 
 import io.javalin.http.Context
 import org.eclipse.jetty.http.HttpHeader
-import org.springframework.stereotype.Component
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -22,7 +22,7 @@ import pl.jwizard.jwl.server.setAttribute
  * @property environment An instance of [BaseEnvironment] used to retrieve application properties.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class LanguageHeaderExtractorFilter(private val environment: BaseEnvironment) : WebFilterBase {
 
 	override val type = WebFilterType.BEFORE

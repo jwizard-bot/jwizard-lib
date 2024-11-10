@@ -6,8 +6,8 @@ package pl.jwizard.jwl.server.exception
 
 import io.javalin.http.Context
 import io.javalin.http.InternalServerErrorResponse
-import org.springframework.stereotype.Component
 import pl.jwizard.jwl.i18n.I18nBean
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.util.logger
 
 /**
@@ -19,7 +19,7 @@ import pl.jwizard.jwl.util.logger
  * @param i18nBean An instance of [I18nBean] used for internationalization (i18n).
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class UnspecifiedExceptionAdvisor(i18nBean: I18nBean) : ExceptionsAdvisorBase<Exception>(i18nBean) {
 
 	companion object {

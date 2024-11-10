@@ -6,11 +6,11 @@ package pl.jwizard.jwl.server
 
 import io.javalin.Javalin
 import io.javalin.config.JavalinConfig
-import org.springframework.beans.factory.DisposableBean
-import org.springframework.stereotype.Component
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
+import pl.jwizard.jwl.ioc.CleanupAfterIoCDestroy
 import pl.jwizard.jwl.ioc.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.server.attribute.CommonServerAttribute
@@ -31,12 +31,12 @@ import pl.jwizard.jwl.util.logger
  * @property i18nBean Bean for handling internationalization and localization of messages.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class HttpServer(
 	private val environment: BaseEnvironment,
 	private val ioCKtContextFactory: IoCKtContextFactory,
 	private val i18nBean: I18nBean,
-) : DisposableBean {
+) : CleanupAfterIoCDestroy {
 
 	companion object {
 		private val log = logger<HttpServer>()
@@ -103,7 +103,6 @@ class HttpServer(
 
 		val serverPort = environment.getProperty<Int>(AppBaseProperty.SERVER_PORT)
 		server.start(serverPort)
-		log.info("Started Jetty server on port: {}.", serverPort)
 	}
 
 	/**

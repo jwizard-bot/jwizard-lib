@@ -17,7 +17,7 @@ import pl.jwizard.jwl.server.route.ServerRole
 abstract class RoleFilterBase : WebFilterBase {
 
 	override val type = WebFilterType.BEFORE_MATCHED
-	override val matcher = "/**"
+	override val matcher = "/*"
 
 	/**
 	 * The filter function that checks if the route contains the necessary roles. If the roles match, it invokes the
