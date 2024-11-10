@@ -4,33 +4,28 @@
  */
 package pl.jwizard.jwl.command.arg
 
-import pl.jwizard.jwl.i18n.source.I18nCmdArgumentSource
+import pl.jwizard.jwl.i18n.I18nLocaleSource
 
 /**
  * Enum representing various command arguments, each associated with its internationalization source
  * and the corresponding argument values.
  *
- * @property i18nSource The internationalization source for the argument.
- * @property arguments The array of arguments associated with the command.
+ * @property placeholder A string key used for localization, which maps to the actual command argument description.
+ * @property arguments The vararg of arguments associated with the command.
  * @author Miłosz Gilga
  */
 enum class CommandArgument(
-	val i18nSource: I18nCmdArgumentSource,
-	val arguments: Array<Argument>,
-) {
-	TITLE_OR_URL(I18nCmdArgumentSource.TITLE_OR_URL, Argument.TRACK),
-	REPEATS_NUMBER(I18nCmdArgumentSource.REPEATS_NUMBER, Argument.COUNT),
-	VOLUME_UNITS_NUMBER(I18nCmdArgumentSource.VOLUME_UNITS_NUMBER, Argument.VOLUME),
-	MEMBER_TAG(I18nCmdArgumentSource.MEMBER_TAG, Argument.MEMBER),
-	POSITION_IN_QUEUE(I18nCmdArgumentSource.POSITION_IN_QUEUE, Argument.POS),
-	CURRENT_AND_NEW_POS(I18nCmdArgumentSource.CURRENT_AND_NEW_POS, arrayOf(Argument.FROM_POS, Argument.TO_POS)),
-	PLAYLIST_NAME_OR_ID(I18nCmdArgumentSource.PLAYLIST_NAME_OR_ID, Argument.PLAYLIST_NAME_OR_ID),
-	PLAYLIST_NAME(I18nCmdArgumentSource.PLAYLIST_NAME, Argument.PLAYLIST_NAME),
-	RADIO_STATION(I18nCmdArgumentSource.RADIO_STATION, Argument.RADIO_STATION),
-	PRIVATE(I18nCmdArgumentSource.PRIVATE, Argument.PRIVATE);
-
-	/**
-	 * Constructor for initializing a CommandArgument with a single argument.
-	 */
-	constructor(i18nSource: I18nCmdArgumentSource, argument: Argument) : this(i18nSource, arrayOf(argument))
+	override val placeholder: String,
+	vararg val arguments: Argument,
+) : I18nLocaleSource {
+	TITLE_OR_URL("jw.arg.cmd.titleOrUrl", Argument.TRACK),
+	REPEATS_NUMBER("jw.arg.cmd.repeatsNumber", Argument.COUNT),
+	VOLUME_UNITS_NUMBER("jw.arg.cmd.volumeUnitsNumber", Argument.VOLUME),
+	MEMBER_TAG("jw.arg.cmd.memberTag", Argument.MEMBER),
+	POSITION_IN_QUEUE("jw.arg.cmd.positionInQueue", Argument.POS),
+	CURRENT_AND_NEW_POS("jw.arg.cmd.currentAndNewPos", Argument.FROM_POS, Argument.TO_POS),
+	PLAYLIST_NAME_OR_ID("jw.arg.cmd.playlistNameOrId", Argument.PLAYLIST_NAME_OR_ID),
+	PLAYLIST_NAME("jw.arg.cmd.playlistName", Argument.PLAYLIST_NAME),
+	RADIO_STATION("jw.arg.cmd.radioStation", Argument.RADIO_STATION),
+	PRIVATE("jw.arg.cmd.private", Argument.PRIVATE);
 }

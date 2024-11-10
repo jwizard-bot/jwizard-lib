@@ -7,7 +7,6 @@ package pl.jwizard.jwl.i18n
 import org.springframework.context.MessageSource
 import org.springframework.context.NoSuchMessageException
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.i18n.source.I18nDynamicMod
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -42,6 +41,11 @@ class I18nBean(
 	}
 
 	/**
+	 * The default language specified in the application properties.
+	 */
+	private val defaultLanguage = environmentBean.getProperty<String>(AppBaseProperty.I18N_DEFAULT_LANGUAGE)
+
+	/**
 	 * Retrieves a translated message based on the provided [I18nLocaleSource], language, and parameters.
 	 *
 	 * This method fetches a localized message for the specified locale. If no language is provided, it defaults
@@ -54,38 +58,37 @@ class I18nBean(
 	 * @return The translated message with placeholders replaced by the corresponding parameters.
 	 */
 	fun t(i18nLocaleSource: I18nLocaleSource, lang: String?, args: Map<String, Any?> = emptyMap()): String {
-		val defaultLanguage = environmentBean.getProperty<String>(AppBaseProperty.I18N_DEFAULT_LANGUAGE)
-		return tRaw(i18nLocaleSource.placeholder, args, lang ?: defaultLanguage)
+		return tRaw(i18nLocaleSource.placeholder, args, lang)
 	}
 
 	/**
-	 * Retrieves raw messages for all available languages based on the provided [I18nDynamicMod] and arguments.
+	 * Retrieves translated messages in all available languages for a given [I18nLocaleSource] and parameters.
 	 *
-	 * This method generates messages for each language by formatting the key from the provided [I18nDynamicMod] using
-	 * the provided `args`, and then looks up the messages in all available languages.
+	 * This method iterates through a list of supported languages defined in the environment properties. For each
+	 * language, it fetches the localized message and replaces placeholders with values from the [args] map.
 	 *
-	 * @param i18nDynamicMod The [I18nDynamicMod] enum that provides the key pattern for the messages.
-	 * @param args Arguments to format the key pattern.
-	 * @return A map where the keys are language tags and the values are the formatted localized messages.
+	 * @param i18nLocaleSource The source providing the placeholder for the message.
+	 * @param args A map of parameters to replace placeholders within the message. Default is an empty map.
+	 * @return A map where each key is a language code and the value is the translated message.
 	 */
-	fun tRaw(i18nDynamicMod: I18nDynamicMod, args: Array<String?>): Map<String, String> {
+	fun t(i18nLocaleSource: I18nLocaleSource, args: Map<String, Any?> = emptyMap()): Map<String, String> {
 		val languages = environmentBean.getListProperty<String>(AppBaseListProperty.I18N_LANGUAGES)
-		return languages.associateWith { tRaw(i18nDynamicMod, args, it) }
+		return languages.associateWith { t(i18nLocaleSource, it, args) }
 	}
 
 	/**
-	 * Retrieves a raw message based on the provided [I18nDynamicMod], arguments, and language.
+	 * Retrieves a raw message based on the provided [I18nDynamicModule], arguments, and language.
 	 *
-	 * This method formats the key from the provided [I18nDynamicMod] using the provided [args], and then looks up the
+	 * This method formats the key from the provided [I18nDynamicModule] using the provided [args], and then looks up the
 	 * message in the specified language. It uses an empty map for parameters.
 	 *
-	 * @param i18nDynamicMod The [I18nDynamicMod] enum that provides the key pattern for the message.
+	 * @param i18nDynamicModule The [I18nDynamicModule] enum that provides the key pattern for the message.
 	 * @param args Arguments to format the key pattern.
-	 * @param lang The language tag representing the desired locale (ex. *en*).
+	 * @param lang The language tag representing the desired locale (ex. *en*). If null, the default language is used.
 	 * @return The formatted localized message with placeholders replaced by the corresponding parameters.
 	 */
-	fun tRaw(i18nDynamicMod: I18nDynamicMod, args: Array<String?>, lang: String) =
-		tRaw(i18nDynamicMod.key.format(*args), emptyMap(), lang)
+	fun tRaw(i18nDynamicModule: I18nDynamicModule, args: Array<String?>, lang: String?) =
+		tRaw(i18nDynamicModule.key.format(*args), emptyMap(), lang)
 
 	/**
 	 * Retrieves a raw message based on the provided i18n key, parameters, and language.
@@ -96,11 +99,11 @@ class I18nBean(
 	 *
 	 * @param i18nKey The key used to look up the message.
 	 * @param args A map of parameters to replace placeholders in the message.
-	 * @param lang The language tag representing the desired locale (ex. *en*).
+	 * @param lang The language tag representing the desired locale (ex. *en*). If null, the default language is used.
 	 * @return The formatted localized message with placeholders replaced by the corresponding parameters.
 	 */
-	private fun tRaw(i18nKey: String, args: Map<String, Any?>, lang: String): String {
-		val locale = Locale.forLanguageTag(lang)
+	private fun tRaw(i18nKey: String, args: Map<String, Any?>, lang: String?): String {
+		val locale = Locale.forLanguageTag(lang ?: defaultLanguage)
 		return try {
 			var propertyValue = messageSource.getMessage(i18nKey, null, locale)
 			if (propertyValue.isBlank()) {

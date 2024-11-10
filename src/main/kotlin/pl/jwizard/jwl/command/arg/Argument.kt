@@ -4,47 +4,40 @@
  */
 package pl.jwizard.jwl.command.arg
 
-import pl.jwizard.jwl.i18n.source.I18nArgumentSource
-import pl.jwizard.jwl.i18n.source.I18nOptionSource
+import pl.jwizard.jwl.TextKeyExtractor
+import pl.jwizard.jwl.command.ArgumentOption
+import pl.jwizard.jwl.i18n.I18nLocaleSource
+import pl.jwizard.jwl.radio.RadioStation
 
 /**
  * Defines various command argument types used in the bot's commands, including metadata for internationalization,
  * argument type, and options.
  *
- * @property i18nSource Provides the i18n source key for localizing argument names.
+ * @property placeholder A string key used for localization, which maps to the actual argument description.
  * @property type Specifies the expected type of argument, such as STRING or INTEGER.
+ * @property options Additional argument options, implements [ArgumentOption] interface. By default empty list
  * @property required Indicates whether the argument is mandatory for the command.
  * @author Miłosz Gilga
  */
 enum class Argument(
-	val i18nSource: I18nArgumentSource,
+	override val placeholder: String,
 	val type: ArgumentType,
+	val options: List<ArgumentOption> = emptyList(),
 	val required: Boolean = true,
-) {
-	TRACK(I18nArgumentSource.TRACK, ArgumentType.STRING),
-	COUNT(I18nArgumentSource.COUNT, ArgumentType.INTEGER),
-	VOLUME(I18nArgumentSource.VOLUME, ArgumentType.INTEGER),
-	MEMBER(I18nArgumentSource.MEMBER, ArgumentType.MENTIONABLE),
-	POS(I18nArgumentSource.POS, ArgumentType.INTEGER),
-	FROM_POS(I18nArgumentSource.FROM_POS, ArgumentType.INTEGER),
-	TO_POS(I18nArgumentSource.TO_POS, ArgumentType.INTEGER),
-	PLAYLIST_NAME_OR_ID(I18nArgumentSource.PLAYLIST_NAME_OR_ID, ArgumentType.STRING),
-	PLAYLIST_NAME(I18nArgumentSource.PLAYLIST_NAME, ArgumentType.STRING),
-	RADIO_STATION(I18nArgumentSource.RADIO_STATION, ArgumentType.STRING),
-	PRIVATE(I18nArgumentSource.PRIVATE, ArgumentType.BOOLEAN, required = false),
+) : I18nLocaleSource, TextKeyExtractor {
+	TRACK("jw.arg.track", ArgumentType.STRING),
+	COUNT("jw.arg.count", ArgumentType.INTEGER),
+	VOLUME("jw.arg.volume", ArgumentType.INTEGER),
+	MEMBER("jw.arg.member", ArgumentType.MENTIONABLE),
+	POS("jw.arg.pos", ArgumentType.INTEGER),
+	FROM_POS("jw.arg.fromPos", ArgumentType.INTEGER),
+	TO_POS("jw.arg.toPos", ArgumentType.INTEGER),
+	PLAYLIST_NAME_OR_ID("jw.arg.playlistNameOrId", ArgumentType.STRING),
+	PLAYLIST_NAME("jw.arg.playlistName", ArgumentType.STRING),
+	RADIO_STATION("jw.arg.radioStation", ArgumentType.STRING, options = RadioStation.entries),
+	PRIVATE("jw.arg.private", ArgumentType.BOOLEAN, required = false),
 	;
 
-	/**
-	 * Extracts a unique key identifier from the `i18nSource` placeholder.
-	 */
-	val extractedKey
-		get() = i18nSource.placeholder.substringAfterLast(".")
-
-	/**
-	 * Maps options available for the argument, removing any prefix for simplified access.
-	 */
-	val options
-		get() = I18nOptionSource.entries
-			.filter { it.name.startsWith(this.name) }
-			.associateBy { it.placeholder.substringAfterLast(".") }
+	override val textKey
+		get() = placeholder.substringAfterLast(".")
 }

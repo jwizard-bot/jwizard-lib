@@ -5,14 +5,16 @@
 package pl.jwizard.jwl.command
 
 import pl.jwizard.jwl.DatabaseIdentifier
+import pl.jwizard.jwl.TextKeyExtractor
 import pl.jwizard.jwl.command.arg.CommandArgument
-import pl.jwizard.jwl.i18n.source.I18nCommandSource
+import pl.jwizard.jwl.i18n.I18nLocaleSource
 
 /**
  * Enum representing various commands in the application, each associated with a unique database ID, module, alias,
  * and optional argument definitions.
  *
  * @property dbId Unique identifier for the command in the database.
+ * @property placeholder A string key used for localization, which maps to the actual command description.
  * @property module The module to which the command belongs.
  * @property alias The alias used to invoke the command.
  * @property argumentsDefinition Optional definition of command arguments.
@@ -20,85 +22,64 @@ import pl.jwizard.jwl.i18n.source.I18nCommandSource
  */
 enum class Command(
 	override val dbId: Long,
+	override val placeholder: String,
 	val module: Module,
 	val alias: String,
 	val argumentsDefinition: CommandArgument? = null,
-) : DatabaseIdentifier {
+) : I18nLocaleSource, DatabaseIdentifier, TextKeyExtractor {
 
 	// music module
-	PLAY(1, Module.MUSIC, "pl", CommandArgument.TITLE_OR_URL),
-	PAUSE(2, Module.MUSIC, "ps"),
-	RESUME(3, Module.MUSIC, "rs"),
-	REPEAT(4, Module.MUSIC, "rp", CommandArgument.REPEATS_NUMBER),
-	REPEATCLS(5, Module.MUSIC, "rpcl"),
-	LOOP(6, Module.MUSIC, "lp"),
-	PLAYING(7, Module.MUSIC, "cp"),
-	PAUSED(8, Module.MUSIC, "cps"),
-	GETVOLUME(9, Module.MUSIC, "gvl"),
-	QUEUE(10, Module.MUSIC, "qt"),
+	PLAY(1, "jw.command.play", Module.MUSIC, "pl", CommandArgument.TITLE_OR_URL),
+	PAUSE(2, "jw.command.pause", Module.MUSIC, "ps"),
+	RESUME(3, "jw.command.resume", Module.MUSIC, "rs"),
+	REPEAT(4, "jw.command.repeat", Module.MUSIC, "rp", CommandArgument.REPEATS_NUMBER),
+	REPEATCLS(5, "jw.command.repeatcls", Module.MUSIC, "rpcl"),
+	LOOP(6, "jw.command.loop", Module.MUSIC, "lp"),
+	PLAYING(7, "jw.command.playing", Module.MUSIC, "cp"),
+	PAUSED(8, "jw.command.paused", Module.MUSIC, "cps"),
+	GETVOLUME(9, "jw.command.getvolume", Module.MUSIC, "gvl"),
+	QUEUE(10, "jw.command.queue", Module.MUSIC, "qt"),
 
 	// dj module
-	SETVOLUME(101, Module.DJ, "svl", CommandArgument.VOLUME_UNITS_NUMBER),
-	VOLUMECLS(102, Module.DJ, "cvl"),
-	JOIN(103, Module.DJ, "jchn"),
-	TRACKSRM(104, Module.DJ, "rtr", CommandArgument.MEMBER_TAG),
-	SHUFFLE(105, Module.DJ, "shq"),
-	SKIPTO(106, Module.DJ, "skt", CommandArgument.POSITION_IN_QUEUE),
-	SKIP(107, Module.DJ, "sk"),
-	CLEAR(108, Module.DJ, "cl"),
-	STOP(109, Module.DJ, "st"),
-	MOVE(110, Module.DJ, "mv", CommandArgument.CURRENT_AND_NEW_POS),
-	INFINITE(111, Module.DJ, "inf"),
+	SETVOLUME(101, "jw.command.setvolume", Module.DJ, "svl", CommandArgument.VOLUME_UNITS_NUMBER),
+	VOLUMECLS(102, "jw.command.volumecls", Module.DJ, "cvl"),
+	JOIN(103, "jw.command.join", Module.DJ, "jchn"),
+	TRACKSRM(104, "jw.command.tracksrm", Module.DJ, "rtr", CommandArgument.MEMBER_TAG),
+	SHUFFLE(105, "jw.command.shuffle", Module.DJ, "shq"),
+	SKIPTO(106, "jw.command.skipto", Module.DJ, "skt", CommandArgument.POSITION_IN_QUEUE),
+	SKIP(107, "jw.command.skip", Module.DJ, "sk"),
+	CLEAR(108, "jw.command.clear", Module.DJ, "cl"),
+	STOP(109, "jw.command.stop", Module.DJ, "st"),
+	MOVE(110, "jw.command.move", Module.DJ, "mv", CommandArgument.CURRENT_AND_NEW_POS),
+	INFINITE(111, "jw.command.infinite", Module.DJ, "inf"),
 
 	// audio tracks
-	ADDTRACKPL(201, Module.PLAYLIST, "apt", CommandArgument.PLAYLIST_NAME_OR_ID),
-	ADDQUEUEPL(202, Module.PLAYLIST, "apq", CommandArgument.PLAYLIST_NAME_OR_ID),
-	ADDPLAYLIST(203, Module.PLAYLIST, "addpl", CommandArgument.PLAYLIST_NAME),
-	PLAYPL(204, Module.PLAYLIST, "pl", CommandArgument.PLAYLIST_NAME_OR_ID),
-	SHOWMEMPL(205, Module.PLAYLIST, "smmpl", CommandArgument.MEMBER_TAG),
-	SHOWMYPL(206, Module.PLAYLIST, "smpl"),
-	SHOWPLTRACKS(207, Module.PLAYLIST, "spltr", CommandArgument.PLAYLIST_NAME_OR_ID),
+	ADDTRACKPL(201, "jw.command.addtrackpl", Module.PLAYLIST, "apt", CommandArgument.PLAYLIST_NAME_OR_ID),
+	ADDQUEUEPL(202, "jw.command.addqueuepl", Module.PLAYLIST, "apq", CommandArgument.PLAYLIST_NAME_OR_ID),
+	ADDPLAYLIST(203, "jw.command.addplaylist", Module.PLAYLIST, "addpl", CommandArgument.PLAYLIST_NAME),
+	PLAYPL(204, "jw.command.playpl", Module.PLAYLIST, "pl", CommandArgument.PLAYLIST_NAME_OR_ID),
+	SHOWMEMPL(205, "jw.command.showmempl", Module.PLAYLIST, "smmpl", CommandArgument.MEMBER_TAG),
+	SHOWMYPL(206, "jw.command.showmypl", Module.PLAYLIST, "smpl"),
+	SHOWPLTRACKS(207, "jw.command.showplsongs", Module.PLAYLIST, "spltr", CommandArgument.PLAYLIST_NAME_OR_ID),
 
 	// vote
-	VSKIP(301, Module.VOTE, "vsk"),
-	VSKIPTO(302, Module.VOTE, "vsto", CommandArgument.POSITION_IN_QUEUE),
-	VCLEAR(303, Module.VOTE, "vcl"),
-	VSTOP(304, Module.VOTE, "vst"),
-	VSHUFFLE(305, Module.VOTE, "vshq"),
+	VSKIP(301, "jw.command.vskip", Module.VOTE, "vsk"),
+	VSKIPTO(302, "jw.command.vskipto", Module.VOTE, "vsto", CommandArgument.POSITION_IN_QUEUE),
+	VCLEAR(303, "jw.command.vclear", Module.VOTE, "vcl"),
+	VSTOP(304, "jw.command.vstop", Module.VOTE, "vst"),
+	VSHUFFLE(305, "jw.command.vshuffle", Module.VOTE, "vshq"),
 
 	// other
-	HELP(401, Module.OTHER, "h", CommandArgument.PRIVATE),
-	DEBUG(402, Module.OTHER, "db", CommandArgument.PRIVATE),
-	SETTINGS(403, Module.OTHER, "stg", CommandArgument.PRIVATE),
+	HELP(401, "jw.command.help", Module.OTHER, "h", CommandArgument.PRIVATE),
+	DEBUG(402, "jw.command.debug", Module.OTHER, "db", CommandArgument.PRIVATE),
+	SETTINGS(403, "jw.command.settings", Module.OTHER, "stg", CommandArgument.PRIVATE),
 
 	// radio
-	PLAYRADIO(501, Module.RADIO, "rd", CommandArgument.RADIO_STATION),
-	STOPRADIO(502, Module.RADIO, "rds"),
-	RADIOS(503, Module.RADIO, "rda"),
-	RADIOINFO(504, Module.RADIO, "ri"),
+	PLAYRADIO(501, "jw.command.radio", Module.RADIO, "rd", CommandArgument.RADIO_STATION),
+	STOPRADIO(502, "jw.command.radiostop", Module.RADIO, "rds"),
+	RADIOS(503, "jw.command.radios", Module.RADIO, "rda"),
+	RADIOINFO(504, "jw.command.radioinfo", Module.RADIO, "ri"),
 	;
-
-	/**
-	 * The internationalization source associated with the command. Defaults to
-	 * [I18nCommandSource.COMMAND_DESCRIPTION_NOT_FOUND] if not found.
-	 */
-	val i18nSource
-		get() = try {
-			I18nCommandSource.valueOf(name)
-		} catch (_: Exception) {
-			I18nCommandSource.COMMAND_DESCRIPTION_NOT_FOUND
-		}
-
-	/**
-	 * The text ID derived from the internationalization source. If not found, returns the command's name.
-	 */
-	val textId
-		get() = try {
-			val i18nSource = I18nCommandSource.valueOf(name)
-			i18nSource.placeholder.substringAfterLast(".")
-		} catch (_: Exception) {
-			name
-		}
 
 	/**
 	 * The exact arguments required by the command, or an empty array if none are defined.
@@ -112,5 +93,8 @@ enum class Command(
 	 * @param prefix The prefix to prepend to the command's text ID.
 	 * @return The complete command string.
 	 */
-	fun parseWithPrefix(prefix: String) = "${prefix}$textId"
+	fun parseWithPrefix(prefix: String) = "${prefix}$textKey"
+
+	override val textKey
+		get() = placeholder.substringAfterLast(".")
 }

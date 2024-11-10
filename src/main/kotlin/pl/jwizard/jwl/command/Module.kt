@@ -5,49 +5,25 @@
 package pl.jwizard.jwl.command
 
 import pl.jwizard.jwl.DatabaseIdentifier
-import pl.jwizard.jwl.i18n.source.I18nModuleSource
+import pl.jwizard.jwl.i18n.I18nLocaleSource
 
 /**
  * Enum representing the different modules in the application, each associated with a unique database ID and an
  * internationalization source for localization purposes.
  *
  * @property dbId Unique identifier for the module in the database.
- * @property i18nSource The internationalization source for the module's localization.
+ * @property placeholder A string key used for localization, which maps to the actual module name.
  * @author Miłosz Gilga
  */
 enum class Module(
 	override val dbId: Long,
-	val i18nSource: I18nModuleSource,
-) : DatabaseIdentifier {
-
-	/**
-	 * Music module, responsible for handling music-related commands and functionalities.
-	 */
-	MUSIC(0, I18nModuleSource.MUSIC),
-
-	/**
-	 * DJ module, providing commands related to DJ functionalities and features.
-	 */
-	DJ(100, I18nModuleSource.DJ),
-
-	/**
-	 * Playlist module, managing playlist-related commands and operations.
-	 */
-	PLAYLIST(200, I18nModuleSource.PLAYLIST),
-
-	/**
-	 * Vote module, facilitating voting-related commands and functionalities.
-	 */
-	VOTE(300, I18nModuleSource.VOTE),
-
-	/**
-	 * Other module for handling miscellaneous commands not categorized elsewhere.
-	 */
-	OTHER(400, I18nModuleSource.OTHER),
-
-	/**
-	 * Radio module, managing commands related to radio functionalities and features.
-	 */
-	RADIO(500, I18nModuleSource.RADIO),
+	override val placeholder: String,
+) : DatabaseIdentifier, I18nLocaleSource {
+	MUSIC(0, "jw.module.music"),
+	DJ(100, "jw.module.dj"),
+	PLAYLIST(200, "jw.module.playlist"),
+	VOTE(300, "jw.module.vote"),
+	OTHER(400, "jw.module.other"),
+	RADIO(500, "jw.module.radio"),
 	;
 }
