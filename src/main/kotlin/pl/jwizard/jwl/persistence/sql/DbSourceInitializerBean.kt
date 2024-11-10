@@ -43,10 +43,10 @@ class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
 		config.username = environmentBean.getProperty(AppBaseProperty.DB_USERNAME)
 		config.password = environmentBean.getProperty(AppBaseProperty.DB_PASSWORD)
 		config.driverClassName = environmentBean.getProperty(AppBaseProperty.DB_DRIVER_CLASS_NAME)
-		config.maximumPoolSize = 10
-		config.minimumIdle = 5
-		config.idleTimeout = 30000
-		config.connectionTimeout = 30000
+		config.maximumPoolSize = environmentBean.getProperty(AppBaseProperty.DB_POOL_MAX_SIZE)
+		config.minimumIdle = environmentBean.getProperty(AppBaseProperty.DB_POOL_MIN_IDLE)
+		config.idleTimeout = environmentBean.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_IDLE)
+		config.connectionTimeout = environmentBean.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_CONNECTION)
 		return HikariDataSource(config)
 	}
 

@@ -24,6 +24,10 @@ import kotlin.reflect.KClass
  * - [DB_USERNAME]: Database username.
  * - [DB_PASSWORD]: Database password.
  * - [DB_DRIVER_CLASS_NAME]: Database driver class name (full qualified path).
+ * - [DB_POOL_MAX_SIZE]: The maximum number of connections allowed in the database connection pool.
+ * - [DB_POOL_MIN_IDLE]: The minimum number of idle connections the pool should maintain.
+ * - [DB_POOL_TIMEOUT_IDLE]: The timeout (in milliseconds) after which idle connections will be closed.
+ * - [DB_POOL_TIMEOUT_CONNECTION]: The timeout (in milliseconds) for establishing a new database connection.
  * - [VAULT_URL]: Vault key storage URL.
  * - [VAULT_AUTHENTICATION_TYPE]: Vault key storage authentication type.
  * - [VAULT_TOKEN]: Vault key storage access token.
@@ -119,6 +123,26 @@ enum class AppBaseProperty(
 	 * Database driver class name (full qualified path).
 	 */
 	DB_DRIVER_CLASS_NAME("db.driver-class-name"),
+
+	/**
+	 * The maximum number of connections allowed in the database connection pool.
+	 */
+	DB_POOL_MAX_SIZE("db.pool.max-size", Int::class),
+
+	/**
+	 * The minimum number of idle connections the pool should maintain.
+	 */
+	DB_POOL_MIN_IDLE("db.pool.min-idle", Int::class),
+
+	/**
+	 * The timeout (in milliseconds) after which idle connections will be closed.
+	 */
+	DB_POOL_TIMEOUT_IDLE("db.pool.timeout.idle-millis", Long::class),
+
+	/**
+	 * The timeout (in milliseconds) for establishing a new database connection.
+	 */
+	DB_POOL_TIMEOUT_CONNECTION("db.pool.timeout.connection-millis", Long::class),
 
 	/**
 	 * Vault key storage url.

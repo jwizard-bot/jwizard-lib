@@ -83,7 +83,7 @@ class JdbcKtTemplateBean(private val datasource: DataSource) : JdbcTemplate(data
 	 * @return The result of the query cast to type [T], or null if no result is found.
 	 */
 	fun <T : Any> queryForNullableObject(sql: String, type: KClass<T>, vararg args: Any) = try {
-		super.queryForObject(sql, type.java, *args)
+		super.queryForObject(sql.trimIndent(), type.java, *args)
 	} catch (_: EmptyResultDataAccessException) {
 		null
 	}
@@ -132,6 +132,18 @@ class JdbcKtTemplateBean(private val datasource: DataSource) : JdbcTemplate(data
 	 */
 	fun <T : Any> queryForList(sql: String, type: KClass<T>, vararg args: Any): List<T> =
 		super.queryForList(sql.trimIndent(), type.java, *args)
+
+	/**
+	 * Executes a query and maps the result to an object of type [T].
+	 *
+	 * @param T The type to which the results should be mapped.
+	 * @param sql The SQL query to execute.
+	 * @param type The [KClass] representing the target type for the result.
+	 * @param args Optional arguments for the SQL query.
+	 * @return The object of type [T] that corresponds to the result of the query.
+	 */
+	fun <T : Any> queryForObject(sql: String, type: KClass<T>, vararg args: Any): T =
+		super.queryForObject(sql.trimIndent(), type.java, *args)
 
 	/**
 	 * Inserts multiple records into the specified table.
