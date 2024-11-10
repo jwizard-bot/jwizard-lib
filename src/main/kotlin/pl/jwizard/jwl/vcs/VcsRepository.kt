@@ -13,13 +13,17 @@ import pl.jwizard.jwl.property.AppBaseProperty
  * (name identifier) for the corresponding repository.
  *
  * @property property The application property associated with this repository.
+ * @property standalone Determinate, if repository is standalone (included in contributors) or not.
  * @author Miłosz Gilga
  */
-enum class VcsRepository(val property: AppBaseProperty) {
-	JWIZARD_CORE(AppBaseProperty.VCS_REPOSITORY_JW_CORE),
-	JWIZARD_API(AppBaseProperty.VCS_REPOSITORY_JW_API),
-	JWIZARD_LIB(AppBaseProperty.VCS_REPOSITORY_JW_LIB),
-	JWIZARD_WEB(AppBaseProperty.VCS_REPOSITORY_JW_WEB),
-	JWIZARD_TOOLS(AppBaseProperty.VCS_REPOSITORY_JW_TOOLS),
+enum class VcsRepository(
+	val property: AppBaseProperty,
+	val standalone: Boolean,
+) {
+	JWIZARD_CORE(AppBaseProperty.VCS_REPOSITORY_JW_CORE, true),
+	JWIZARD_API(AppBaseProperty.VCS_REPOSITORY_JW_API, true),
+	JWIZARD_LIB(AppBaseProperty.VCS_REPOSITORY_JW_LIB, false),
+	JWIZARD_WEB(AppBaseProperty.VCS_REPOSITORY_JW_WEB, true),
+	JWIZARD_TOOLS(AppBaseProperty.VCS_REPOSITORY_JW_TOOLS, true),
 	;
 }
