@@ -42,7 +42,7 @@ class IndependentFileBrowser(private val path: String) {
 		val directoryUri = VFS.getManager().resolveFile(resource.uri)
 		directoryUri.children.map { "${it.parent.name.baseName}/${it.name.baseName}/messages" }
 	} catch (ex: IOException) {
-		log.error("Unable to list i18n directories from: {}. Cause: {}.", path, ex.message)
+		log.error("Unable to list i18n directories from: \"{}\". Cause: {}.", path, ex.message)
 		emptyList()
 	}
 
@@ -75,7 +75,7 @@ class IndependentFileBrowser(private val path: String) {
 		}
 		elements
 	} catch (ex: IOException) {
-		log.warn("Directory: {} not exist. Skipping load directories and files.", path)
+		log.warn("Directory: \"{}\" not exist. Skipping load directories and files.", path)
 		emptyList()
 	}
 }
