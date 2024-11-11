@@ -14,10 +14,12 @@ import pl.jwizard.jwl.i18n.I18nLocaleSource
  * @property status The HTTP status code associated with the exception.
  * @property i18nLocaleSource The source for the translated error message.
  * @property args A map of arguments that can be used for dynamic message generation (optional).
+ * @property details Additional exception response details as key list value elements.
  * @author Miłosz Gilga
  */
 data class ExceptionResponse(
 	val status: HttpStatus,
 	val i18nLocaleSource: I18nLocaleSource,
 	val args: Map<String, Any?> = emptyMap(),
+	val details: Map<String, List<String>> = emptyMap(),
 )

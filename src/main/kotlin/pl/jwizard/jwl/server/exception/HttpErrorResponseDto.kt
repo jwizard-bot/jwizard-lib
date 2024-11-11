@@ -12,9 +12,11 @@ package pl.jwizard.jwl.server.exception
  *
  * @property status The HTTP status code associated with the error.
  * @property message A descriptive message explaining the error.
+ * @property details Additional exception response details as key list value elements.
  * @author Miłosz Gilga
  */
 data class HttpErrorResponseDto(
 	val status: Int,
 	val message: String,
+	val details: Map<String, List<String>> = emptyMap(),
 )

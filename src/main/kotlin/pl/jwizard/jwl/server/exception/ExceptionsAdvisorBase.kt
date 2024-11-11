@@ -22,7 +22,7 @@ import kotlin.reflect.KClass
  * @property i18nBean A bean that handles internationalization (I18n) to translate error messages.
  * @author Miłosz Gilga
  */
-abstract class ExceptionsAdvisorBase<T : Exception>(private val i18nBean: I18nBean) {
+abstract class ExceptionsAdvisorBase<T : Exception>(protected val i18nBean: I18nBean) {
 
 	/**
 	 * Executes the exception handling process by advising the exception and generating an error response with a
@@ -35,11 +35,12 @@ abstract class ExceptionsAdvisorBase<T : Exception>(private val i18nBean: I18nBe
 	 * @param ctx The context of the HTTP request, used to retrieve information like the locale.
 	 */
 	fun executeStatement(ex: T, ctx: Context) {
-		val (status, i18nLocaleSource, args) = advise(ex, ctx)
+		val (status, i18nLocaleSource, args, details) = advise(ex, ctx)
 		val locale = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
 		val response = HttpErrorResponseDto(
 			status = status.code,
 			message = i18nBean.t(i18nLocaleSource, locale, args),
+			details,
 		)
 		ctx.json(response).status(status)
 	}
