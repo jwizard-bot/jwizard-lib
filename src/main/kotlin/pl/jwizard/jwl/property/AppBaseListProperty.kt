@@ -13,6 +13,7 @@ import kotlin.reflect.KClass
  * Defining following properties:
  * - [RUNTIME_PROFILES]: Application runtime profiles. Defined all others configurations and Spring Context loaders.
  *   Accepted: *dev*, *prod*. Default: *empty array*.
+ * - [STATIC_RESOURCES_PREFIXES]: The URL prefixes for accessing the static resources.
  * - [JDA_PERMISSIONS]: Permissions required by the JDA (Java Discord API) library for accessing and interacting with
  *   Discord.
  * - [I18N_LANGUAGES]: The placeholder for the available languages in internationalization.
@@ -33,6 +34,11 @@ enum class AppBaseListProperty(
 	 * Accepted: *dev*, *prod*. Default: *empty array*.
 	 */
 	RUNTIME_PROFILES("runtime.profiles", ","),
+
+	/**
+	 * The URL prefixes for accessing the static resources.
+	 */
+	STATIC_RESOURCES_PREFIXES("static-resources.prefixes"),
 
 	/**
 	 * Permissions required by the JDA (Java Discord API) library for accessing and interacting with Discord.

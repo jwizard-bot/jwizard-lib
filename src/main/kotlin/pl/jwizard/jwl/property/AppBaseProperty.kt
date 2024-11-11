@@ -38,7 +38,6 @@ import kotlin.reflect.KClass
  * - [VAULT_KV_DEFAULT_CONTEXT]: Vault key storage KV default context. Load default secrets independently of
  *   application name.
  * - [VAULT_KV_APPLICATION_NAME]: Vault key storage KV application name. Load all secrets from this pre-path.
- * - [STATIC_RESOURCES_PREFIX]: The URL prefix for accessing the static resources.
  * - [GUILD_VOTING_PERCENTAGE_RATIO]: Ratio of voting percentage for guilds.
  * - [GUILD_MAX_VOTING_TIME_SEC]: Maximum voting time for guilds in seconds.
  * - [GUILD_DJ_ROLE_NAME]: Name of the DJ role in guilds.
@@ -190,11 +189,6 @@ enum class AppBaseProperty(
 	 * Vault key storage KV application name. Load all secrets from this pre-path.
 	 */
 	VAULT_KV_APPLICATION_NAME("vault.kv.application-name"),
-
-	/**
-	 * The URL prefix for accessing the static resources.
-	 */
-	STATIC_RESOURCES_PREFIX("static-resources.prefix"),
 
 	/**
 	 * Ratio of voting percentage for guilds.

@@ -45,9 +45,11 @@ guild:
 player:
   default:
     max-volume: 1000
-  
+
 static-resources:
-  prefix: assets
+  prefixes:
+    - assets
+    - assets-lib
 
 jda:
   permissions:

@@ -4,13 +4,11 @@
  */
 package pl.jwizard.jwl.i18n
 
-import org.apache.commons.vfs2.VFS
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.support.ResourceBundleMessageSource
-import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.ioc.IoCKtContextFactory
+import pl.jwizard.jwl.file.IndependentFileBrowser
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets
@@ -38,8 +36,8 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 	 */
 	@Bean
 	fun messageSource(): MessageSource {
-		val libI18nSource = getMessageDirectories(ClassPathResource("/i18n-lib", IoCKtContextFactory::class.java))
-		val classpathI18nSources = getMessageDirectories(ClassPathResource("i18n"))
+		val libI18nSource = IndependentFileBrowser("/i18n-lib").getI18nProjectDirectories()
+		val classpathI18nSources = IndependentFileBrowser("/i18n").getI18nProjectDirectories()
 		val sources = libI18nSource + classpathI18nSources
 		log.info("Load: {} i18n message sources: {}.", sources.size, sources)
 
@@ -47,17 +45,5 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 		source.setBasenames(*sources.toTypedArray())
 		source.setDefaultEncoding(StandardCharsets.UTF_8.toString())
 		return source
-	}
-
-	/**
-	 * Retrieves the directories that contain message bundles for internationalization. It reads the specified
-	 * [ClassPathResource] path and finds the associated message directories.
-	 *
-	 * @param resource The [ClassPathResource] that represents the base path for i18n files.
-	 * @return A list of directory paths containing message bundles for each language.
-	 */
-	private fun getMessageDirectories(resource: ClassPathResource): List<String> {
-		val directoryUri = VFS.getManager().resolveFile(resource.uri)
-		return directoryUri.children.map { "${it.parent.name.baseName}/${it.name.baseName}/messages" }
 	}
 }
