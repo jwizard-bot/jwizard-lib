@@ -3,6 +3,3 @@ vault:
   token: ${env:ENV_VAULT_TOKEN}
   authentication:
     type: TOKEN
-
-static:
-  public-url: http://localhost:8765/assets

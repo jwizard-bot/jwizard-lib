@@ -4,6 +4,3 @@ vault:
   password: ${env:JWIZARD_VAULT_PASSWORD}
   authentication:
     type: USERPASS
-
-static:
-  public-url: https://api.jwizard.pl/assets
