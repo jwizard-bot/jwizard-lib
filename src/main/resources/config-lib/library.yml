@@ -25,10 +25,6 @@ vault:
     default-context: common
     version: 1
 
-player:
-  default:
-    max-volume: 1000
-
 guild:
   default:
     voting-percentage-ratio: 50
@@ -44,6 +40,11 @@ guild:
     legacy-prefix: '?'
     slash-enabled: true
     min-repeats-of-track: 2
+    suppress-response-notifications: false
+
+player:
+  default:
+    max-volume: 1000
 
 jda:
   permissions:

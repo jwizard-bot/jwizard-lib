@@ -52,6 +52,7 @@ import kotlin.reflect.KClass
  * - [GUILD_MAX_TRACKS_TO_CHOOSE]: Maximum number of tracks to choose from in guilds.
  * - [GUILD_LEGACY_PREFIX]: Default legacy command prefix used in guild.
  * - [GUILD_SLASH_ENABLED]: Determines if the slash command system is enabled by default in guild.
+ * - [GUILD_SUPPRESS_RESPONSE_NOTIFICATIONS]: Determines if notifications from bot responses should be suppressed.
  * - [PLAYER_MAX_VOLUME]: Max discord player volume (in units).
  * - [I18N_DEFAULT_LANGUAGE]: I18n default language (as language tag, without localization property).
  *
@@ -259,6 +260,11 @@ enum class AppBaseProperty(
 	 * Determines if the slash command system is enabled by default in guild.
 	 */
 	GUILD_SLASH_ENABLED("guild.default.slash-enabled", Boolean::class),
+
+	/**
+	 * Determines if notifications from bot responses should be suppressed.
+	 */
+	GUILD_SUPPRESS_RESPONSE_NOTIFICATIONS("guild.default.suppress-response-notifications", Boolean::class),
 
 	/**
 	 * Max discord player volume (in units).
