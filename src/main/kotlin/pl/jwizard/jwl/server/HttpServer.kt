@@ -90,7 +90,7 @@ class HttpServer(
 				routes
 			)
 		}
-		for (exception in I18nGeneralServerExceptionSource.entries) {
+		for (exception in I18nGeneralServerExceptionSource.entries.filter(I18nGeneralServerExceptionSource::withHandler)) {
 			server.error(exception.statusCode) { ctx ->
 				val locale = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
 				val response = HttpErrorResponseDto(exception.statusCode, i18nBean.t(exception, locale))
