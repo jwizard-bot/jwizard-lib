@@ -75,7 +75,7 @@ class IndependentFileBrowser(private val path: String) {
 		}
 		elements
 	} catch (ex: IOException) {
-		log.error("Unable to list all files from directory: {}. Cause: {}.", path, ex.message)
+		log.warn("Directory: {} not exist. Skipping load directories and files.", path)
 		emptyList()
 	}
 }
