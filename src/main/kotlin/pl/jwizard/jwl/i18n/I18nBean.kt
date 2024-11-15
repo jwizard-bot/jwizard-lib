@@ -83,12 +83,24 @@ class I18nBean(
 	 * message in the specified language. It uses an empty map for parameters.
 	 *
 	 * @param i18nDynamicModule The [I18nDynamicModule] enum that provides the key pattern for the message.
-	 * @param args Arguments to format the key pattern.
+	 * @param params Parameters to format the key pattern.
+	 * @param args A map of parameters to replace placeholders within the message. Default is an empty map.
 	 * @param lang The language tag representing the desired locale (ex. *en*). If null, the default language is used.
 	 * @return The formatted localized message with placeholders replaced by the corresponding parameters.
 	 */
-	fun tRaw(i18nDynamicModule: I18nDynamicModule, args: Array<String?>, lang: String?) =
-		tRaw(i18nDynamicModule.key.format(*args), emptyMap(), lang)
+	fun tRaw(i18nDynamicModule: I18nDynamicModule, params: Array<String?>, args: Map<String, Any?>, lang: String?) =
+		tRaw(i18nDynamicModule.key.format(*params), args, lang)
+
+	/**
+	 * Retrieves a localized message for a dynamic module without additional placeholders.
+	 *
+	 * @param i18nDynamicModule The module providing the key pattern for the message.
+	 * @param params Parameters used to format the key pattern.
+	 * @param lang The language tag. Defaults to the configured default language.
+	 * @return The resolved localized message.
+	 */
+	fun tRaw(i18nDynamicModule: I18nDynamicModule, params: Array<String?>, lang: String?) =
+		tRaw(i18nDynamicModule.key.format(*params), emptyMap(), lang)
 
 	/**
 	 * Retrieves a raw message based on the provided i18n key, parameters, and language.
