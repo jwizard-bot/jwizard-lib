@@ -7,6 +7,7 @@ package pl.jwizard.jwl.property
 import jakarta.annotation.PostConstruct
 import org.springframework.core.env.StandardEnvironment
 import pl.jwizard.jwl.ioc.IoCKtContextFactory
+import pl.jwizard.jwl.property.extractor.CmdPropertyValueExtractor
 import pl.jwizard.jwl.property.extractor.EnvPropertyValueExtractor
 import pl.jwizard.jwl.property.extractor.VaultPropertyValueExtractor
 import pl.jwizard.jwl.property.loader.YamlPropertySourceLoader
@@ -17,10 +18,10 @@ import pl.jwizard.jwl.util.logger
  * Manages environment-specific property sources, loading configurations from YAML files, environment variables, and
  * Vault secrets.
  *
- * @property IoCKtContextFactory Factory for creating the IoC DI container context used to initialize properties.
+ * @property ioCKtContextFactory Factory for creating the IoC DI container context used to initialize properties.
  * @author Miłosz Gilga
  */
-abstract class BaseEnvironment(private val IoCKtContextFactory: IoCKtContextFactory) {
+abstract class BaseEnvironment(private val ioCKtContextFactory: IoCKtContextFactory) {
 
 	companion object {
 		private val log = logger<BaseEnvironment>()
@@ -57,6 +58,7 @@ abstract class BaseEnvironment(private val IoCKtContextFactory: IoCKtContextFact
 		propertiesEnv.createResolver()
 
 		val runtimeProfiles = getListProperty<String>(AppBaseListProperty.RUNTIME_PROFILES)
+		propertiesEnv.addSource(CmdPropertyValueExtractor())
 		propertiesEnv.addSource(YamlPropertySourceLoader(runtimeProfiles))
 		log.info("Loaded runtime profiles: {}", runtimeProfiles)
 
@@ -67,7 +69,7 @@ abstract class BaseEnvironment(private val IoCKtContextFactory: IoCKtContextFact
 			VaultPropertyValueExtractor(
 				environment = this,
 				vaultKvDefaultContext = getProperty(AppBaseProperty.VAULT_KV_DEFAULT_CONTEXT),
-				vaultKvApplicationName = getProperty(AppBaseProperty.VAULT_KV_APPLICATION_NAME),
+				vaultKvApplicationNames = getListProperty(AppBaseListProperty.VAULT_KV_APPLICATION_NAMES),
 			)
 		)
 		log.info("Load: {} properties from sources: {}.", propertiesEnv.size, propertiesEnv.propertySourceNames)

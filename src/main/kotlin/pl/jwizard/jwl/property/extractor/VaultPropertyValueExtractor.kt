@@ -12,14 +12,14 @@ import pl.jwizard.jwl.property.vault.VaultClient
  *
  * @property environment The environment configuration used to initialize the Vault client.
  * @property vaultKvDefaultContext The default context path in Vault for key-value secrets.
- * @property vaultKvApplicationName The application-specific path in Vault for key-value secrets.
+ * @property vaultKvApplicationNames The application-specific paths in Vault for key-value secrets.
  * @author Miłosz Gilga
  * @see PropertyValueExtractor
  */
 class VaultPropertyValueExtractor(
 	private val environment: BaseEnvironment,
 	private val vaultKvDefaultContext: String,
-	private val vaultKvApplicationName: String,
+	private val vaultKvApplicationNames: List<String>,
 ) : PropertyValueExtractor(VaultPropertyValueExtractor::class) {
 
 	/**
@@ -35,12 +35,15 @@ class VaultPropertyValueExtractor(
 	 * Retrieves properties from Vault and combines them into a single map.
 	 *
 	 * This method reads secrets from two paths in Vault: one specified by [vaultKvDefaultContext] and another by
-	 * [vaultKvApplicationName]. The results from both paths are merged into a single map of properties.
+	 * [vaultKvApplicationNames]. The results from both paths are merged into a single map of properties.
 	 *
 	 * @return A map of properties where keys are property names and values are property values.
 	 */
-	override fun setProperties() =
-		vaultClient.readKvSecrets(vaultKvDefaultContext) + vaultClient.readKvSecrets(vaultKvApplicationName)
+	override fun setProperties(): Map<Any, Any> {
+		val allSecrets = vaultClient.readKvSecrets(vaultKvDefaultContext)
+		vaultKvApplicationNames.forEach { allSecrets += vaultClient.readKvSecrets(it) }
+		return allSecrets
+	}
 
 	override val extractionKey = "vault"
 }

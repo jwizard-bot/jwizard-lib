@@ -46,9 +46,14 @@ $ ./gradlew publishToMavenLocal
 1. Before run containers, create `.env` file based `example.env` and fill with below schema:
 
 ```properties
-# jda api
-JWIZARD_JDA_APP_ID=<JDA application identifier>
-JWIZARD_JDA_SECRET=<JDA application secret>
+# core instances
+JWIZARD_JDA_SECRET_1_INSTANCE=<JDA application secret (first instance)>
+JWIZARD_JDA_PRIMARY_COLOR_1_INSTANCE=0xFFFFFF
+JWIZARD_JDA_SECRET_2_INSTANCE=<JDA application secret (second instance)>
+JWIZARD_JDA_PRIMARY_COLOR_2_INSTANCE=0x000000
+# sharding
+JWIZARD_MIN_SHARD_ID=<min shard ID (0 base index) (per any instance, for separate shards between multiple JVM processes)>
+JWIZARD_MAX_SHARD_ID=<max shard ID (per any instance, for separate shards between multiple JVM processes)>
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>

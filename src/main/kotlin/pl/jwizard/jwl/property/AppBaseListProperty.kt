@@ -13,6 +13,7 @@ import kotlin.reflect.KClass
  * Defining following properties:
  * - [RUNTIME_PROFILES]: Application runtime profiles. Defined all others configurations and Spring Context loaders.
  *   Accepted: *dev*, *prod*. Default: *empty array*.
+ * - [VAULT_KV_APPLICATION_NAMES]: Vault key storage KV application names. Load all secrets from this pre-path.
  * - [STATIC_RESOURCES_PREFIXES]: The URL prefixes for accessing the static resources.
  * - [JDA_PERMISSIONS]: Permissions required by the JDA (Java Discord API) library for accessing and interacting with
  *   Discord.
@@ -34,6 +35,11 @@ enum class AppBaseListProperty(
 	 * Accepted: *dev*, *prod*. Default: *empty array*.
 	 */
 	RUNTIME_PROFILES("runtime.profiles", ","),
+
+	/**
+	 * Vault key storage KV application names. Load all secrets from this pre-path.
+	 */
+	VAULT_KV_APPLICATION_NAMES("vault.kv.application-names"),
 
 	/**
 	 * The URL prefixes for accessing the static resources.
