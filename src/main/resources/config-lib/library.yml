@@ -37,7 +37,7 @@ guild:
     random-auto-choose-track: true
     time-after-auto-choose-sec: 30
     tracks-to-choose-max: 10
-    legacy-prefix: 'jw'
+    legacy-prefix: '$jw'
     slash-enabled: true
     min-repeats-of-track: 2
     suppress-response-notifications: false
