@@ -23,11 +23,6 @@ class VcsConfigBean(private val environment: BaseEnvironment) {
 		 * Length of the shortened SHA hash used for identifying a specific commit version.
 		 */
 		private const val SHORT_SHA_LENGTH = 7
-
-		/**
-		 * Default version label when no specific version information is available.
-		 */
-		private const val DEFAULT_VERSION = "unknown"
 	}
 
 	/**
@@ -41,16 +36,16 @@ class VcsConfigBean(private val environment: BaseEnvironment) {
 	 * @param repository The [VcsRepository] instance, which contains information about the repository.
 	 * @param version The commit SHA or version tag for which the snapshot URL is generated.
 	 *
-	 * @return A pair containing a shortened version of the commit SHA (or "unknown" if not available) and the snapshot
-	 *         URL in the repository, or null if version information is unavailable.
+	 * @return A pair containing a shortened version of the commit SHA (or `null` if not available) and the snapshot URL
+	 *         in the repository, or null if version information is unavailable.
 	 */
-	fun createSnapshotUrl(repository: VcsRepository, version: String?): Pair<String, String?> {
+	fun createSnapshotUrl(repository: VcsRepository, version: String?): Pair<String?, String?> {
 		if (version != null) {
 			val repositoryName = environment.getProperty<String>(repository.property)
 			val url = "https://github.com/${organizationName}/${repositoryName}/tree/${version}"
 			return Pair(version.substring(0, SHORT_SHA_LENGTH), url)
 		}
-		return Pair(DEFAULT_VERSION, null)
+		return Pair(null, null)
 	}
 
 	/**

@@ -73,6 +73,7 @@ enum class Command(
 	HELP(401, "jw.command.help", Module.OTHER, "h", CommandArgument.PRIVATE),
 	DEBUG(402, "jw.command.debug", Module.OTHER, "db", CommandArgument.PRIVATE),
 	SETTINGS(403, "jw.command.settings", Module.OTHER, "stg", CommandArgument.PRIVATE),
+	SHARDS(404, "jw.command.shards", Module.OTHER, "shr", CommandArgument.PRIVATE),
 
 	// radio
 	PLAYRADIO(501, "jw.command.radio", Module.RADIO, "rd", CommandArgument.RADIO_STATION),
