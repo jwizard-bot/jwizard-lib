@@ -13,8 +13,8 @@ services:
       KV_STORAGE_0: common
       KV_STORAGE_1: core
       KV_STORAGE_2: api
-      KV_STORAGE_3: core-instance-01 # 1 instance
-      KV_STORAGE_4: core-instance-02 # 2 instance
+      KV_STORAGE_3: core-instance-0 # 1 instance
+      KV_STORAGE_4: core-instance-1 # 2 instance
       # KV secrets
       V_MYSQL_HOST_0: localhost:${JWIZARD_MYSQL_PORT}
       V_MYSQL_DB_NAME_0: ${JWIZARD_MYSQL_DB_NAME}
