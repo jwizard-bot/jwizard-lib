@@ -53,9 +53,6 @@ JWIZARD_JDA_PRIMARY_COLOR_1_INSTANCE=0xFFFFFF
 JWIZARD_JDA_PRIMARY_COLOR_2_INSTANCE=0x000000
 JWIZARD_JDA_PREFIX_1_INSTANCE=1
 JWIZARD_JDA_PREFIX_2_INSTANCE=2
-# sharding
-JWIZARD_MIN_SHARD_ID=<min shard ID (0 base index) (per any instance, for separate shards between multiple JVM processes)>
-JWIZARD_MAX_SHARD_ID=<max shard ID (per any instance, for separate shards between multiple JVM processes)>
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
