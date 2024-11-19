@@ -25,6 +25,7 @@ enum class I18nExceptionSource(
 	UNEXPECTED_EXCEPTION(0, "jw.exception.unexpectedException"),
 	MODULE_IS_TURNED_OFF(1, "jw.exception.moduleIsTurnedOffException"),
 	EPHEMERAL_UNEXPECTED_EXCEPTION(2, "jw.exception.ephemeralUnexpectedException"),
+	INSUFFICIENT_PERMISSIONS_EXCEPTION(3, "jw.exception.insufficientPermissionsException"),
 
 	TRACK_OFFSET_OUT_OF_BOUNDS(100, "jw.exception.trackOffsetOutOfBoundsException"),
 	TRACK_THE_SAME_POSITION(101, "jw.exception.trackTheSamePositionException"),
