@@ -25,21 +25,21 @@ repositories {
 }
 
 dependencies {
-	implementation libs.kotlin
-	implementation libs.kotlinReflect
-	implementation libs.slf4jApi
-	implementation libs.springContext
+	implementation libs.commonsVfs
 	implementation libs.dotEnv
-	implementation libs.jacksonKotlin
+	implementation libs.hikariCp
 	implementation libs.jacksonDatabind
 	implementation libs.jacksonDataformatYaml
-	implementation libs.jeeAnnotationApi
-	implementation libs.commonsVfs
-	implementation libs.springJdbc
-	implementation libs.mysqlConnector
-	implementation libs.hikariCp
-	implementation libs.vault
+	implementation libs.jacksonKotlin
 	implementation libs.javalin
+	implementation libs.jeeAnnotationApi
+	implementation libs.kotlin
+	implementation libs.kotlinReflect
+	implementation libs.mysqlConnector
+	implementation libs.slf4jApi
+	implementation libs.springContext
+	implementation libs.springJdbc
+	implementation libs.vault
 
 	testImplementation libs.kotlinTest
 }

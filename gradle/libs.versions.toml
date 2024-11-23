@@ -1,35 +1,35 @@
 [versions]
-kotlinVersion = "2.0.20"
-springVersion = "6.1.14"
-mysqlConnectorVersion = "9.1.0"
-hikariCpVersion = "5.1.0"
-slf4jApiVersion = "2.0.16"
+commonsVfsVersion = "2.9.0"
 dokkaVersion = "1.9.20"
 dotenvVersion = "2.2.0"
+hikariCpVersion = "5.1.0"
 jacksonVersion = "2.18.0"
-jeeAnnotationApiVersion = "3.0.0"
-commonsVfsVersion = "2.9.0"
-vaultVersion = "5.2.0"
 javalinVersion = "6.3.0"
+jeeAnnotationApiVersion = "3.0.0"
+kotlinVersion = "2.0.20"
+mysqlConnectorVersion = "9.1.0"
+slf4jApiVersion = "2.0.16"
+springVersion = "6.1.14"
+vaultVersion = "5.2.0"
 
 [libraries]
+commonsVfs = { module = "org.apache.commons:commons-vfs2", version.ref = "commonsVfsVersion" }
+dotEnv = { module = "io.github.cdimascio:dotenv-java", version.ref = "dotenvVersion" }
+hikariCp = { module = "com.zaxxer:HikariCP", version.ref = "hikariCpVersion" }
+jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
+jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
+jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonVersion" }
+javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
+jeeAnnotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jeeAnnotationApiVersion" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
 kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinVersion" }
+mysqlConnector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnectorVersion" }
+slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContext = { module = "org.springframework:spring-context", version.ref = "springVersion" }
 springJdbc = { module = "org.springframework:spring-jdbc", version.ref = "springVersion" }
-mysqlConnector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnectorVersion" }
-hikariCp = { module = "com.zaxxer:HikariCP", version.ref = "hikariCpVersion" }
-slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
-dotEnv = { module = "io.github.cdimascio:dotenv-java", version.ref = "dotenvVersion" }
-jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonVersion" }
-jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
-jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
-jeeAnnotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jeeAnnotationApiVersion" }
-commonsVfs = { module = "org.apache.commons:commons-vfs2", version.ref = "commonsVfsVersion" }
 vault = { module = "io.github.jopenlibs:vault-java-driver", version.ref = "vaultVersion" }
-javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
 
 [plugins]
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
