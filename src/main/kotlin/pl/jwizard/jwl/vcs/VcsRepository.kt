@@ -25,5 +25,6 @@ enum class VcsRepository(
 	JWIZARD_LIB(AppBaseProperty.VCS_REPOSITORY_JW_LIB, false),
 	JWIZARD_WEB(AppBaseProperty.VCS_REPOSITORY_JW_WEB, true),
 	JWIZARD_TOOLS(AppBaseProperty.VCS_REPOSITORY_JW_TOOLS, true),
+	JWIZARD_AUDIO_CLIENT(AppBaseProperty.VCS_REPOSITORY_JW_AUDIO_CLIENT, true),
 	;
 }

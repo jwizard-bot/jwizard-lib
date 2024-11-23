@@ -6,6 +6,7 @@ vcs:
     jw-lib: jwizard-lib
     jw-web: jwizard-web
     jw-tools: jwizard-tools
+    jw-audio-client: jwizard-audio-client
 
 db:
   jdbc: jdbc:mysql://${vault:V_MYSQL_HOST}/${vault:V_MYSQL_DB_NAME}

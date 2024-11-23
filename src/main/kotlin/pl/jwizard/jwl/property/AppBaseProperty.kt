@@ -20,6 +20,7 @@ import kotlin.reflect.KClass
  * - [VCS_REPOSITORY_JW_LIB]: Name of the `jw-lib` version control system repository.
  * - [VCS_REPOSITORY_JW_WEB]: Name of the `jw-web` version control system repository.
  * - [VCS_REPOSITORY_JW_TOOLS]: Name of the `jw-tools` version control system repository.
+ * - [VCS_REPOSITORY_JW_AUDIO_CLIENT]: Name of the `jw-audio-client` version control system repository.
  * - [DB_URL]: Database JDBC URL provider.
  * - [DB_USERNAME]: Database username.
  * - [DB_PASSWORD]: Database password.
@@ -102,6 +103,11 @@ enum class AppBaseProperty(
 	 * Name of the `jw-tools` version control system repository.
 	 */
 	VCS_REPOSITORY_JW_TOOLS("vcs.repository.jw-tools"),
+
+	/**
+	 * Name of the `jw-audio-client` version control system repository.
+	 */
+	VCS_REPOSITORY_JW_AUDIO_CLIENT("vcs.repository.jw-audio-client"),
 
 	/**
 	 * Database JDBC url provider.
