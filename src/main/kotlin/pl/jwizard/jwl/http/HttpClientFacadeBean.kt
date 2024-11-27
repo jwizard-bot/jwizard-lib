@@ -38,7 +38,7 @@ class HttpClientFacadeBean(private val objectMapper: ObjectMapper) {
 	 * a [RuntimeException].
 	 *
 	 * @param url The URL to send the GET request to. It should point to a JSON resource.
-	 * @param headers TODO
+	 * @param headers Additional HTTP headers. Not required. By default, empty map.
 	 * @return A [JsonNode] representing the JSON data returned by the response.
 	 * @throws RuntimeException If the HTTP status code is not 200 or if an error occurs during the request.
 	 */
