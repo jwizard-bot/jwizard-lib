@@ -5,10 +5,10 @@
 package pl.jwizard.jwl.i18n
 
 import org.springframework.context.MessageSource
-import org.springframework.context.annotation.Bean
 import org.springframework.context.support.ResourceBundleMessageSource
-import org.springframework.stereotype.Component
 import pl.jwizard.jwl.file.IndependentFileBrowser
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
+import pl.jwizard.jwl.ioc.stereotype.SingletonObject
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.nio.charset.StandardCharsets
@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
  *           message source.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 
 	companion object {
@@ -34,7 +34,7 @@ class I18nInitializerBean(private val environmentBean: BaseEnvironment) {
 	 *
 	 * @return The configured [MessageSource] bean.
 	 */
-	@Bean
+	@SingletonObject
 	fun messageSource(): MessageSource {
 		val libI18nSource = IndependentFileBrowser("/i18n-lib").getI18nProjectDirectories()
 		val classpathI18nSources = IndependentFileBrowser("/i18n").getI18nProjectDirectories()

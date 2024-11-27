@@ -6,7 +6,7 @@ package pl.jwizard.jwl.i18n
 
 import org.springframework.context.MessageSource
 import org.springframework.context.NoSuchMessageException
-import org.springframework.stereotype.Component
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -21,7 +21,7 @@ import java.util.*
  * @property i18nInitializerBean The [I18nInitializerBean] component storing global configuration for i18n.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class I18nBean(
 	private val messageSource: MessageSource,
 	private val environmentBean: BaseEnvironment,

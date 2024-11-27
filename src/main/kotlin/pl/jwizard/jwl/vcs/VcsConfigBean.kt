@@ -4,7 +4,7 @@
  */
 package pl.jwizard.jwl.vcs
 
-import org.springframework.stereotype.Component
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 
@@ -15,7 +15,7 @@ import pl.jwizard.jwl.property.BaseEnvironment
  * @property environment An instance of BaseEnvironment, used to retrieve application properties.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class VcsConfigBean(private val environment: BaseEnvironment) {
 
 	companion object {
