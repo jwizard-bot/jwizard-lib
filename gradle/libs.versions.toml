@@ -5,6 +5,7 @@ dotenvVersion = "2.2.0"
 hikariCpVersion = "5.1.0"
 jacksonVersion = "2.18.0"
 javalinVersion = "6.3.0"
+jdbiVersion = "3.47.0"
 jeeAnnotationApiVersion = "3.0.0"
 kotlinVersion = "2.0.20"
 mysqlConnectorVersion = "9.1.0"
@@ -20,13 +21,14 @@ jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", vers
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
 jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
+jdbi = { module = "org.jdbi:jdbi3-core", version.ref = "jdbiVersion" }
+jdbiKotlin = { module = "org.jdbi:jdbi3-kotlin", version.ref = "jdbiVersion" }
 jeeAnnotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jeeAnnotationApiVersion" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
 mysqlConnector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnectorVersion" }
 slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContext = { module = "org.springframework:spring-context", version.ref = "springVersion" }
-springJdbc = { module = "org.springframework:spring-jdbc", version.ref = "springVersion" }
 vault = { module = "io.github.jopenlibs:vault-java-driver", version.ref = "vaultVersion" }
 
 [plugins]

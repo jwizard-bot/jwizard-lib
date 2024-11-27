@@ -31,10 +31,11 @@ dependencies {
 	api libs.jacksonDataformatYaml
 	api libs.jacksonKotlin
 	api libs.javalin
+	api libs.jdbi
+	api libs.jdbiKotlin
 	api libs.jeeAnnotationApi
 	api libs.mysqlConnector
 	api libs.springContext
-	api libs.springJdbc
 
 	implementation libs.commonsVfs
 	implementation libs.kotlin

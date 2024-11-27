@@ -6,26 +6,28 @@ package pl.jwizard.jwl.persistence.sql
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import org.springframework.context.annotation.Bean
-import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.datasource.DataSourceTransactionManager
-import org.springframework.stereotype.Component
-import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.transaction.support.TransactionTemplate
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.argument.Argument
+import org.jdbi.v3.core.argument.ArgumentFactory
+import org.jdbi.v3.core.kotlin.KotlinPlugin
+import org.jdbi.v3.core.mapper.ColumnMappers
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
+import pl.jwizard.jwl.ioc.stereotype.SingletonObject
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
+import java.math.BigInteger
+import java.util.*
 
 /**
  * Configuration class for initializing the database connection pool and JDBC template.
  *
  * This class provides configuration for the [HikariDataSource], which is used to manage the connection pool for
- * connecting to the database. It also provides a [JdbcTemplate] bean that is used to perform database operations.
+ * connecting to the database. It also provides a [Jdbi] bean that is used to perform database operations.
  *
- * @property environmentBean The [BaseEnvironment] instance used to retrieve database connection properties from
- *           the environment.
+ * @property environmentBean The [BaseEnvironment] instance used to retrieve database connection properties.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
 
 	/**
@@ -36,7 +38,7 @@ class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
 	 *
 	 * @return The configured [HikariDataSource] instance.
 	 */
-	@Bean
+	@SingletonObject
 	fun dataSourceBean(): HikariDataSource {
 		val config = HikariConfig()
 		config.jdbcUrl = environmentBean.getProperty(AppBaseProperty.DB_URL)
@@ -51,33 +53,32 @@ class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
 	}
 
 	/**
-	 * Configures and creates a [JdbcKtTemplateBean] bean.
+	 * Configures and creates a [Jdbi] bean.
 	 *
-	 * This method creates a [JdbcKtTemplateBean] instance using the configured [HikariDataSource].
-	 * The [JdbcKtTemplateBean] is used for executing SQL queries and updates, and provides a simplified way to
-	 * interact with the database.
+	 * This method creates a [Jdbi] instance using the configured [HikariDataSource]. The [Jdbi] is used for executing
+	 * SQL queries and updates, and provides a simplified way to interact with the database.
 	 *
 	 * @param dataSourceBean Configured [HikariDataSource] instance.
-	 * @return The configured [JdbcKtTemplateBean] instance.
+	 * @return The configured [Jdbi] instance.
 	 */
-	@Bean
-	fun jdbcTemplateBean(dataSourceBean: HikariDataSource) = JdbcKtTemplateBean(dataSourceBean)
+	@SingletonObject
+	fun jdbi(dataSourceBean: HikariDataSource): Jdbi {
+		val jdbi = Jdbi.create(dataSourceBean)
 
-	/**
-	 * Configures and creates a [DataSourceTransactionManager] bean.
-	 *
-	 * @param dataSourceBean The configured [HikariDataSource] instance used for transaction management.
-	 * @return The configured [DataSourceTransactionManager] instance.
-	 */
-	@Bean
-	fun transactionManager(dataSourceBean: HikariDataSource) = DataSourceTransactionManager(dataSourceBean)
+		jdbi.getConfig(ColumnMappers::class.java).coalesceNullPrimitivesToDefaults = false
+		jdbi.installPlugin(KotlinPlugin())
 
-	/**
-	 * Configures and creates a [TransactionTemplate] bean.
-	 *
-	 * @param transactionManager The [PlatformTransactionManager] instance used to manage transactions.
-	 * @return The configured [TransactionTemplate] instance.
-	 */
-	@Bean
-	fun transactionTemplate(transactionManager: PlatformTransactionManager) = TransactionTemplate(transactionManager)
+		jdbi.registerArgument(ArgumentFactory { type, value, _ ->
+			if (type == BigInteger::class.java) {
+				Optional.of(Argument { position, statement, _ -> statement.setString(position, value.toString()) })
+			} else {
+				Optional.empty()
+			}
+		})
+		jdbi.registerColumnMapper(BigInteger::class.java) { rs, columnNumber, _ ->
+			val value = rs.getString(columnNumber)
+			value?.let { BigInteger(it) }
+		}
+		return jdbi
+	}
 }
