@@ -7,7 +7,6 @@ package pl.jwizard.jwl.persistence.sql
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.HandleCallback
 import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.core.result.UnableToProduceResultException
 import org.jdbi.v3.core.statement.Query
 import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import kotlin.reflect.KClass
@@ -74,7 +73,7 @@ class JdbiQueryBean(private val jdbi: Jdbi) {
 			args.forEachIndexed { index, arg -> statement.bind(index, arg) }
 			statement.mapTo(type.java).one()
 		}
-	} catch (ex: UnableToProduceResultException) {
+	} catch (ex: Exception) {
 		null
 	}
 
