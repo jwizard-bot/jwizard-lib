@@ -101,6 +101,24 @@ $ docker compose up -D <container name>
 
 where `<container name>` is the name of the container (available container you will find above in the table).
 
+3. Apply database migrations:
+
+* Clone `jwizard-tools` repository via:
+
+```bash
+$ git clone https://github.com/jwizard-bot/jwizard-tools
+```
+
+* Set-up Python environment (see `README.md` file in `jwizard-tools` repository),
+* Run migrations for `self` and `infra` via:
+
+```bash
+$ (venv) python src/db_migrator.py --pipeline infra
+$ (venv) python src/db_migrator.py --pipeline self
+```
+
+> NOTE: More information about JWizard Python migrator you could find in `jwizard-tools` repository.
+
 ## Documentation
 
 For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
