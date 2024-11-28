@@ -7,6 +7,7 @@ package pl.jwizard.jwl.property.vault
 import io.github.jopenlibs.vault.Vault
 import io.github.jopenlibs.vault.VaultConfig
 import io.github.jopenlibs.vault.VaultException
+import io.github.jopenlibs.vault.json.JsonObject
 import pl.jwizard.jwl.IrreparableException
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -89,5 +90,18 @@ class VaultClient(private val environment: BaseEnvironment) {
 		log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
 
 		return properties
+	}
+
+	/**
+	 * Reads secrets from a Vault KV (Key-Value) store and returns them as a JSON object.
+	 *
+	 * @param kvStore The path of the KV store within the Vault backend to fetch secrets from.
+	 * @return A [JsonObject] containing the secrets retrieved from the specified KV store.
+	 * @throws VaultException If the Vault client fails to read the specified path or if the data is invalid.
+	 */
+	fun readKvSecretsAsJson(kvStore: String): JsonObject {
+		val kvBackend = environment.getProperty<String>(AppBaseProperty.VAULT_KV_BACKEND)
+		val qualifiedKvStorePath = "$kvBackend/$kvStore"
+		return client.logical().read(qualifiedKvStorePath).dataObject
 	}
 }
