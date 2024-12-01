@@ -70,7 +70,7 @@ jda:
     - VOICE_DEAF_OTHERS
 
 i18n:
-  default-language: pl
+  default-language: en-US
   languages:
-    - en
+    - en-US
     - pl
