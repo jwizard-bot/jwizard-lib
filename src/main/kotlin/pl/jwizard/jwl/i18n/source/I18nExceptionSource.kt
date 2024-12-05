@@ -39,6 +39,7 @@ enum class I18nExceptionSource(
 	ISSUE_WHILE_PLAYING_TRACK(110, "jw.exception.unexpectedErrorOnPlayTrack"),
 	ISSUE_WHILE_LOADING_TRACK(111, "jw.exception.unexpectedErrorOnLoadTrack"),
 	NOT_FOUND_TRACK(112, "jw.exception.notFoundAudioTrack"),
+	ANY_NODE_IN_POOL_IS_NOT_AVAILABLE(113, "jw.exception.anyNodeInPoolIsNotAvailable"),
 
 	USER_ID_ALREADY_WITH_BOT(200, "jw.exception.userIsAlreadyWithBotException"),
 	USER_NOT_FOUND_IN_GUILD(201, "jw.exception.userNotFoundInGuildException"),
