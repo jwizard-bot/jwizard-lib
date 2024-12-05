@@ -88,12 +88,24 @@ enum class Command(
 		get() = argumentsDefinition?.arguments ?: emptyArray()
 
 	/**
+	 * Convert command key to URL acceptable format (change "." to "-").
+	 */
+	val toUrl
+		get() = textKey.replace(".", "-")
+
+	/**
 	 * Parses the command with the given prefix.
 	 *
-	 * @param prefix The prefix to prepend to the command's text ID.
+	 * @param context A [CommandFormatContext] instance used to process command in readable form.
 	 * @return The complete command string.
 	 */
-	fun parseWithPrefix(prefix: String) = "${prefix}$textKey"
+	fun parseWithPrefix(context: CommandFormatContext): String {
+		var key = textKey
+		if (context.isSlashEvent) {
+			key = textKey.replace(".", " ")
+		}
+		return "${context.prefix}$key"
+	}
 
 	override val textKey
 		get() = placeholder.replace("jw.command.", "")
