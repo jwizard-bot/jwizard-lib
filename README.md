@@ -89,9 +89,8 @@ This command will create and run following containers:
 | jwizard-lava-node-1 | 8766    | Lavalink #1 node.            |
 | jwizard-lava-node-2 | 8767    | Lavalink #2 node.            |
 
-> NOTE: Alternatively, you can run single Lavalink node, but in `application.dev.yml` file in **JWizard Core** project
-> you must remove second Lavalink node declaration. Running 2 nodes are useful for checking load-balancer in
-> performance tests.
+> NOTE: Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must remove second
+> Lavalink node declaration. Running 2 nodes are useful for checking load-balancer in performance tests.
 
 AD: Alternatively you can run containers separately via:
 
@@ -109,7 +108,8 @@ where `<container name>` is the name of the container (available container you w
 $ git clone https://github.com/jwizard-bot/jwizard-tools
 ```
 
-* Set-up Python environment (see `README.md` file in `jwizard-tools` repository),
+* Set-up Python environment (see `README.md` file in [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools)
+  repository),
 * Run migrations for `self` and `infra` via:
 
 ```bash
@@ -117,7 +117,8 @@ $ (venv) python src/db_migrator.py --pipeline infra
 $ (venv) python src/db_migrator.py --pipeline self
 ```
 
-> NOTE: More information about JWizard Python migrator you could find in `jwizard-tools` repository.
+> NOTE: More information about JWizard Python migrator you could find in
+> [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools) repository.
 
 ## Documentation
 
