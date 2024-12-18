@@ -4,6 +4,7 @@
  */
 package pl.jwizard.jwl.vcs
 
+import pl.jwizard.jwl.i18n.source.I18nProjectSource
 import pl.jwizard.jwl.property.AppBaseProperty
 
 /**
@@ -12,19 +13,21 @@ import pl.jwizard.jwl.property.AppBaseProperty
  * Each repository is associated with a specific `AppBaseProperty`, which defines configuration properties
  * (name identifier) for the corresponding repository.
  *
+ * @property position Position number in UI (for sorted unordered collections, as [Map]).
  * @property property The application property associated with this repository.
- * @property standalone Determinate, if repository is standalone (included in contributors) or not.
+ * @property i18nSource The source for the translated repository name.
  * @author Miłosz Gilga
  */
 enum class VcsRepository(
+	val position: Int,
 	val property: AppBaseProperty,
-	val standalone: Boolean,
+	val i18nSource: I18nProjectSource,
 ) {
-	JWIZARD_CORE(AppBaseProperty.VCS_REPOSITORY_JW_CORE, true),
-	JWIZARD_API(AppBaseProperty.VCS_REPOSITORY_JW_API, true),
-	JWIZARD_LIB(AppBaseProperty.VCS_REPOSITORY_JW_LIB, false),
-	JWIZARD_AUDIO_CLIENT(AppBaseProperty.VCS_REPOSITORY_JW_AUDIO_CLIENT, true),
-	JWIZARD_WEB(AppBaseProperty.VCS_REPOSITORY_JW_WEB, true),
-	JWIZARD_TOOLS(AppBaseProperty.VCS_REPOSITORY_JW_TOOLS, true),
+	JWIZARD_CORE(1, AppBaseProperty.VCS_REPOSITORY_JW_CORE, I18nProjectSource.CORE),
+	JWIZARD_API(2, AppBaseProperty.VCS_REPOSITORY_JW_API, I18nProjectSource.API),
+	JWIZARD_LIB(3, AppBaseProperty.VCS_REPOSITORY_JW_LIB, I18nProjectSource.LIB),
+	JWIZARD_AUDIO_CLIENT(4, AppBaseProperty.VCS_REPOSITORY_JW_AUDIO_CLIENT, I18nProjectSource.AUDIO_CLIENT),
+	JWIZARD_WEB(5, AppBaseProperty.VCS_REPOSITORY_JW_WEB, I18nProjectSource.WEB_UI),
+	JWIZARD_TOOLS(6, AppBaseProperty.VCS_REPOSITORY_JW_TOOLS, I18nProjectSource.TOOLS),
 	;
 }
