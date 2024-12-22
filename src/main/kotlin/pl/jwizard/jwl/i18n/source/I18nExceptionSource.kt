@@ -37,9 +37,10 @@ enum class I18nExceptionSource(
 	TEMPORARY_HALTED_BOT(108, "jw.exception.temporaryHaltedBotException"),
 	TRACK_REPEATS_OUT_OF_BOUNDS(109, "jw.exception.trackRepeatsOutOfBoundsException"),
 	ISSUE_WHILE_PLAYING_TRACK(110, "jw.exception.unexpectedErrorOnPlayTrack"),
-	ISSUE_WHILE_LOADING_TRACK(111, "jw.exception.unexpectedErrorOnLoadTrack"),
-	NOT_FOUND_TRACK(112, "jw.exception.notFoundAudioTrack"),
-	ANY_NODE_IN_POOL_IS_NOT_AVAILABLE(113, "jw.exception.anyNodeInPoolIsNotAvailable"),
+	TRACK_IS_BLOCKED_IN_COUNTRY(111, "jw.exception.trackIsBlockedInCountry"),
+	ISSUE_WHILE_LOADING_TRACK(112, "jw.exception.unexpectedErrorOnLoadTrack"),
+	NOT_FOUND_TRACK(113, "jw.exception.notFoundAudioTrack"),
+	ANY_NODE_IN_POOL_IS_NOT_AVAILABLE(114, "jw.exception.anyNodeInPoolIsNotAvailable"),
 
 	USER_ID_ALREADY_WITH_BOT(200, "jw.exception.userIsAlreadyWithBotException"),
 	USER_NOT_FOUND_IN_GUILD(201, "jw.exception.userNotFoundInGuildException"),
