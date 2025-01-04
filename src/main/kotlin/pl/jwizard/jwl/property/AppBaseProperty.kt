@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.property
@@ -14,6 +14,7 @@ import kotlin.reflect.KClass
  * Defining following properties:
  * - [ENV_ENABLED]: Determines if the application should load environment variables from a .env file at startup.
  * - [SERVER_PORT]: Server port used for standalone Jetty server.
+ * - [VCS_ALL]: Property defining all version control system (VCS) repositories.
  * - [VCS_ORGANIZATION_NAME]: Version Control System organization name. Used for create links refer to online repository.
  * - [VCS_REPOSITORY_JW_CORE]: Name of the `jw-core` version control system repository.
  * - [VCS_REPOSITORY_JW_API]: Name of the `jw-api` version control system repository.
@@ -73,6 +74,11 @@ enum class AppBaseProperty(
 	 * Server port used for standalone Jetty server.
 	 */
 	SERVER_PORT("server.port", Int::class),
+
+	/**
+	 * Property defining all version control system (VCS) repositories.
+	 */
+	VCS_ALL("vcs.all"),
 
 	/**
 	 * Version Control System organization name. Used for create links refer to online repository.

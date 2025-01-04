@@ -1,4 +1,5 @@
 vcs:
+  all: all
   organization-name: jwizard-bot
   repository:
     jw-core: jwizard-core
