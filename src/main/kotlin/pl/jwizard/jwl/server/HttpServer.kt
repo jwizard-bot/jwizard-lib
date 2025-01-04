@@ -1,11 +1,13 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.server
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.javalin.Javalin
 import io.javalin.config.JavalinConfig
+import io.javalin.json.JavalinJackson
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
 import pl.jwizard.jwl.ioc.CleanupAfterIoCDestroy
@@ -29,6 +31,7 @@ import pl.jwizard.jwl.util.logger
  * @property environment The application environment containing server properties.
  * @property ioCKtContextFactory The context factory for dependency injection and managing application beans.
  * @property i18nBean Bean for handling internationalization and localization of messages.
+ * @property objectMapper A Jackson ObjectMapper for JSON serialization and deserialization.
  * @author Miłosz Gilga
  */
 @SingletonComponent
@@ -36,6 +39,7 @@ class HttpServer(
 	private val environment: BaseEnvironment,
 	private val ioCKtContextFactory: IoCKtContextFactory,
 	private val i18nBean: I18nBean,
+	private val objectMapper: ObjectMapper,
 ) : CleanupAfterIoCDestroy {
 
 	companion object {
@@ -63,6 +67,7 @@ class HttpServer(
 		server = Javalin
 			.create { config ->
 				config.showJavalinBanner = false
+				config.jsonMapper(JavalinJackson(objectMapper))
 				withCustomConfig.forEach { it(config) }
 			}
 			.events { event ->

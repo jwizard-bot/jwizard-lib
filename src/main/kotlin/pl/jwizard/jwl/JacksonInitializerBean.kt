@@ -1,11 +1,13 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.util.StdDateFormat
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.ioc.stereotype.SingletonObject
 
@@ -27,7 +29,11 @@ class JacksonInitializerBean {
 	@SingletonObject
 	fun objectMapper(): ObjectMapper {
 		val objectMapper = ObjectMapper()
-		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+		// mappers
+		objectMapper.registerModule(JavaTimeModule())
+		// formatters
+		objectMapper.dateFormat = StdDateFormat()
 		return objectMapper
 	}
 }

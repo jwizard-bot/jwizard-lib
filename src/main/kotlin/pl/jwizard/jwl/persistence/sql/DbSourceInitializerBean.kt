@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.persistence.sql
@@ -16,6 +16,7 @@ import pl.jwizard.jwl.ioc.stereotype.SingletonObject
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import java.math.BigInteger
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -78,6 +79,10 @@ class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
 		jdbi.registerColumnMapper(BigInteger::class.java) { rs, columnNumber, _ ->
 			val value = rs.getString(columnNumber)
 			value?.let { BigInteger(it) }
+		}
+		jdbi.registerColumnMapper(LocalDateTime::class.java) { rs, columnNumber, _ ->
+			val value = rs.getTimestamp(columnNumber)
+			value?.toLocalDateTime()
 		}
 		return jdbi
 	}

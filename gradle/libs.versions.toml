@@ -3,8 +3,8 @@ commonsVfsVersion = "2.9.0"
 dokkaVersion = "1.9.20"
 dotenvVersion = "2.2.0"
 hikariCpVersion = "5.1.0"
-jacksonVersion = "2.18.0"
-javalinVersion = "6.3.0"
+jacksonVersion = "2.18.2"
+javalinVersion = "6.4.0"
 jdbiVersion = "3.47.0"
 jeeAnnotationApiVersion = "3.0.0"
 kotlinVersion = "2.0.20"
@@ -19,6 +19,7 @@ dotEnv = { module = "io.github.cdimascio:dotenv-java", version.ref = "dotenvVers
 hikariCp = { module = "com.zaxxer:HikariCP", version.ref = "hikariCpVersion" }
 jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
+jacksonJsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jacksonVersion" }
 jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
 jdbi = { module = "org.jdbi:jdbi3-core", version.ref = "jdbiVersion" }

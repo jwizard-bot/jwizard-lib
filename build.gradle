@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 import org.codehaus.groovy.runtime.GStringImpl
@@ -30,6 +30,7 @@ dependencies {
 	api libs.jacksonDatabind
 	api libs.jacksonDataformatYaml
 	api libs.jacksonKotlin
+	api libs.jacksonJsr310
 	api libs.javalin
 	api libs.jdbi
 	api libs.jdbiKotlin
