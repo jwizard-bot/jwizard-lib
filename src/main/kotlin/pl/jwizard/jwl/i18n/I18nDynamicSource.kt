@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.i18n
@@ -15,4 +15,4 @@ import pl.jwizard.jwl.property.Property
  * @author Miłosz Gilga
  * @see Property
  */
-interface I18nDynamicModule : Property
+interface I18nDynamicSource : Property

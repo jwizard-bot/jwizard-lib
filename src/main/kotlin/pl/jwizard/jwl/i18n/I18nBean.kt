@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.i18n
@@ -77,30 +77,30 @@ class I18nBean(
 	}
 
 	/**
-	 * Retrieves a raw message based on the provided [I18nDynamicModule], arguments, and language.
+	 * Retrieves a raw message based on the provided [I18nDynamicSource], arguments, and language.
 	 *
-	 * This method formats the key from the provided [I18nDynamicModule] using the provided [args], and then looks up the
+	 * This method formats the key from the provided [I18nDynamicSource] using the provided [args], and then looks up the
 	 * message in the specified language. It uses an empty map for parameters.
 	 *
-	 * @param i18nDynamicModule The [I18nDynamicModule] enum that provides the key pattern for the message.
+	 * @param i18NDynamicSource The [I18nDynamicSource] enum that provides the key pattern for the message.
 	 * @param params Parameters to format the key pattern.
 	 * @param args A map of parameters to replace placeholders within the message. Default is an empty map.
 	 * @param lang The language tag representing the desired locale (ex. *en*). If null, the default language is used.
 	 * @return The formatted localized message with placeholders replaced by the corresponding parameters.
 	 */
-	fun tRaw(i18nDynamicModule: I18nDynamicModule, params: Array<String?>, args: Map<String, Any?>, lang: String?) =
-		tRaw(i18nDynamicModule.key.format(*params), args, lang)
+	fun tRaw(i18NDynamicSource: I18nDynamicSource, params: Array<String?>, args: Map<String, Any?>, lang: String?) =
+		tRaw(i18NDynamicSource.key.format(*params), args, lang)
 
 	/**
 	 * Retrieves a localized message for a dynamic module without additional placeholders.
 	 *
-	 * @param i18nDynamicModule The module providing the key pattern for the message.
+	 * @param i18NDynamicSource The module providing the key pattern for the message.
 	 * @param params Parameters used to format the key pattern.
 	 * @param lang The language tag. Defaults to the configured default language.
 	 * @return The resolved localized message.
 	 */
-	fun tRaw(i18nDynamicModule: I18nDynamicModule, params: Array<String?>, lang: String?) =
-		tRaw(i18nDynamicModule.key.format(*params), emptyMap(), lang)
+	fun tRaw(i18NDynamicSource: I18nDynamicSource, params: Array<String?>, lang: String?) =
+		tRaw(i18NDynamicSource.key.format(*params), emptyMap(), lang)
 
 	/**
 	 * Retrieves a raw message based on the provided i18n key, parameters, and language.
