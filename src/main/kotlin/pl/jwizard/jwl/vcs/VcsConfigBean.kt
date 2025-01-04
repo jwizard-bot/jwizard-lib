@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.vcs
@@ -31,22 +31,61 @@ class VcsConfigBean(private val environment: BaseEnvironment) {
 	private val organizationName = environment.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
 
 	/**
-	 * Generates a URL for a specific snapshot in the repository based on the repository identifier and commit version.
+	 * Generates a URL for a specific snapshot in the repository.
+	 *
+	 * @param repository The repository for which the URL is being generated.
+	 * @param version The version or commit hash to generate the snapshot URL for.
+	 * @return A pair containing the shortened commit hash and the full snapshot URL.
+	 */
+	fun createSnapshotUrl(repository: VcsRepository, version: String?) =
+		createSnapshotUrl(environment.getProperty<String>(repository.property), version)
+
+	/**
+	 * Generates a URL for a specific snapshot in the repository. Returns a pair of `null` values if the version is not
+	 * provided.
+	 *
+	 * @param repository The name of the repository.
+	 * @param version The version or commit hash to generate the snapshot URL for.
+	 * @return A pair containing the shortened commit hash (if applicable) and the full snapshot URL.
+	 */
+	fun createSnapshotUrl(repository: String, version: String?): Pair<String?, String?> =
+		version?.let { createSafeSnapshotUrl(repository, it) } ?: Pair(null, null)
+
+	/**
+	 * Safely generates a URL for a specific snapshot in the repository, ensuring the version is valid.
+	 *
+	 * @param repository The name of the repository.
+	 * @param version The version or commit hash to generate the snapshot URL for.
+	 * @return A pair containing the shortened commit hash and the full snapshot URL.
+	 */
+	fun createSafeSnapshotUrl(repository: String, version: String): Pair<String, String> {
+		val url = "${createRepositoryUrl(repository)}/tree/${version}"
+		return Pair(createShortSha(version), url)
+	}
+
+	/**
+	 * Creates a shortened SHA hash for the given version.
+	 *
+	 * @param version The full SHA hash to be shortened.
+	 * @return A shortened SHA hash consisting of the first [SHORT_SHA_LENGTH] characters.
+	 */
+	fun createShortSha(version: String) = version.substring(0, SHORT_SHA_LENGTH)
+
+	/**
+	 * Generates a URL for the repository based on its name.
+	 *
+	 * @param name The name of the repository.
+	 * @return A URL pointing to the repository in the VCS system.
+	 */
+	fun createRepositoryUrl(name: String) = "https://github.com/${organizationName}/$name"
+
+	/**
+	 * Generates a URL for the repository using the [VcsRepository] instance.
 	 *
 	 * @param repository The [VcsRepository] instance, which contains information about the repository.
-	 * @param version The commit SHA or version tag for which the snapshot URL is generated.
-	 *
-	 * @return A pair containing a shortened version of the commit SHA (or `null` if not available) and the snapshot URL
-	 *         in the repository, or null if version information is unavailable.
+	 * @return A URL pointing to the repository in the VCS system.
 	 */
-	fun createSnapshotUrl(repository: VcsRepository, version: String?): Pair<String?, String?> {
-		if (version != null) {
-			val repositoryName = environment.getProperty<String>(repository.property)
-			val url = "https://github.com/${organizationName}/${repositoryName}/tree/${version}"
-			return Pair(version.substring(0, SHORT_SHA_LENGTH), url)
-		}
-		return Pair(null, null)
-	}
+	fun createRepositoryUrl(repository: VcsRepository) = createRepositoryUrl(getRepositoryName(repository))
 
 	/**
 	 * Retrieves the name of the specified repository from application properties.
