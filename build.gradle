@@ -59,7 +59,7 @@ tasks.register('dokkaJavadocJar', Jar.class) {
 	archiveClassifier.set('javadoc')
 }
 
-def docModuleName = "JWizard API"
+def docModuleName = "JWizard Lib"
 def docRootDir = "$projectDir/docs"
 
 dokkaHtml {
