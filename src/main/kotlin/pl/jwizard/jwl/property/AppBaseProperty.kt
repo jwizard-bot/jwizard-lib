@@ -55,6 +55,7 @@ import kotlin.reflect.KClass
  * - [GUILD_SUPPRESS_RESPONSE_NOTIFICATIONS]: Determines if notifications from bot responses should be suppressed.
  * - [PLAYER_MAX_VOLUME]: Max discord player volume (in units).
  * - [I18N_DEFAULT_LANGUAGE]: I18n default language (as language tag, without localization property).
+ * - [SERVICE_DOCS_URL]: The base URL for service documentation links.
  *
  * @property key The key used to retrieve the property value from various property sources.
  * @property type The type of the property value. Defaults to [String] if not specified.
@@ -275,5 +276,10 @@ enum class AppBaseProperty(
 	 * I18n default language (as language tag, without localization property).
 	 */
 	I18N_DEFAULT_LANGUAGE("i18n.default-language"),
+
+	/**
+	 * The base URL for service documentation links.
+	 */
+	SERVICE_DOCS_URL("service.docs-url"),
 	;
 }
