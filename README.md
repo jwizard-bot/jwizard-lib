@@ -124,7 +124,10 @@ $ (venv) python src/db_migrator.py --pipeline self
 
 For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
 <br>
-Documentation for latest version (with SHA) you will find [here](https://docs.jwizard.pl/jwl) - in KDoc format.
+Documentation for latest version (with SHA) you will find:
+
+* [here](https://docs.jwizard.pl/jwl/kdoc) - in **KDoc** format,
+* [here](https://docs.jwizard.pl/jwl/javadoc) - in **Javadoc** format.
 
 ## Contributing
 
