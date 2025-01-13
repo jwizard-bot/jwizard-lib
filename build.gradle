@@ -39,12 +39,12 @@ dependencies {
 	api libs.jeeAnnotationApi
 	api libs.mysqlConnector
 	api libs.springContext
+	api libs.vault
 
 	implementation libs.commonsVfs
 	implementation libs.kotlin
 	implementation libs.kotlinReflect
 	implementation libs.slf4jApi
-	implementation libs.vault
 }
 
 tasks.register('sourcesJar', Jar) {
