@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.property.vault
@@ -68,6 +68,33 @@ class VaultClient(private val environment: BaseEnvironment) {
 			log.info("Init vault client: {} with authentication type: {}.", configBuilder.address, authenticationType)
 		} catch (ex: VaultException) {
 			throw IrreparableException(this::class, "Unable to configure Vault. Cause: %s.", ex.message)
+		}
+	}
+
+	/**
+	 * Retrieves a list of keys from a Vault KV (Key-Value) backend path.
+	 *
+	 * @param kvPath The specific path within the KV backend to list keys. Defaults to an empty string for the root path.
+	 * @param patternFilter A regex filter to apply to the keys. If null, all keys are returned.
+	 * @return A list of keys matching the specified path and optional filter. Returns an empty list if no keys exist.
+	 */
+	fun readKvPaths(kvPath: String = "", patternFilter: Regex? = null): List<String> {
+		val kvBackend = environment.getProperty<String>(AppBaseProperty.VAULT_KV_BACKEND)
+		val qualifiedKvPath = if (kvPath != "") {
+			"$kvBackend/$kvPath"
+		} else {
+			kvBackend
+		}
+		val response = client.logical().list(qualifiedKvPath)
+		val keys = response.dataObject.get("keys")
+		if (keys.isNull) {
+			return listOf()
+		}
+		val allKeys = keys.asArray().map { it.asString() }
+		return if (patternFilter != null) {
+			allKeys.filter { it.matches(patternFilter) }
+		} else {
+			allKeys
 		}
 	}
 
