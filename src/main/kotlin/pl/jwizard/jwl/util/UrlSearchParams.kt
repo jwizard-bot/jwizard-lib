@@ -37,8 +37,8 @@ class UrlSearchParams(
 		/**
 		 * Sets the base URL for the URL being constructed.
 		 *
-		 * @param baseUrl the base URL as a string
-		 * @return the current [Builder] instance for method chaining
+		 * @param baseUrl The base URL as a string.
+		 * @return The current [Builder] instance for method chaining.
 		 */
 		fun setBaseUrl(baseUrl: String) = apply {
 			this.baseUrl = baseUrl
@@ -47,9 +47,9 @@ class UrlSearchParams(
 		/**
 		 * Adds a query parameter to the URL being constructed. The value is automatically encoded using UTF-8.
 		 *
-		 * @param key the parameter name
-		 * @param value the parameter value
-		 * @return the current [Builder] instance for method chaining
+		 * @param key The parameter name.
+		 * @param value The parameter value.
+		 * @return The current [Builder] instance for method chaining.
 		 */
 		fun addParam(key: String, value: Any) = apply {
 			params += key to URLEncoder.encode(value.toString(), Charsets.UTF_8)
@@ -58,8 +58,8 @@ class UrlSearchParams(
 		/**
 		 * Builds the final URL with the base URL and appended query parameters.
 		 *
-		 * @return the constructed URL as a string
-		 * @throws IllegalArgumentException if the base URL is not set
+		 * @return The constructed URL as a string.
+		 * @throws IllegalArgumentException If the base URL is not set.
 		 */
 		fun build(): String {
 			requireNotNull(baseUrl) { "Base URL must not be null." }
