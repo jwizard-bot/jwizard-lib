@@ -67,8 +67,8 @@ JWIZARD_MYSQL_DB_NAME=<MySQL database name, by default jwizard-db>
 # lavalink
 JWIZARD_LAVA_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
 JWIZARD_LAVA_YT_SOURCE_VERSION=1.8.3
-JWIZARD_LAVA_NODE_1_YT_REFRESH_TOKEN=<Refresh token for youtube source, used only if youtube source is active>
-JWIZARD_LAVA_NODE_2_YT_REFRESH_TOKEN=<Refresh token for youtube source, used only if youtube source is active>
+JWIZARD_AUDIO_YT_PO_TOKEN=<proof of origin token>
+JWIZARD_AUDIO_YT_PO_VISITOR_DATA=<proof of origin visitor data>
 # ports (should not be changed)
 JWIZARD_VAULT_PORT=8761
 JWIZARD_MYSQL_PORT=8762
