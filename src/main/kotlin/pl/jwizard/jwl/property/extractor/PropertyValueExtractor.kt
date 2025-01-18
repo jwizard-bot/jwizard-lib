@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.property.extractor
@@ -46,7 +46,7 @@ abstract class PropertyValueExtractor(private val clazz: KClass<*>) : PropertySo
 		val key = keyFragments[0]
 		val parsedProperty = super.getProperty(key)
 		if (parsedProperty == null) {
-			if (keyFragments.size != 2) { // has not default value
+			if (keyFragments.size != 2) { // has not defaulted value
 				throw PropertyNotFoundException(this::class, name)
 			}
 			return keyFragments[1]
