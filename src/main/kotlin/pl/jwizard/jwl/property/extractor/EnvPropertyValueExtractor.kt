@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.property.extractor
@@ -32,7 +32,10 @@ class EnvPropertyValueExtractor(
 	/**
 	 * Dotenv instance for reading .env file.
 	 */
-	private val dotEnv = Dotenv.load()
+	private val dotEnv = Dotenv
+		.configure()
+		.ignoreIfMissing()
+		.load()
 
 	/**
 	 * Reads properties from the .env file if it exists and loading from the file is enabled.
