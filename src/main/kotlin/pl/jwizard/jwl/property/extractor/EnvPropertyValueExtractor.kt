@@ -9,12 +9,10 @@ import pl.jwizard.jwl.util.logger
 import java.io.File
 
 /**
- * Extractor for environment property values from system environment variables and an optional .env file.
+ * Extractor responsible for retrieving environment property values from system environment variables and optionally
+ * from a `.env` file.
  *
- * This class is responsible for loading environment variables either from the system environment or an optional `.env`
- * file, depending on the configuration of the [envFileEnabled] flag.
- *
- * @property envFileEnabled Flag indicating whether to load properties from the .env file.
+ * @property envFileEnabled Flag indicating whether the `.env` file should be used to load properties.
  * @author Miłosz Gilga
  * @see PropertyValueExtractor
  */
@@ -40,11 +38,10 @@ class EnvPropertyValueExtractor(
 		.load()
 
 	/**
-	 * Sets the properties for the environment variable extractor.
-	 * If the `.env` file is enabled, it loads the variables from that file, otherwise, it skips it.
-	 * If the `.env` file is found, it logs the number of variables extracted.
+	 * Sets and retrieves all environment properties. If the `.env` file exists and is enabled, it reads the properties
+	 * from that file; otherwise, it retrieves the system environment variables.
 	 *
-	 * @return A map of environment variable keys and their corresponding values.
+	 * @return A map containing all environment variables, either from the system or from the `.env` file.
 	 */
 	override fun setProperties(): Map<Any, Any> {
 		val file = File(ENV_FILE_NAME)
@@ -52,29 +49,19 @@ class EnvPropertyValueExtractor(
 			if (!envFileEnabled) {
 				log.info("Env file disabled. Skipping loading environment variables from {} file.", ENV_FILE_NAME)
 			}
-		} else {
-			val envFileKeys = file.readLines()
-				.filter { line -> line.isNotBlank() && !line.startsWith("#") }
-				.mapNotNull { line ->
-					val key = line.split("=", limit = 2).firstOrNull()?.trim()
-					if (key.isNullOrEmpty()) null else key
-				}
-				.toTypedArray()
-
-			log.info("Extract: {} environment variables from: {} file: {}.", envFileKeys.size, ENV_FILE_NAME, envFileKeys)
+			return System.getenv().entries.associate { it.key to it.value }
 		}
-		return getAllEnvVariables()
-	}
+		val envFileKeys = file.readLines()
+			.filter { line -> line.isNotBlank() && !line.startsWith("#") }
+			.mapNotNull { line ->
+				val key = line.split("=", limit = 2).firstOrNull()?.trim()
+				if (key.isNullOrEmpty()) null else key
+			}
+			.toTypedArray()
 
-	/**
-	 * Retrieves all environment variables from the Dotenv instance.
-	 *
-	 * This method returns a map of all the variables loaded from the `.env` file, as well as any system environment
-	 * variables that have been read.
-	 *
-	 * @return A map of environment variable keys and their corresponding values.
-	 */
-	private fun getAllEnvVariables(): Map<Any, Any> = dotEnv.entries().associate { it.key to it.value }
+		log.info("Extract: {} environment variables from: {} file: {}.", envFileKeys.size, ENV_FILE_NAME, envFileKeys)
+		return dotEnv.entries().associate { it.key to it.value }
+	}
 
 	override val extractionKey = "env"
 }
