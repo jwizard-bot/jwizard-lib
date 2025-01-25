@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.i18n.source
@@ -38,9 +38,10 @@ enum class I18nExceptionSource(
 	TRACK_REPEATS_OUT_OF_BOUNDS(109, "jw.exception.trackRepeatsOutOfBoundsException"),
 	ISSUE_WHILE_PLAYING_TRACK(110, "jw.exception.unexpectedErrorOnPlayTrack"),
 	TRACK_IS_BLOCKED_IN_COUNTRY(111, "jw.exception.trackIsBlockedInCountry"),
-	ISSUE_WHILE_LOADING_TRACK(112, "jw.exception.unexpectedErrorOnLoadTrack"),
-	NOT_FOUND_TRACK(113, "jw.exception.notFoundAudioTrack"),
-	ANY_NODE_IN_POOL_IS_NOT_AVAILABLE(114, "jw.exception.anyNodeInPoolIsNotAvailable"),
+	TRACK_IS_AGE_RESTRICTED(112, "jw.exception.trackIsAgeRestricted"),
+	ISSUE_WHILE_LOADING_TRACK(113, "jw.exception.unexpectedErrorOnLoadTrack"),
+	NOT_FOUND_TRACK(114, "jw.exception.notFoundAudioTrack"),
+	ANY_NODE_IN_POOL_IS_NOT_AVAILABLE(115, "jw.exception.anyNodeInPoolIsNotAvailable"),
 
 	USER_ID_ALREADY_WITH_BOT(200, "jw.exception.userIsAlreadyWithBotException"),
 	USER_NOT_FOUND_IN_GUILD(201, "jw.exception.userNotFoundInGuildException"),
