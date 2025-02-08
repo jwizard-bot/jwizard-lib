@@ -7,6 +7,7 @@ package pl.jwizard.jwl.server
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.javalin.Javalin
 import io.javalin.config.JavalinConfig
+import io.javalin.http.Context
 import io.javalin.json.JavalinJackson
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
@@ -86,7 +87,16 @@ class HttpServer(
 		val controllers = ioCKtContextFactory.getBeansWithSupertype<RestControllerBase>()
 		for (controller in controllers) {
 			val routes = controller.routes
-			routes.forEach { server.addHttpHandler(it.method, controller.basePath + it.path, it.handler, *it.roles) }
+			routes.baseRoutes.forEach {
+				server.addHttpHandler(it.method, controller.basePath + it.path, it.handler, *it.roles)
+			}
+			routes.routesWithI18n.forEach { route ->
+				val handler: (ctx: Context) -> Unit = {
+					val locale = it.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
+					route.handler.handle(it, locale)
+				}
+				server.addHttpHandler(route.method, controller.basePath + route.path, handler, *route.roles)
+			}
 			log.info(
 				"Load controller: {} -> \"{}\" with: {} routes: {}.",
 				controller::class.qualifiedName,

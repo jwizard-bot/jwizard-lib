@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl.server.route
@@ -22,5 +22,5 @@ interface RestControllerBase {
 	 * The routes that belong to this REST controller. This array defines the individual route paths and their associated
 	 * methods (GET, POST, etc.) and handlers.
 	 */
-	val routes: Array<RouteDefinition>
+	val routes: CompositedRoutes
 }
