@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwl
@@ -16,7 +16,7 @@ package pl.jwizard.jwl
 interface TextKeyExtractor {
 
 	/**
-	 *
+	 * A unique text key identifier associated with a specific message or resource.
 	 */
 	val textKey: String
 }
