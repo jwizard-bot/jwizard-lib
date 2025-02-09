@@ -96,6 +96,12 @@ enum class Command(
 		get() = textKey.replace(".", "-")
 
 	/**
+	 * Convert command key to name with spaces (change "." to " ").
+	 */
+	val toNameWithSpaces
+		get() = textKey.replace(".", " ")
+
+	/**
 	 * Parses the command with the given prefix.
 	 *
 	 * @param context A [CommandFormatContext] instance used to process command in readable form.
