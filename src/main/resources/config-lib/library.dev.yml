@@ -3,3 +3,8 @@ vault:
   token: ${env:ENV_VAULT_TOKEN}
   authentication:
     type: TOKEN
+
+guild:
+  default:
+    leave-empty-channel-sec: 20
+    leave-no-tracks-channel-sec: 20
