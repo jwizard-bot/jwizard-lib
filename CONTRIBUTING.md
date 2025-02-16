@@ -18,10 +18,10 @@ There are several ways you can contribute to the project:
 
 1. Review the existing issues to ensure that the bug hasn’t already been reported.
 2. If it’s a new bug, open a new issue and include the following details:
-	- A clear description of the issue.
-	- Steps to reproduce the bug.
-	- Your environment (OS version, browser version, etc.).
-	- Expected and actual behavior.
+  - A clear description of the issue.
+  - Steps to reproduce the bug.
+  - Your environment (OS version, browser version, etc.).
+  - Expected and actual behavior.
 
 ## Coding guidelines
 

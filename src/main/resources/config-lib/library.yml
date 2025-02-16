@@ -74,6 +74,3 @@ i18n:
   languages:
     - en-US
     - pl
-
-service:
-  docs-url: https://docs.jwizard.pl

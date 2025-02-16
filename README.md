@@ -2,10 +2,10 @@
 
 [[About project](https://jwizard.pl/about)]
 
-JWizard is an open-source Discord music bot handling audio content from various multimedia sources with innovative web
-player. This repository contains a library that shares code between the JWizard Core and JWizard API projects. It
-includes additional helper classes for logging, database handling, and communication protocols based on AMQP and
-WebSockets.
+JWizard is an open-source Discord music bot handling audio content from various multimedia sources
+with innovative web player. This repository contains a library that shares code between the JWizard
+Core and JWizard API projects. It includes additional helper classes for logging, database handling,
+and communication protocols based on AMQP and WebSockets.
 
 ## Table of content
 
@@ -90,8 +90,9 @@ This command will create and run following containers:
 | jwizard-lava-node-1 | 8766    | Lavalink #1 node.            |
 | jwizard-lava-node-2 | 8767    | Lavalink #2 node.            |
 
-> NOTE: Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must remove second
-> Lavalink node declaration. Running 2 nodes are useful for checking load-balancer in performance tests.
+> NOTE: Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must
+> remove second Lavalink node declaration. Running 2 nodes are useful for checking load-balancer in
+> performance tests.
 
 AD: Alternatively you can run containers separately via:
 
@@ -99,7 +100,8 @@ AD: Alternatively you can run containers separately via:
 $ docker compose up -D <container name>
 ```
 
-where `<container name>` is the name of the container (available container you will find above in the table).
+where `<container name>` is the name of the container (available container you will find above in
+the table).
 
 3. Apply database migrations:
 
@@ -109,8 +111,8 @@ where `<container name>` is the name of the container (available container you w
 $ git clone https://github.com/jwizard-bot/jwizard-tools
 ```
 
-* Set-up Python environment (see `README.md` file in [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools)
-  repository),
+* Set-up Python environment (see `README.md` file
+  in [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools) repository),
 * Run migrations for `self` and `infra` via:
 
 ```bash
@@ -123,8 +125,8 @@ $ (venv) python src/db_migrator.py --pipeline self
 
 ## Contributing
 
-We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING) file for guidelines on how
-to get involved.
+We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING) file for
+guidelines on how to get involved.
 
 ## License
 

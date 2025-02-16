@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.command
 
 import pl.jwizard.jwl.DatabaseIdentifier
@@ -9,18 +5,6 @@ import pl.jwizard.jwl.TextKeyExtractor
 import pl.jwizard.jwl.command.arg.CommandArgument
 import pl.jwizard.jwl.i18n.I18nLocaleSource
 
-/**
- * Enum representing various commands in the application, each associated with a unique database ID, module, alias,
- * and optional argument definitions.
- *
- * @property dbId Unique identifier for the command in the database.
- * @property placeholder A string key used for localization, which maps to the actual command description.
- * @property slashAvailable Determined, if slash mode for selected command is available or not available.
- * @property module The module to which the command belongs.
- * @property argumentsDefinition Optional definition of command arguments.
- * @property global Determines if command also can be executed in global environment (without guild reference).
- * @author Miłosz Gilga
- */
 enum class Command(
 	override val dbId: Long,
 	override val placeholder: String,
@@ -29,6 +13,7 @@ enum class Command(
 	val argumentsDefinition: CommandArgument? = null,
 	val global: Boolean = false,
 ) : I18nLocaleSource, DatabaseIdentifier, TextKeyExtractor {
+	// @formatter:off
 
 	// music module
 	PLAY(1, "jw.command.play", true, Module.MUSIC, CommandArgument.TITLE_OR_URL),
@@ -83,30 +68,18 @@ enum class Command(
 	RADIO_INFO(504, "jw.command.radio.info", true, Module.RADIO),
 	;
 
-	/**
-	 * The exact arguments required by the command, or an empty array if none are defined.
-	 */
+	// @formatter:on
+
+	// defined command arguments as list
 	val exactArguments
 		get() = argumentsDefinition?.arguments ?: emptyArray()
 
-	/**
-	 * Convert command key to URL acceptable format (change "." to "-").
-	 */
 	val toUrl
 		get() = textKey.replace(".", "-")
 
-	/**
-	 * Convert command key to name with spaces (change "." to " ").
-	 */
 	val toNameWithSpaces
 		get() = textKey.replace(".", " ")
 
-	/**
-	 * Parses the command with the given prefix.
-	 *
-	 * @param context A [CommandFormatContext] instance used to process command in readable form.
-	 * @return The complete command string.
-	 */
 	fun parseWithPrefix(context: CommandFormatContext): String {
 		var key = textKey
 		if (context.isSlashEvent) {

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.i18n
 
 import pl.jwizard.jwl.property.Property
 
-/**
- * Defines a module interface for managing dynamic internationalization (i18n) properties.
- *
- * This interface allows for the configuration and retrieval of localized properties in a modular way, potentially for
- * different sections or modules within an application.
- *
- * @author Miłosz Gilga
- * @see Property
- */
+// use this interface on dynamic i18n enum sources
 interface I18nDynamicSource : Property

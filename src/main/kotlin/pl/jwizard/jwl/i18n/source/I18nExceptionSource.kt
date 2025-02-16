@@ -1,27 +1,13 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.i18n.source
 
 import pl.jwizard.jwl.i18n.I18nLocaleSource
 
-/**
- * Enum representing various internationalization exception sources.
- *
- * This enum defines a set of exceptions that can be thrown in the application, each associated with a specific error
- * tracker ID and a placeholder for localization. It implements the [I18nLocaleSource] interface, which provides a
- * structure for internationalization of error messages.
- *
- * @property tracker An integer representing the unique identifier for the exception.
- * @property placeholder A string key used for localization, which maps to the actual error message.
- * @author Miłosz Gilga
- * @see I18nLocaleSource
- */
 enum class I18nExceptionSource(
 	val tracker: Int,
 	override val placeholder: String,
 ) : I18nLocaleSource {
+	// @formatter:off
+
 	UNEXPECTED_EXCEPTION(0, "jw.exception.unexpectedException"),
 	MODULE_IS_TURNED_OFF(1, "jw.exception.moduleIsTurnedOffException"),
 	EPHEMERAL_UNEXPECTED_EXCEPTION(2, "jw.exception.ephemeralUnexpectedException"),
@@ -66,4 +52,6 @@ enum class I18nExceptionSource(
 	UNEXPECTED_ERROR_WHILE_STREAMING_RADIO(405, "jw.exception.unexpectedErrorWhileStreamingRadioException"),
 	RADIO_STATION_NOT_PROVIDING_PLAYBACK_DATA(406, "jw.exception.radioStationNotProvidingPlaybackDataException"),
 	;
+
+	// @formatter:on
 }

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 plugins {
 	alias libs.plugins.kotlinJvm
 	id 'maven-publish'

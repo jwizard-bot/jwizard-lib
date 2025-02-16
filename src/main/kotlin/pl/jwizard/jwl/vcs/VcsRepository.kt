@@ -1,21 +1,7 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.vcs
 
 import pl.jwizard.jwl.property.AppBaseProperty
 
-/**
- * Enum representing various repositories within the JWizard project.
- *
- * Each repository is associated with a specific `AppBaseProperty`, which defines configuration properties
- * (name identifier) for the corresponding repository.
- *
- * @property position Position number in UI (for sorted unordered collections, as [Map]).
- * @property property The application property associated with this repository.
- * @author Miłosz Gilga
- */
 enum class VcsRepository(
 	val position: Int,
 	val property: AppBaseProperty,

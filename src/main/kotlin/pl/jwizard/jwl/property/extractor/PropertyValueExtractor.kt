@@ -1,42 +1,14 @@
-/*
- * Copyright (c) 2025 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.property.extractor
 
 import pl.jwizard.jwl.property.PropertyNotFoundException
 import pl.jwizard.jwl.property.PropertySourceData
 import kotlin.reflect.KClass
 
-/**
- * Abstract base class for extracting property values from various sources.
- *
- * This class extends [PropertySourceData], providing common functionality for property extraction and property source
- * loading. It provides a mechanism to retrieve properties based on a qualifier prefix and handle default values.
- *
- * @property clazz The Kotlin class of the property source data.
- * @author Miłosz Gilga
- * @see PropertySourceData
- */
-abstract class PropertyValueExtractor(private val clazz: KClass<*>) : PropertySourceData(clazz) {
-
+abstract class PropertyValueExtractor(clazz: KClass<*>) : PropertySourceData(clazz) {
 	companion object {
-		/**
-		 * Separator used in property names to distinguish between key and value parts.
-		 */
 		private const val SEPARATOR = ":"
 	}
 
-	/**
-	 * Retrieves the property value based on the given name.
-	 *
-	 * The property name should start with a qualifier prefix derived from the extraction key, followed by the actual
-	 * property key and optionally a default value. If the property is not found, and no default value is provided, a
-	 * [PropertyNotFoundException] is thrown.
-	 *
-	 * @param name The name of the property to retrieve.
-	 * @return The property value or default value if not found.
-	 */
 	override fun getProperty(name: String): Any? {
 		val qualifier = "${extractionKey}$SEPARATOR"
 		if (!name.startsWith(qualifier)) {
@@ -54,8 +26,5 @@ abstract class PropertyValueExtractor(private val clazz: KClass<*>) : PropertySo
 		return parsedProperty
 	}
 
-	/**
-	 * Abstract property defines the extraction key used for identifying properties.
-	 */
 	protected abstract val extractionKey: String
 }

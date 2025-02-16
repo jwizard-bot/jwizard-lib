@@ -1,19 +1,7 @@
-/*
- * Copyright (c) 2024 by JWizard
- * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
- */
 package pl.jwizard.jwl.command.arg
 
 import pl.jwizard.jwl.i18n.I18nLocaleSource
 
-/**
- * Enum representing various command arguments, each associated with its internationalization source
- * and the corresponding argument values.
- *
- * @property placeholder A string key used for localization, which maps to the actual command argument description.
- * @property arguments The vararg of arguments associated with the command.
- * @author Miłosz Gilga
- */
 enum class CommandArgument(
 	override val placeholder: String,
 	vararg val arguments: Argument,
@@ -27,5 +15,6 @@ enum class CommandArgument(
 	PLAYLIST_NAME_OR_ID("jw.arg.cmd.playlistNameOrId", Argument.PLAYLIST_NAME_OR_ID),
 	PLAYLIST_NAME("jw.arg.cmd.playlistName", Argument.PLAYLIST_NAME),
 	RADIO_STATION("jw.arg.cmd.radioStation", Argument.RADIO_STATION),
-	PRIVATE("jw.arg.cmd.private", Argument.PRIVATE);
+	PRIVATE("jw.arg.cmd.private", Argument.PRIVATE),
+	;
 }
