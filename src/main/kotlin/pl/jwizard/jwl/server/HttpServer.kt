@@ -34,7 +34,10 @@ class HttpServer(
 
 	private lateinit var server: Javalin
 
-	fun init(serverHook: HttpServerHook?, vararg withCustomConfig: (JavalinConfig) -> Unit) {
+	fun init(
+		onServerStart: (() -> Unit)? = null,
+		vararg withCustomConfig: (JavalinConfig) -> Unit,
+	) {
 		server = Javalin
 			.create { config ->
 				config.showJavalinBanner = false
@@ -42,7 +45,7 @@ class HttpServer(
 				withCustomConfig.forEach { it(config) }
 			}
 			.events { event ->
-				event.serverStarted { serverHook?.afterStartServer(ioCKtContextFactory) }
+				event.serverStarted { onServerStart?.let { it() } }
 			}
 		val filters = ioCKtContextFactory.getBeansWithSupertype<WebFilterBase>()
 		for (filter in filters) {
