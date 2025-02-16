@@ -50,10 +50,6 @@ $ ./gradlew publishToMavenLocal
 # core instances
 JWIZARD_JDA_SECRET_1_INSTANCE=<JDA application secret (first instance)>
 JWIZARD_JDA_SECRET_2_INSTANCE=<JDA application secret (second instance)>
-JWIZARD_JDA_PRIMARY_COLOR_1_INSTANCE=0xFFFFFF
-JWIZARD_JDA_PRIMARY_COLOR_2_INSTANCE=0x000000
-JWIZARD_JDA_PREFIX_1_INSTANCE=1
-JWIZARD_JDA_PREFIX_2_INSTANCE=2
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
@@ -64,15 +60,10 @@ JWIZARD_MYSQL_USERNAME=<MySQL database username, by default root>
 JWIZARD_MYSQL_PASSWORD=<MySQL database password>
 JWIZARD_MYSQL_DB_NAME=<MySQL database name, by default jwizard-db>
 # lavalink
-JWIZARD_LAVA_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
-JWIZARD_LAVA_YT_SOURCE_VERSION=1.8.3
+JWIZARD_AUDIO_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
+JWIZARD_AUDIO_YT_SOURCE_VERSION=<yt source version>
 JWIZARD_AUDIO_YT_PO_TOKEN=<proof of origin token>
 JWIZARD_AUDIO_YT_PO_VISITOR_DATA=<proof of origin visitor data>
-# ports (should not be changed)
-JWIZARD_VAULT_PORT=8761
-JWIZARD_MYSQL_PORT=8762
-JWIZARD_LAVA_NODE_1_PORT=8766
-JWIZARD_LAVA_NODE_2_PORT=8767
 ```
 
 2. To run all docker containers for this project, type:
