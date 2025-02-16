@@ -2,14 +2,8 @@
  * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
-import org.codehaus.groovy.runtime.GStringImpl
-import org.jetbrains.dokka.DokkaConfiguration
-
-import java.time.Year
-
 plugins {
 	alias libs.plugins.kotlinJvm
-	alias libs.plugins.dokka
 	id 'maven-publish'
 }
 
@@ -27,6 +21,7 @@ repositories {
 }
 
 dependencies {
+	// this dependencies should be visible in related repositories
 	api libs.dotEnv
 	api libs.hikariCp
 	api libs.jacksonDatabind
@@ -41,6 +36,7 @@ dependencies {
 	api libs.springContext
 	api libs.vault
 
+	// this dependencies are used only in this library
 	implementation libs.commonsVfs
 	implementation libs.kotlin
 	implementation libs.kotlinReflect
@@ -52,68 +48,6 @@ tasks.register('sourcesJar', Jar) {
 	from sourceSets.main.allSource
 }
 
-tasks.register('dokkaJavadocJar', Jar.class) {
-	group = 'documentation'
-	dependsOn(dokkaJavadoc)
-	from(dokkaJavadoc)
-	archiveClassifier.set('javadoc')
-}
-
-def docModuleName = "JWizard Lib"
-def docRootDir = "$projectDir/docs"
-
-dokkaHtml {
-	moduleName = "$docModuleName ($projectVersion)"
-	moduleVersion = "" // move module version to module name
-	outputDirectory = file("$docRootDir/kdoc")
-	suppressInheritedMembers = true
-
-	def assets = [
-		'dokka/logo-icon.svg',
-		'dokka/logo-nav.svg',
-		'dokka/dokka-styles.css',
-	]
-	def definedDokkaAssets = assets
-		.collect { "\"${file(it).absolutePath.replace("\\", "\\\\")}\"" }
-		.join(',')
-
-	def dokkaCopyright
-		= ("&copy; ${Year.now().value} by JWizard"
-		+ ". On AGPL-3.0 license"
-		+ ". Build SHA: $projectVersion") as GStringImpl
-
-	pluginsMapConfiguration.set([
-		'org.jetbrains.dokka.base.DokkaBase': """
-    {
-      "customAssets": [${definedDokkaAssets}],
-      "footerMessage": "${dokkaCopyright}",
-      "separateInheritedMembers": false
-    }
-  """
-	])
-	dokkaSourceSets.configureEach {
-		documentedVisibilities.set([
-			DokkaConfiguration.Visibility.PUBLIC,
-			DokkaConfiguration.Visibility.PRIVATE,
-			DokkaConfiguration.Visibility.PROTECTED,
-			DokkaConfiguration.Visibility.INTERNAL,
-			DokkaConfiguration.Visibility.PACKAGE,
-		])
-	}
-}
-
-dokkaJavadoc {
-	moduleName = "$docModuleName - "
-	outputDirectory = file("$docRootDir/javadoc")
-	suppressInheritedMembers = true
-}
-
-tasks.register('dokkaAll') {
-	group = 'documentation'
-	dependsOn dokkaHtml
-	dependsOn dokkaJavadoc
-}
-
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -123,7 +57,6 @@ publishing {
 
 			from components.java
 			artifact tasks.sourcesJar
-			artifact tasks.dokkaJavadocJar
 
 			pom {
 				name = 'JWizard library'
@@ -165,13 +98,7 @@ kotlin {
 	jvmToolchain(rootProject.ext.jvmSpecification.toInteger())
 }
 
-/**
- * Retrieves the value of an environment variable, with a fallback to a default value.
- *
- * @param name The name of the environment variable (without the prefix "JWIZARD_").
- * @param defValue The default value to return if the environment variable is not set.
- * @return The value of the environment variable or the default value if not set.
- */
+// retrieves the value of an environment variable, with a fallback to a default value
 static def getEnv(String name, Object defValue = '') {
 	return System.getenv("JWIZARD_$name") ?: defValue.toString()
 }

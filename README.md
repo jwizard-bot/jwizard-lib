@@ -12,7 +12,6 @@ WebSockets.
 * [Clone and install](#clone-and-install)
 * [Package on local environments](#package-on-local-environments)
 * [Docker containers](#docker-containers)
-* [Documentation](#documentation)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -121,15 +120,6 @@ $ (venv) python src/db_migrator.py --pipeline self
 
 > NOTE: More information about JWizard Python migrator you could find in
 > [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools) repository.
-
-## Documentation
-
-For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
-<br>
-Documentation for latest version (with SHA) you will find:
-
-* [here](https://docs.jwizard.pl/jwl/kdoc) - in **KDoc** format,
-* [here](https://docs.jwizard.pl/jwl/javadoc) - in **Javadoc** format.
 
 ## Contributing
 

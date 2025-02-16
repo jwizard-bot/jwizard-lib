@@ -1,6 +1,5 @@
 [versions]
 commonsVfsVersion = "2.9.0"
-dokkaVersion = "1.9.20"
 dotenvVersion = "2.2.0"
 hikariCpVersion = "5.1.0"
 jacksonVersion = "2.18.2"
@@ -33,5 +32,4 @@ springContext = { module = "org.springframework:spring-context", version.ref = "
 vault = { module = "io.github.jopenlibs:vault-java-driver", version.ref = "vaultVersion" }
 
 [plugins]
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
