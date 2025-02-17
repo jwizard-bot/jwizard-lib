@@ -70,15 +70,19 @@ enum class Command(
 
 	// @formatter:on
 
+	companion object {
+		fun rawCommandToDotFormat(rawCommand: String) = rawCommand.replace(" ", ".")
+	}
+
+	val asString
+		get() = textKey.replace(".", " ")
+
+	val asSlug
+		get() = textKey.replace(".", "-")
+
 	// defined command arguments as list
 	val exactArguments
 		get() = argumentsDefinition?.arguments ?: emptyArray()
-
-	val toUrl
-		get() = textKey.replace(".", "-")
-
-	val toNameWithSpaces
-		get() = textKey.replace(".", " ")
 
 	fun parseWithPrefix(context: CommandFormatContext): String {
 		var key = textKey
@@ -87,6 +91,8 @@ enum class Command(
 		}
 		return "${context.prefix}$key"
 	}
+
+	override fun toString() = asString
 
 	override val textKey
 		get() = placeholder.replace("jw.command.", "")
