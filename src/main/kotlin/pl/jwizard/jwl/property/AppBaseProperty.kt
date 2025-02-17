@@ -14,18 +14,8 @@ enum class AppBaseProperty(
 	// server port used for standalone Jetty server
 	SERVER_PORT("server.port", Int::class),
 
-	// all version control system (VCS) repositories
-	VCS_ALL("vcs.all"),
-
 	// used for create links refer to online repository
 	VCS_ORGANIZATION_NAME("vcs.organization-name"),
-
-	// GitHub repository names
-	VCS_REPOSITORY_JW_CORE("vcs.repository.jw-core"),
-	VCS_REPOSITORY_JW_API("vcs.repository.jw-api"),
-	VCS_REPOSITORY_JW_LIB("vcs.repository.jw-lib"),
-	VCS_REPOSITORY_JW_WEB("vcs.repository.jw-web"),
-	VCS_REPOSITORY_JW_TOOLS("vcs.repository.jw-tools"),
 
 	// database connection
 	DB_URL("db.jdbc"),
