@@ -2,7 +2,6 @@ package pl.jwizard.jwl.server.filter
 
 import io.javalin.http.Context
 import org.eclipse.jetty.http.HttpHeader
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -10,7 +9,6 @@ import pl.jwizard.jwl.server.attribute.CommonServerAttribute
 import pl.jwizard.jwl.server.definedHeader
 import pl.jwizard.jwl.server.setAttribute
 
-@SingletonComponent
 class LanguageHeaderExtractorFilter(environment: BaseEnvironment) : WebFilterBase {
 	override val type = WebFilterType.BEFORE
 	override val matcher = "/*"

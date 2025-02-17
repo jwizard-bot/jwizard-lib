@@ -2,23 +2,16 @@ package pl.jwizard.jwl.i18n
 
 import org.springframework.context.MessageSource
 import org.springframework.context.NoSuchMessageException
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import java.util.*
 
-@SingletonComponent
-class I18nBean(
+class I18n(
 	private val messageSource: MessageSource,
-	private val environmentBean: BaseEnvironment,
+	private val environment: BaseEnvironment,
 ) {
-	companion object {
-		private const val START_DELIMITER = "{{"
-		private const val END_DELIMITER = "}}"
-	}
-
-	private val defaultLanguage = environmentBean
+	private val defaultLanguage = environment
 		.getProperty<String>(AppBaseProperty.I18N_DEFAULT_LANGUAGE)
 
 	fun t(
@@ -30,19 +23,19 @@ class I18nBean(
 	fun t(
 		i18nLocaleSource: I18nLocaleSource,
 		args: Map<String, Any?> = emptyMap(),
-	) = environmentBean
+	) = environment
 		.getListProperty<String>(AppBaseListProperty.I18N_LANGUAGES)
 		.associateWith { t(i18nLocaleSource, it, args) }
 
 	fun tRaw(
-		i18NDynamicSource: I18nDynamicSource,
+		i18nFragmentSource: I18nFragmentSource,
 		params: Array<String?>,
 		args: Map<String, Any?>,
 		lang: String?,
-	) = tRaw(i18NDynamicSource.key.format(*params), args, lang)
+	) = tRaw(i18nFragmentSource.key.format(*params), args, lang)
 
 	fun tRaw(
-		i18NDynamicSource: I18nDynamicSource,
+		i18NDynamicSource: I18nFragmentSource,
 		params: Array<String?>,
 		lang: String?,
 	) = tRaw(i18NDynamicSource.key.format(*params), emptyMap(), lang)
@@ -59,7 +52,7 @@ class I18nBean(
 				for ((key, value) in args) {
 					// otherwise replace incrementally all values based on start and end delimiters
 					propertyValue = propertyValue
-						.replace("$START_DELIMITER${key}$END_DELIMITER", value.toString())
+						.replace("{{${key}}}", value.toString())
 				}
 				propertyValue
 			}

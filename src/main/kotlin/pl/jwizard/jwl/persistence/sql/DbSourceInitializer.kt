@@ -7,34 +7,26 @@ import org.jdbi.v3.core.argument.Argument
 import org.jdbi.v3.core.argument.ArgumentFactory
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.core.mapper.ColumnMappers
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
-import pl.jwizard.jwl.ioc.stereotype.SingletonObject
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import java.math.BigInteger
 import java.time.LocalDateTime
 import java.util.*
 
-@SingletonComponent
-class DbSourceInitializerBean(private val environmentBean: BaseEnvironment) {
-	@SingletonObject
-	fun dataSourceBean(): HikariDataSource {
+class DbSourceInitializer {
+	fun createJdbi(environment: BaseEnvironment): Jdbi {
 		val config = HikariConfig()
-		config.jdbcUrl = environmentBean.getProperty(AppBaseProperty.DB_URL)
-		config.username = environmentBean.getProperty(AppBaseProperty.DB_USERNAME)
-		config.password = environmentBean.getProperty(AppBaseProperty.DB_PASSWORD)
-		config.driverClassName = environmentBean.getProperty(AppBaseProperty.DB_DRIVER_CLASS_NAME)
-		config.maximumPoolSize = environmentBean.getProperty(AppBaseProperty.DB_POOL_MAX_SIZE)
-		config.minimumIdle = environmentBean.getProperty(AppBaseProperty.DB_POOL_MIN_IDLE)
-		config.idleTimeout = environmentBean.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_IDLE)
-		config.connectionTimeout = environmentBean
-			.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_CONNECTION)
-		return HikariDataSource(config)
-	}
+		config.jdbcUrl = environment.getProperty(AppBaseProperty.DB_URL)
+		config.username = environment.getProperty(AppBaseProperty.DB_USERNAME)
+		config.password = environment.getProperty(AppBaseProperty.DB_PASSWORD)
+		config.driverClassName = environment.getProperty(AppBaseProperty.DB_DRIVER_CLASS_NAME)
+		config.maximumPoolSize = environment.getProperty(AppBaseProperty.DB_POOL_MAX_SIZE)
+		config.minimumIdle = environment.getProperty(AppBaseProperty.DB_POOL_MIN_IDLE)
+		config.idleTimeout = environment.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_IDLE)
+		config.connectionTimeout = environment.getProperty(AppBaseProperty.DB_POOL_TIMEOUT_CONNECTION)
 
-	@SingletonObject
-	fun jdbi(dataSourceBean: HikariDataSource): Jdbi {
-		val jdbi = Jdbi.create(dataSourceBean)
+		val dataSource = HikariDataSource(config)
+		val jdbi = Jdbi.create(dataSource)
 
 		jdbi.getConfig(ColumnMappers::class.java).coalesceNullPrimitivesToDefaults = false
 		jdbi.installPlugin(KotlinPlugin())

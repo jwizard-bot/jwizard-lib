@@ -5,27 +5,25 @@ import io.javalin.Javalin
 import io.javalin.config.JavalinConfig
 import io.javalin.http.Context
 import io.javalin.json.JavalinJackson
-import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
-import pl.jwizard.jwl.ioc.CleanupAfterIoCDestroy
+import org.springframework.beans.factory.DisposableBean
+import pl.jwizard.jwl.i18n.I18n
 import pl.jwizard.jwl.ioc.IoCKtContextFactory
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.server.attribute.CommonServerAttribute
 import pl.jwizard.jwl.server.exception.ExceptionsAdvisorBase
 import pl.jwizard.jwl.server.exception.HttpErrorResponseDto
+import pl.jwizard.jwl.server.exception.I18nGeneralServerExceptionSource
 import pl.jwizard.jwl.server.filter.WebFilterBase
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.util.logger
 
-@SingletonComponent
 class HttpServer(
 	private val environment: BaseEnvironment,
 	private val ioCKtContextFactory: IoCKtContextFactory,
-	private val i18nBean: I18nBean,
+	private val i18n: I18n,
 	private val objectMapper: ObjectMapper,
-) : CleanupAfterIoCDestroy {
+) : DisposableBean {
 	companion object {
 		private val log = logger<HttpServer>()
 
@@ -92,7 +90,7 @@ class HttpServer(
 		)) {
 			server.error(exception.statusCode) { ctx ->
 				val locale = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
-				val response = HttpErrorResponseDto(exception.statusCode, i18nBean.t(exception, locale))
+				val response = HttpErrorResponseDto(exception.statusCode, i18n.t(exception, locale))
 				ctx.json(response).status(exception.statusCode)
 			}
 			log.info("Load status code: {} handler.", exception.statusCode)

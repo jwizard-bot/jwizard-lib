@@ -3,21 +3,14 @@ package pl.jwizard.jwl.persistence.sql
 import org.jdbi.v3.core.HandleCallback
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.statement.Query
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
 
-@SingletonComponent
-class JdbiQueryBean(private val jdbi: Jdbi) {
-	companion object {
-		private const val START_DELIMITER = "{{"
-		private const val STOP_DELIMITER = "}}"
-	}
-
+class JdbiQuery(private val jdbi: Jdbi) {
 	fun parse(input: String, replacements: Map<String, Any>): String {
 		var result = input
 		for ((key, value) in replacements) {
-			result = result.replace("$START_DELIMITER$key$STOP_DELIMITER", value.toString())
+			result = result.replace("{{$key}}", value.toString())
 		}
 		return result
 	}
