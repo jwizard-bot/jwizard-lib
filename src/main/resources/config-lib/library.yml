@@ -47,11 +47,6 @@ player:
   default:
     max-volume: 1000
 
-static-resources:
-  prefixes:
-    - assets
-    - assets-lib
-
 jda:
   permissions:
     - MANAGE_CHANNEL

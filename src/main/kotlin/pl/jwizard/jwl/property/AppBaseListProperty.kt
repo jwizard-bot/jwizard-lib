@@ -13,9 +13,6 @@ enum class AppBaseListProperty(
 	// vault application names (kv prefix)
 	VAULT_KV_APPLICATION_NAMES("vault.kv.application-names"),
 
-	// static resources (images)
-	STATIC_RESOURCES_PREFIXES("static-resources.prefixes"),
-
 	// bot permissions
 	JDA_PERMISSIONS("jda.permissions"),
 
