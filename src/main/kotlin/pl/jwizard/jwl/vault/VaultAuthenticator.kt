@@ -1,8 +1,8 @@
-package pl.jwizard.jwl.property.vault
+package pl.jwizard.jwl.vault
 
 import io.github.jopenlibs.vault.VaultConfig
 import pl.jwizard.jwl.property.BaseEnvironment
 
-interface VaultAuthenticator {
+internal interface VaultAuthenticator {
 	fun authenticate(config: VaultConfig, environment: BaseEnvironment): String
 }

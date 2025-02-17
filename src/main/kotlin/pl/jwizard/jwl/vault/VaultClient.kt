@@ -1,4 +1,4 @@
-package pl.jwizard.jwl.property.vault
+package pl.jwizard.jwl.vault
 
 import io.github.jopenlibs.vault.Vault
 import io.github.jopenlibs.vault.VaultConfig
@@ -39,12 +39,16 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val token = authenticationType.authenticator.authenticate(config, environment)
 			client = Vault(config.token(token))
 			log.info(
-				"Init vault client: {} with authentication type: {}.",
+				"Authenticate to vault client: {} with authentication type: {}.",
 				configBuilder.address,
 				authenticationType,
 			)
 		} catch (ex: VaultException) {
-			throw IrreparableException(this::class, "Unable to configure Vault. Cause: %s.", ex.message)
+			throw IrreparableException(
+				this::class,
+				"Unable to authenticate Vault. Cause: %s.",
+				ex.message,
+			)
 		}
 	}
 

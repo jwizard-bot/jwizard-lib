@@ -1,6 +1,6 @@
-package pl.jwizard.jwl.property.vault
+package pl.jwizard.jwl.vault
 
-enum class VaultAuthenticationType(
+internal enum class VaultAuthenticationType(
 	val id: String,
 	val authenticator: VaultAuthenticator,
 ) {

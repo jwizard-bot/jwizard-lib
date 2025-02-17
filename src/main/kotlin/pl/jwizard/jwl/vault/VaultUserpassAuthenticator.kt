@@ -1,11 +1,11 @@
-package pl.jwizard.jwl.property.vault
+package pl.jwizard.jwl.vault
 
 import io.github.jopenlibs.vault.Vault
 import io.github.jopenlibs.vault.VaultConfig
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 
-class VaultUserpassAuthenticator : VaultAuthenticator {
+internal class VaultUserpassAuthenticator : VaultAuthenticator {
 	override fun authenticate(config: VaultConfig, environment: BaseEnvironment): String {
 		val vault = Vault(config)
 		val response = vault.auth().loginByUserPass(

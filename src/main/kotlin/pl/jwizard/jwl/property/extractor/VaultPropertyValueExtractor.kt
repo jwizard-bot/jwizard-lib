@@ -1,7 +1,7 @@
 package pl.jwizard.jwl.property.extractor
 
 import pl.jwizard.jwl.property.BaseEnvironment
-import pl.jwizard.jwl.property.vault.VaultClient
+import pl.jwizard.jwl.vault.VaultClient
 
 class VaultPropertyValueExtractor(
 	environment: BaseEnvironment,
