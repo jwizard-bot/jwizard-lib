@@ -9,9 +9,9 @@ import pl.jwizard.jwl.util.logger
 import kotlin.reflect.KClass
 
 abstract class AppRunner {
-	private val log = logger<AppRunner>()
-
 	companion object {
+		private val log = logger<AppRunner>()
+
 		// used for scanning IoC components
 		const val BASE_PACKAGE = "pl.jwizard"
 

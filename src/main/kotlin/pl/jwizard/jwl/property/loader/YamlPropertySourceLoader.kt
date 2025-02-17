@@ -18,7 +18,7 @@ internal class YamlPropertySourceLoader(
 	}
 
 	override fun setProperties(): Map<Any, Any> {
-		val yamlPropertiesFactoryBean = YamlPropertiesFactoryBean()
+		val yamlPropertiesFactory = YamlPropertiesFactoryBean()
 
 		val appProperties =
 			loadDefaultAndRuntimeDependentProperties(DEFAULT_YAML_PREFIX) { ClassPathResource(it) }
@@ -26,10 +26,10 @@ internal class YamlPropertySourceLoader(
 			ClassPathResource(it, IoCKtContextFactory::class.java)
 		}
 		val fileContents = appProperties + libProperties
-		yamlPropertiesFactoryBean.setResources(*fileContents.toTypedArray())
+		yamlPropertiesFactory.setResources(*fileContents.toTypedArray())
 		log.info("Load YAML configuration files: {}.", fileContents.map { it.filename })
 
-		val properties = yamlPropertiesFactoryBean.getObject()
+		val properties = yamlPropertiesFactory.getObject()
 		return properties?.map { it.key to it.value }?.toMap() ?: emptyMap()
 	}
 

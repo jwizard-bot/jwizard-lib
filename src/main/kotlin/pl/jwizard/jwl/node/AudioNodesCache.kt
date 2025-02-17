@@ -1,8 +1,8 @@
 package pl.jwizard.jwl.node
 
 import pl.jwizard.jwl.property.BaseEnvironment
-import pl.jwizard.jwl.property.vault.VaultClient
 import pl.jwizard.jwl.util.logger
+import pl.jwizard.jwl.vault.VaultClient
 
 class AudioNodesCache(environment: BaseEnvironment) {
 	companion object {

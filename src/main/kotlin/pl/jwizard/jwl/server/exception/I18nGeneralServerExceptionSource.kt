@@ -1,4 +1,4 @@
-package pl.jwizard.jwl.i18n.source
+package pl.jwizard.jwl.server.exception
 
 import pl.jwizard.jwl.i18n.I18nLocaleSource
 
