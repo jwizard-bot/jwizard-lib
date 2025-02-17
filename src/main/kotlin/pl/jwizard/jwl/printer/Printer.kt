@@ -1,5 +1,5 @@
 package pl.jwizard.jwl.printer
 
-interface Printer {
+internal interface Printer {
 	fun print(content: String)
 }

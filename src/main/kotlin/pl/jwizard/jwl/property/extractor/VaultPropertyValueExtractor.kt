@@ -3,7 +3,7 @@ package pl.jwizard.jwl.property.extractor
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.vault.VaultClient
 
-class VaultPropertyValueExtractor(
+internal class VaultPropertyValueExtractor(
 	environment: BaseEnvironment,
 	private val vaultKvDefaultContext: String,
 	private val vaultKvApplicationNames: List<String>,

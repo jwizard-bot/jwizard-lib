@@ -6,7 +6,7 @@ import pl.jwizard.jwl.ioc.IoCKtContextFactory
 import pl.jwizard.jwl.property.PropertySourceData
 import pl.jwizard.jwl.util.logger
 
-class YamlPropertySourceLoader(
+internal class YamlPropertySourceLoader(
 	private val runtimeProfiles: List<String>,
 ) : PropertySourceData(YamlPropertySourceLoader::class) {
 	companion object {

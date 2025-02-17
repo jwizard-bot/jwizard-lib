@@ -9,7 +9,7 @@ import pl.jwizard.jwl.property.loader.YamlPropertySourceLoader
 import pl.jwizard.jwl.util.castToValue
 import pl.jwizard.jwl.util.logger
 
-abstract class BaseEnvironment {
+open class BaseEnvironment {
 	companion object {
 		private val log = logger<BaseEnvironment>()
 	}

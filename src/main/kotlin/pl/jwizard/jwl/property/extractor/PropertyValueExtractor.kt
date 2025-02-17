@@ -4,7 +4,7 @@ import pl.jwizard.jwl.property.PropertyNotFoundException
 import pl.jwizard.jwl.property.PropertySourceData
 import kotlin.reflect.KClass
 
-abstract class PropertyValueExtractor(clazz: KClass<*>) : PropertySourceData(clazz) {
+internal abstract class PropertyValueExtractor(clazz: KClass<*>) : PropertySourceData(clazz) {
 	companion object {
 		private const val SEPARATOR = ":"
 	}

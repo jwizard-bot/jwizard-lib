@@ -1,14 +1,15 @@
 package pl.jwizard.jwl.printer
 
-import pl.jwizard.jwl.file.ClasspathFileLoader
+import org.springframework.core.io.ClassPathResource
+import java.nio.charset.StandardCharsets
 
-class FancyTitlePrinter(
-	private val fileClasspathLocation: String,
+internal class FancyTitlePrinter(
+	fileClasspathLocation: String,
 	printer: Printer,
 ) : AbstractPrinter(printer) {
+	private val classPathResource = ClassPathResource(fileClasspathLocation)
 
-	override fun setBodyContent(): String {
-		val loader = ClasspathFileLoader(fileClasspathLocation)
-		return loader.readFileRaw()
-	}
+	override fun setBodyContent() = classPathResource.inputStream
+		.bufferedReader(StandardCharsets.UTF_8)
+		.use { it.readText() }
 }

@@ -2,7 +2,7 @@ package pl.jwizard.jwl.printer
 
 import pl.jwizard.jwl.util.logger
 
-abstract class AbstractPrinter(private val printer: Printer) {
+internal abstract class AbstractPrinter(private val printer: Printer) {
 	companion object {
 		private val log = logger<AbstractPrinter>()
 

@@ -4,7 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv
 import pl.jwizard.jwl.util.logger
 import java.io.File
 
-class EnvPropertyValueExtractor(
+internal class EnvPropertyValueExtractor(
 	private val envFileEnabled: Boolean,
 ) : PropertyValueExtractor(EnvPropertyValueExtractor::class) {
 	companion object {
