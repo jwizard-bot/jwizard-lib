@@ -1,7 +1,6 @@
 package pl.jwizard.jwl.printer
 
-import org.springframework.core.io.ClassPathResource
-import java.nio.charset.StandardCharsets
+import pl.jwizard.jwl.file.ClassPathFileResource
 
 internal class FancyFramePrinter(
 	fileClasspathLocation: String,
@@ -14,12 +13,10 @@ internal class FancyFramePrinter(
 		private val BOTTOM_EDGE: (String) -> String = { "╰$it╯" }
 	}
 
-	private val classPathResource = ClassPathResource(fileClasspathLocation)
+	private val classPathResource = ClassPathFileResource(fileClasspathLocation)
 
 	override fun setBodyContent(): String? {
-		val rawFrameElements = classPathResource.inputStream
-			.bufferedReader(StandardCharsets.UTF_8)
-			.use { it.readText() }
+		val rawFrameElements = classPathResource.getRawContent()
 
 		val frameElements = rawFrameElements
 			.split(regex = "\\r?\\n|\\r".toRegex())
