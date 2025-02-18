@@ -11,12 +11,13 @@ internal class VaultPropertyValueExtractor(
 	private val vaultClient = VaultClient(environment)
 
 	init {
-		vaultClient.init()
+		vaultClient.initOnce()
 	}
 
 	override fun setProperties(): Map<Any, Any> {
 		val allSecrets = vaultClient.readKvSecrets(vaultKvDefaultContext)
 		vaultKvApplicationNames.forEach { allSecrets += vaultClient.readKvSecrets(it) }
+		vaultClient.revoke() // revoke access to vault storage!
 		return allSecrets
 	}
 

@@ -6,7 +6,10 @@ import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 
 internal class VaultUserpassAuthenticator : VaultAuthenticator {
-	override fun authenticate(config: VaultConfig, environment: BaseEnvironment): String {
+	override fun authenticate(
+		config: VaultConfig,
+		environment: BaseEnvironment,
+	): String {
 		val vault = Vault(config)
 		val response = vault.auth().loginByUserPass(
 			environment.getProperty<String>(AppBaseProperty.VAULT_USERNAME),
@@ -14,5 +17,10 @@ internal class VaultUserpassAuthenticator : VaultAuthenticator {
 			VaultAuthenticationType.USERPASS.id,
 		)
 		return response.authClientToken
+	}
+
+	override fun revokeAccess(vault: Vault): Boolean {
+		vault.auth().revokeSelf()
+		return true
 	}
 }

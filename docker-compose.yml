@@ -12,56 +12,48 @@ services:
       # KV storages
       KV_STORAGE_NORMAL_0: common
       KV_STORAGE_NORMAL_1: api
-      KV_STORAGE_NORMAL_2: core-instance-0 # 1 instance
-      KV_STORAGE_NORMAL_3: core-instance-1 # 2 instance
-      KV_STORAGE_JSON_4: audio-nodes
-      # KV raw JSON combined properties
-      KV_VALUE_JSON_4: |
-        {
-          "audioNodes": [
-            {
-              "name": "AUDIO-QUEUED-NODE-1",
-              "regionGroup": "EUROPE",
-              "password": "${JWIZARD_AUDIO_NODE_TOKEN}",
-              "host": "localhost",
-              "port": ${JWIZARD_AUDIO_NODE_1_PORT},
-              "secure": false,
-              "nodePool": "QUEUED",
-              "active": true
-            },
-            {
-              "name": "AUDIO-CONTINUOUS-NODE-1",
-              "regionGroup": "EUROPE",
-              "password": "${JWIZARD_AUDIO_NODE_TOKEN}",
-              "host": "localhost",
-              "port": ${JWIZARD_AUDIO_NODE_2_PORT},
-              "secure": false,
-              "nodePool": "CONTINUOUS",
-              "active": true
-            }
-          ]
-        }
-      # KV secrets
+      KV_STORAGE_NORMAL_2: core-instance/0 # 1 instance
+      KV_STORAGE_NORMAL_3: core-instance/1 # 2 instance
+      KV_STORAGE_NORMAL_4: audio-node/0
+      KV_STORAGE_NORMAL_5: audio-node/1
+      # common
       V_MYSQL_HOST_0: localhost:${JWIZARD_MYSQL_PORT}
       V_MYSQL_DB_NAME_0: ${JWIZARD_MYSQL_DB_NAME}
       V_MYSQL_USERNAME_0: ${JWIZARD_MYSQL_USERNAME}
       V_MYSQL_PASSWORD_0: ${JWIZARD_MYSQL_PASSWORD}
+      # api
       V_OIDC_APP_ID_1: ${JWIZARD_OIDC_APP_ID}
       V_OIDC_SECRET_1: ${JWIZARD_OIDC_SECRET}
-      # 1 instance
+      # core-instance/0
       V_JDA_SECRET_2: ${JWIZARD_JDA_SECRET_1_INSTANCE}
       V_JDA_INSTANCE_PREFIX_2: 1
       V_JDA_PRIMARY_COLOR_2: '#FFFFFF'
       V_SERVER_PORT_2: ${JWIZARD_CORE_INSTANCE_1_PORT}
       V_SHARDS_PER_PROCESS_2: 2
       V_SHARD_OVERALL_MAX_2: 2
-      # 2 instance
+      # core-instance/1
       V_JDA_SECRET_3: ${JWIZARD_JDA_SECRET_2_INSTANCE}
       V_JDA_INSTANCE_PREFIX_3: 2
       V_JDA_PRIMARY_COLOR_3: '#000000'
       V_SERVER_PORT_3: ${JWIZARD_CORE_INSTANCE_2_PORT}
       V_SHARDS_PER_PROCESS_3: 2
       V_SHARD_OVERALL_MAX_3: 2
+      # audio-node/0
+      V_NAME_4: AUDIO-QUEUED-NODE-1
+      V_REGION_GROUP_4: EUROPE
+      V_PASSWORD_4: ${JWIZARD_AUDIO_NODE_TOKEN}
+      V_GATEWAY_HOST_4: localhost:${JWIZARD_AUDIO_NODE_1_PORT}
+      V_SECURE_4: false
+      V_NODE_POOL_4: QUEUED
+      V_ACTIVE_4: true
+      # audio-node/1
+      V_NAME_5: AUDIO-CONTINUOUS-NODE-1
+      V_REGION_GROUP_5: EUROPE
+      V_PASSWORD_5: ${JWIZARD_AUDIO_NODE_TOKEN}
+      V_GATEWAY_HOST_5: localhost:${JWIZARD_AUDIO_NODE_2_PORT}
+      V_SECURE_5: false
+      V_NODE_POOL_5: CONTINUOUS
+      V_ACTIVE_5: true
     cap_add:
       - IPC_LOCK
     networks:

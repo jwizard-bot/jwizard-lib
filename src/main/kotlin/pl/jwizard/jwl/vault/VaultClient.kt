@@ -3,11 +3,12 @@ package pl.jwizard.jwl.vault
 import io.github.jopenlibs.vault.Vault
 import io.github.jopenlibs.vault.VaultConfig
 import io.github.jopenlibs.vault.VaultException
-import io.github.jopenlibs.vault.json.JsonObject
 import pl.jwizard.jwl.IrreparableException
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
+import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupProperties
+import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupPropertySource
 import java.util.*
 
 class VaultClient(private val environment: BaseEnvironment) {
@@ -15,27 +16,25 @@ class VaultClient(private val environment: BaseEnvironment) {
 		private val log = logger<VaultClient>()
 	}
 
+	private val rawType = environment.getProperty<String>(AppBaseProperty.VAULT_AUTHENTICATION_TYPE)
+
 	private val configBuilder = VaultConfig()
+	private var isAuthenticated = false
 	private lateinit var client: Vault
+	private val authenticationType: VaultAuthenticationType
 
 	init {
 		configBuilder.address(environment.getProperty(AppBaseProperty.VAULT_URL))
 		configBuilder.engineVersion(environment.getProperty<Int>(AppBaseProperty.VAULT_KV_VERSION))
+		authenticationType = determinateAuthenticationType()
 	}
 
-	fun init() {
-		val rawType = environment.getProperty<String>(AppBaseProperty.VAULT_AUTHENTICATION_TYPE)
-		val authenticationType = try {
-			VaultAuthenticationType.valueOf(rawType)
-		} catch (_: Exception) {
-			throw IrreparableException(
-				this::class,
-				"Followed authentication type: %s is not supported.",
-				rawType,
-			)
+	fun initOnce() {
+		if (isAuthenticated) {
+			return // ignore init when vault is already authenticated
 		}
+		val config = configBuilder.build()
 		try {
-			val config = configBuilder.build()
 			val token = authenticationType.authenticator.authenticate(config, environment)
 			client = Vault(config.token(token))
 			log.info(
@@ -43,6 +42,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 				configBuilder.address,
 				authenticationType,
 			)
+			isAuthenticated = true
 		} catch (ex: VaultException) {
 			throw IrreparableException(
 				this::class,
@@ -50,6 +50,15 @@ class VaultClient(private val environment: BaseEnvironment) {
 				ex.message,
 			)
 		}
+	}
+
+	// run after grab all properties and save in-memory
+	fun revoke() {
+		val actualRevoked = authenticationType.authenticator.revokeAccess(client)
+		if (actualRevoked) {
+			log.info("Revoked access to vault storage.")
+		}
+		isAuthenticated = false
 	}
 
 	fun readKvPaths(kvPath: String = "", patternFilter: Regex? = null): List<String> {
@@ -84,9 +93,29 @@ class VaultClient(private val environment: BaseEnvironment) {
 		return properties
 	}
 
-	fun readKvSecretsAsJson(kvStore: String): JsonObject {
-		val kvBackend = environment.getProperty<String>(AppBaseProperty.VAULT_KV_BACKEND)
-		val qualifiedKvStorePath = "$kvBackend/$kvStore"
-		return client.logical().read(qualifiedKvStorePath).dataObject
+	fun <U, T : VaultKvGroupPropertySource> readKvGroupPropertySource(
+		kvPath: String = "",
+		patternFilter: Regex? = null,
+		keyExtractor: (kvGroupName: String) -> U,
+		immediatelyRevoke: Boolean = true,
+	): Map<U, VaultKvGroupProperties<T>> {
+		val kvGroupNames = readKvPaths(kvPath, patternFilter)
+		val kvGroupProperties = kvGroupNames.associate {
+			keyExtractor(it) to VaultKvGroupProperties<T>(readKvSecrets("$kvPath/$it"))
+		}
+		if (immediatelyRevoke) {
+			revoke()
+		}
+		return kvGroupProperties
+	}
+
+	private fun determinateAuthenticationType() = try {
+		VaultAuthenticationType.valueOf(rawType)
+	} catch (_: Exception) {
+		throw IrreparableException(
+			this::class,
+			"Followed authentication type: %s is not supported.",
+			rawType,
+		)
 	}
 }
