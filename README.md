@@ -53,6 +53,8 @@ JWIZARD_JDA_SECRET_2_INSTANCE=<JDA application secret (second instance)>
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
+# github
+JWIZARD_GITHUB_TOKEN=<GitHub personal token (used for GitHub API calls)>
 # vault
 JWIZARD_VAULT_ROOT_TOKEN=<Vault root token (used in .env files in other JWizard projects>
 # mysql
