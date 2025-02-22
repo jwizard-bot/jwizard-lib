@@ -50,6 +50,7 @@ $ ./gradlew publishToMavenLocal
 # core instances
 JWIZARD_JDA_SECRET_1_INSTANCE=<JDA application secret (first instance)>
 JWIZARD_JDA_SECRET_2_INSTANCE=<JDA application secret (second instance)>
+JWIZARD_REST_API_TOKEN=<Rest API token used in communication between JWizard API and Core instances>
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
