@@ -1,6 +1,6 @@
 package pl.jwizard.jwl.server.route
 
-interface RestControllerBase {
+interface HttpControllerBase {
 	val basePath: String
 	val routes: CompositedRoutes
 }

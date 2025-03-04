@@ -15,7 +15,7 @@ import pl.jwizard.jwl.server.exception.ExceptionsAdvisorBase
 import pl.jwizard.jwl.server.exception.HttpErrorResponseDto
 import pl.jwizard.jwl.server.exception.I18nGeneralServerExceptionSource
 import pl.jwizard.jwl.server.filter.WebFilterBase
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.util.logger
 
 class HttpServer(
@@ -64,7 +64,7 @@ class HttpServer(
 				ex::class.simpleName,
 			)
 		}
-		val controllers = ioCKtContextFactory.getBeansWithSupertype<RestControllerBase>()
+		val controllers = ioCKtContextFactory.getBeansWithSupertype<HttpControllerBase>()
 		for (controller in controllers) {
 			val routes = controller.routes
 			routes.baseRoutes.forEach {
