@@ -67,6 +67,13 @@ JWIZARD_AUDIO_NODE_TOKEN=<Authentication token for development Lavalink nodes (a
 JWIZARD_AUDIO_YT_SOURCE_VERSION=<yt source version>
 JWIZARD_AUDIO_YT_PO_TOKEN=<proof of origin token>
 JWIZARD_AUDIO_YT_PO_VISITOR_DATA=<proof of origin visitor data>
+# ports (leave unchanged)
+JWIZARD_VAULT_PORT=8761
+JWIZARD_MYSQL_PORT=8762
+JWIZARD_AUDIO_NODE_1_PORT=8766
+JWIZARD_AUDIO_NODE_2_PORT=8767
+JWIZARD_CORE_INSTANCE_1_PORT=8768
+JWIZARD_CORE_INSTANCE_2_PORT=8769
 ```
 
 2. To run all docker containers for this project, type:
