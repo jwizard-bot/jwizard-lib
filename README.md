@@ -54,6 +54,8 @@ JWIZARD_REST_API_TOKEN=<Rest API token used in communication between JWizard API
 # discord oidc (oauth2)
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
+# server (api)
+JWIZARD_AES_SECRET_KEY=<16 bytes of AES-128 secret value>
 # github
 JWIZARD_GITHUB_TOKEN=<GitHub personal token (used for GitHub API calls)>
 # vault
