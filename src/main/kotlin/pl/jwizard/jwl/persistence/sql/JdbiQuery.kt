@@ -90,6 +90,34 @@ class JdbiQuery(private val jdbi: Jdbi) {
 		}
 	}
 
+	fun updateSingle(
+		tableName: String,
+		columns: Map<String, SqlColumn>,
+		findColumn: Pair<String, SqlColumn>
+	): Int {
+		val (findColumnName, findColumnValue) = findColumn
+		val sql = parse(
+			input = "UPDATE {{table}} SET {{columns}} WHERE {{determinantColumn}} = ?",
+			replacements = mapOf(
+				"table" to tableName,
+				"columns" to columns.keys.joinToString(separator = ",") { "$it = ?" },
+				"determinantColumn" to findColumnName,
+			)
+		)
+		return jdbi.withHandle<Int, Exception> {
+			val statement = it.createUpdate(sql)
+			columns.values.forEachIndexed { index, col ->
+				statement.bindBySqlType(index, col.value, col.type.vendorTypeNumber)
+			}
+			statement.bindBySqlType(
+				columns.values.size,
+				findColumnValue.value,
+				findColumnValue.type.vendorTypeNumber,
+			)
+			statement.execute()
+		}
+	}
+
 	private fun <T> withBaseHandler(
 		sql: String,
 		vararg args: Any,
