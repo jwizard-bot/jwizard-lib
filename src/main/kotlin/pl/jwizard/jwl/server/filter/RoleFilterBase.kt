@@ -1,11 +1,10 @@
 package pl.jwizard.jwl.server.filter
 
 import io.javalin.http.Context
-import pl.jwizard.jwl.server.route.ServerRole
+import io.javalin.security.RouteRole
 
-abstract class RoleFilterBase : WebFilterBase {
+abstract class RoleFilterBase : WebFilterBase() {
 	override val type = WebFilterType.BEFORE_MATCHED
-	override val matcher = "/*"
 
 	override fun filter(ctx: Context) {
 		if (ctx.routeRoles().containsAll(roles.toList())) {
@@ -13,7 +12,7 @@ abstract class RoleFilterBase : WebFilterBase {
 		}
 	}
 
-	protected abstract val roles: Array<ServerRole>
+	abstract val roles: Array<RouteRole>
 
 	protected abstract fun roleFilter(ctx: Context)
 }

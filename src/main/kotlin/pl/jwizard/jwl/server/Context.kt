@@ -2,7 +2,6 @@ package pl.jwizard.jwl.server
 
 import io.javalin.http.Context
 import org.eclipse.jetty.http.HttpHeader
-import pl.jwizard.jwl.server.attribute.ServerAttribute
 
 fun <T> Context.getAttribute(
 	serverAttribute: ServerAttribute,

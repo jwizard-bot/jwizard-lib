@@ -2,12 +2,15 @@ package pl.jwizard.jwl.server.filter
 
 import io.javalin.http.Context
 
-interface WebFilterBase {
+abstract class WebFilterBase {
 	// filter invoking schedule type
-	val type: WebFilterType
+	open val type = WebFilterType.BEFORE
 
 	// filter path
-	val matcher: String
+	open val matcher = "/*"
 
-	fun filter(ctx: Context)
+	// determinate sequence of run filters
+	open val runIndex = 0
+
+	abstract fun filter(ctx: Context)
 }
