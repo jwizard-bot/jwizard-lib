@@ -6,7 +6,7 @@ enum class RouteMethod(val handlerType: HandlerType) {
 	GET(HandlerType.GET),
 	POST(HandlerType.POST),
 	PUT(HandlerType.PUT),
-	DELETE(HandlerType.DELETE),
 	PATCH(HandlerType.PATCH),
+	DELETE(HandlerType.DELETE),
 	;
 }
