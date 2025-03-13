@@ -56,7 +56,7 @@ JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
 # server (api)
 JWIZARD_AES_SECRET_KEY=<16 bytes of AES-128 secret value>
-# github
+JWIZARD_GEOLOCATION_API_KEY=<geolocation api key, when is blank api is turned off>
 JWIZARD_GITHUB_TOKEN=<GitHub personal token (used for GitHub API calls)>
 # vault
 JWIZARD_VAULT_ROOT_TOKEN=<Vault root token (used in .env files in other JWizard projects>
