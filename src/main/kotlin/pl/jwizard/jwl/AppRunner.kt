@@ -8,18 +8,15 @@ import pl.jwizard.jwl.printer.FancyTitlePrinter
 import pl.jwizard.jwl.util.logger
 import kotlin.reflect.KClass
 
-abstract class AppRunner {
-	companion object {
-		private val log = logger<AppRunner>()
-
-		// used for scanning IoC components
-		const val BASE_PACKAGE = "pl.jwizard"
-
-		// directory, where banner and fancy title are located
-		private const val PRINTABLE_DATA_DIRECTORY = "util"
-	}
-
+object AppRunner {
+	private val log = logger<AppRunner>()
 	private lateinit var context: IoCKtContextFactory
+
+	// used for scanning IoC components
+	const val BASE_PACKAGE = "pl.jwizard"
+
+	// directory, where banner and fancy title are located
+	private const val PRINTABLE_DATA_DIRECTORY = "util"
 
 	fun run(clazz: KClass<*>) {
 		val startTimestamp = System.currentTimeMillis()
@@ -37,7 +34,8 @@ abstract class AppRunner {
 					clazz.qualifiedName,
 					BASE_PACKAGE,
 				)
-				runWithContext(context)
+				val appInitiator = context.getNullableBean(AppInitiator::class)
+				appInitiator.onInit()
 
 				val endTimestamp = System.currentTimeMillis()
 				val elapsedTime = endTimestamp - startTimestamp
@@ -50,6 +48,4 @@ abstract class AppRunner {
 			ex.killProcess()
 		}
 	}
-
-	protected abstract fun runWithContext(context: IoCKtContextFactory)
 }
