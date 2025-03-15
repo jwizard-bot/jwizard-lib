@@ -128,8 +128,8 @@ $ (venv) python src/db_migrator.py --pipeline self
 
 ## Contributing
 
-We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING) file for
-guidelines on how to get involved.
+We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING.md) file
+for guidelines on how to get involved.
 
 ## License
 
