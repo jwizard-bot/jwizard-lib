@@ -93,7 +93,8 @@ This command will create and run following containers:
 | jwizard-lava-node-1 | 8766    | Lavalink #1 node.            |
 | jwizard-lava-node-2 | 8767    | Lavalink #2 node.            |
 
-> NOTE: Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must
+> [!TIP]
+> Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must
 > remove second Lavalink node declaration. Running 2 nodes are useful for checking load-balancer in
 > performance tests.
 
@@ -123,7 +124,8 @@ $ (venv) python src/db_migrator.py --pipeline infra
 $ (venv) python src/db_migrator.py --pipeline self
 ```
 
-> NOTE: More information about JWizard Python migrator you could find in
+> [!TIP]
+> More information about JWizard Python migrator you could find in
 > [jwizard-tools](https://github.com/jwizard-bot/jwizard-tools) repository.
 
 ## Contributing
