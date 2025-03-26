@@ -61,6 +61,7 @@ services:
       V_SECURE_5: false
       V_NODE_POOL_5: QUEUED
       V_ACTIVE_5: true
+      V_PROXY_PROTECT_5: false
       # audio-node/1
       V_NAME_6: AUDIO-CONTINUOUS-NODE-1
       V_REGION_GROUP_6: EUROPE
@@ -69,6 +70,7 @@ services:
       V_SECURE_6: false
       V_NODE_POOL_6: CONTINUOUS
       V_ACTIVE_6: true
+      V_PROXY_PROTECT_6: false
     cap_add:
       - IPC_LOCK
     networks:
