@@ -24,6 +24,8 @@ class VaultClient(private val environment: BaseEnvironment) {
 
 	private val rawType = environment.getProperty<String>(AppBaseProperty.VAULT_AUTHENTICATION_TYPE)
 	private val vaultUrl = environment.getProperty<String>(AppBaseProperty.VAULT_URL)
+	private val proxyVerificationHeaderName = environment
+		.getProperty<String>(AppBaseProperty.PROXY_VERIFICATION_HEADER_NAME)
 	private val proxyVerificationToken = environment
 		.getProperty<String>(AppBaseProperty.PROXY_VERIFICATION_TOKEN)
 
@@ -43,7 +45,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val interceptor = ClientHttpRequestInterceptor { request, body, execution ->
 				// add header only, if was provided
 				if (proxyVerificationToken.isNotBlank()) {
-					request.headers.add("X-Proxy-Verification-Token", proxyVerificationToken)
+					request.headers.add(proxyVerificationHeaderName, proxyVerificationToken)
 				}
 				execution.execute(request, body)
 			}
