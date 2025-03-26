@@ -20,11 +20,14 @@ db:
       idle-millis: 30000
       connection-millis: 30000
 
+proxy:
+  # empty for no verification (on localhost)
+  verify-token: ${env:JWIZARD_PROXY_VERIFY_TOKEN:}
+
 vault:
   kv:
     backend: jwizard
     default-context: common
-    version: 1
 
 guild:
   default:

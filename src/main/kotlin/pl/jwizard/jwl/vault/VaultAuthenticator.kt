@@ -1,11 +1,11 @@
 package pl.jwizard.jwl.vault
 
-import io.github.jopenlibs.vault.Vault
-import io.github.jopenlibs.vault.VaultConfig
+import org.springframework.vault.authentication.ClientAuthentication
+import org.springframework.web.client.RestTemplate
 import pl.jwizard.jwl.property.BaseEnvironment
 
 internal interface VaultAuthenticator {
-	fun authenticate(config: VaultConfig, environment: BaseEnvironment): String
+	val canRevokeAccess: Boolean
 
-	fun revokeAccess(vault: Vault): Boolean
+	fun authenticate(environment: BaseEnvironment, restTemplate: RestTemplate): ClientAuthentication
 }

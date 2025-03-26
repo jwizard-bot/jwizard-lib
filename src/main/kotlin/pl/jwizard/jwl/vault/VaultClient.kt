@@ -1,8 +1,14 @@
 package pl.jwizard.jwl.vault
 
-import io.github.jopenlibs.vault.Vault
-import io.github.jopenlibs.vault.VaultConfig
-import io.github.jopenlibs.vault.VaultException
+import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.http.client.SimpleClientHttpRequestFactory
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
+import org.springframework.vault.VaultException
+import org.springframework.vault.authentication.LifecycleAwareSessionManager
+import org.springframework.vault.client.RestTemplateBuilder
+import org.springframework.vault.client.RestTemplateCustomizer
+import org.springframework.vault.client.VaultEndpoint
+import org.springframework.vault.core.VaultTemplate
 import pl.jwizard.jwl.IrreparableException
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
@@ -17,29 +23,48 @@ class VaultClient(private val environment: BaseEnvironment) {
 	}
 
 	private val rawType = environment.getProperty<String>(AppBaseProperty.VAULT_AUTHENTICATION_TYPE)
+	private val vaultUrl = environment.getProperty<String>(AppBaseProperty.VAULT_URL)
+	private val proxyVerifyToken = environment.getProperty<String>(AppBaseProperty.PROXY_VERIFY_TOKEN)
 
-	private val configBuilder = VaultConfig()
 	private var isAuthenticated = false
-	private lateinit var client: Vault
+	private lateinit var vaultTemplate: VaultTemplate
 	private val authenticationType: VaultAuthenticationType
 
 	init {
-		configBuilder.address(environment.getProperty(AppBaseProperty.VAULT_URL))
-		configBuilder.engineVersion(environment.getProperty<Int>(AppBaseProperty.VAULT_KV_VERSION))
 		authenticationType = determinateAuthenticationType()
 	}
 
 	fun initOnce() {
-		if (isAuthenticated) {
-			return // ignore init when vault is already authenticated
-		}
-		val config = configBuilder.build()
 		try {
-			val token = authenticationType.authenticator.authenticate(config, environment)
-			client = Vault(config.token(token))
+			if (isAuthenticated) {
+				return // ignore init when vault is already authenticated
+			}
+			val interceptor = ClientHttpRequestInterceptor { request, body, execution ->
+				// add header only, if was provided
+				if (proxyVerifyToken.isNotBlank()) {
+					request.headers.add("x-cloudflare-verify-proxy", proxyVerifyToken)
+				}
+				execution.execute(request, body)
+			}
+			val restTemplateBuilder = RestTemplateBuilder.builder()
+				.endpoint(VaultEndpoint.from(vaultUrl))
+				.requestFactory(SimpleClientHttpRequestFactory())
+				.customizers(RestTemplateCustomizer {
+					it.interceptors.add(interceptor) // add custom proxy interceptor
+				})
+			val authentication = authenticationType.authenticator
+				.authenticate(environment, restTemplateBuilder.build())
+
+			// automatically refresh and revoke tokens
+			val sessionManager = LifecycleAwareSessionManager(
+				authentication,
+				ThreadPoolTaskScheduler(),
+				restTemplateBuilder.build()
+			)
+			vaultTemplate = VaultTemplate(restTemplateBuilder, sessionManager)
 			log.info(
 				"Authenticate to vault client: {} with authentication type: {}.",
-				configBuilder.address,
+				vaultUrl,
 				authenticationType,
 			)
 			isAuthenticated = true
@@ -54,9 +79,9 @@ class VaultClient(private val environment: BaseEnvironment) {
 
 	// run after grab all properties and save in-memory
 	fun revoke() {
-		val actualRevoked = authenticationType.authenticator.revokeAccess(client)
-		if (actualRevoked) {
+		if (authenticationType.authenticator.canRevokeAccess) {
 			log.info("Revoked access to vault storage.")
+			vaultTemplate.destroy() // run only for dedicated session manager
 		}
 		isAuthenticated = false
 	}
@@ -68,12 +93,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 		} else {
 			kvBackend
 		}
-		val response = client.logical().list(qualifiedKvPath)
-		val keys = response.dataObject.get("keys")
-		if (keys.isNull) {
-			return listOf()
-		}
-		val allKeys = keys.asArray().map { it.asString() }
+		val allKeys = vaultTemplate.list(qualifiedKvPath) ?: emptyList()
 		return if (patternFilter != null) {
 			allKeys.filter { it.matches(patternFilter) }
 		} else {
@@ -86,8 +106,9 @@ class VaultClient(private val environment: BaseEnvironment) {
 		val properties = Properties()
 
 		val qualifiedKvStorePath = "$kvBackend/$kvStore"
-		val response = client.logical().read(qualifiedKvStorePath)
-		response.data.forEach { properties[it.key] = it.value }
+		val response = vaultTemplate.read(qualifiedKvStorePath)
+
+		response.data?.forEach { properties[it.key] = it.value }
 		log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
 
 		return properties

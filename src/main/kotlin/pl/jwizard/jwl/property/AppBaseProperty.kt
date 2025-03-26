@@ -34,8 +34,10 @@ enum class AppBaseProperty(
 	VAULT_USERNAME("vault.username"),
 	VAULT_PASSWORD("vault.password"),
 	VAULT_KV_BACKEND("vault.kv.backend"),
-	VAULT_KV_VERSION("vault.kv.version", Int::class),
 	VAULT_KV_DEFAULT_CONTEXT("vault.kv.default-context"),
+
+	// proxy
+	PROXY_VERIFY_TOKEN("proxy.verify-token"),
 
 	// guild default properties
 	GUILD_VOTING_PERCENTAGE_RATIO("guild.default.voting-percentage-ratio", Int::class),

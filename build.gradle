@@ -30,7 +30,7 @@ dependencies {
 	api libs.jeeAnnotationApi
 	api libs.mysqlConnector
 	api libs.springContext
-	api libs.vault
+	api libs.springVault
 
 	// this dependencies are used only in this library
 	implementation libs.commonsVfs

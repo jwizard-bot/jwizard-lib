@@ -1,26 +1,23 @@
 package pl.jwizard.jwl.vault
 
-import io.github.jopenlibs.vault.Vault
-import io.github.jopenlibs.vault.VaultConfig
+import org.springframework.vault.authentication.ClientAuthentication
+import org.springframework.vault.authentication.UsernamePasswordAuthentication
+import org.springframework.vault.authentication.UsernamePasswordAuthenticationOptions
+import org.springframework.web.client.RestTemplate
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 
 internal class VaultUserpassAuthenticator : VaultAuthenticator {
-	override fun authenticate(
-		config: VaultConfig,
-		environment: BaseEnvironment,
-	): String {
-		val vault = Vault(config)
-		val response = vault.auth().loginByUserPass(
-			environment.getProperty<String>(AppBaseProperty.VAULT_USERNAME),
-			environment.getProperty<String>(AppBaseProperty.VAULT_PASSWORD),
-			VaultAuthenticationType.USERPASS.id,
-		)
-		return response.authClientToken
-	}
+	override val canRevokeAccess = true
 
-	override fun revokeAccess(vault: Vault): Boolean {
-		vault.auth().revokeSelf()
-		return true
+	override fun authenticate(
+		environment: BaseEnvironment,
+		restTemplate: RestTemplate,
+	): ClientAuthentication {
+		val options = UsernamePasswordAuthenticationOptions.builder()
+			.username(environment.getProperty<String>(AppBaseProperty.VAULT_USERNAME))
+			.password(environment.getProperty<String>(AppBaseProperty.VAULT_PASSWORD))
+			.build()
+		return UsernamePasswordAuthentication(options, restTemplate)
 	}
 }
