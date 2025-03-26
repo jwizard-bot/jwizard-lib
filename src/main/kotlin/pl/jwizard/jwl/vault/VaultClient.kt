@@ -43,7 +43,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val interceptor = ClientHttpRequestInterceptor { request, body, execution ->
 				// add header only, if was provided
 				if (proxyVerificationToken.isNotBlank()) {
-					request.headers.add("X-Proxy-Verification", proxyVerificationToken)
+					request.headers.add("X-Proxy-Verification-Token", proxyVerificationToken)
 				}
 				execution.execute(request, body)
 			}
