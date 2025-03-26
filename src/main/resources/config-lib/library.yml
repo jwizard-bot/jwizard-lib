@@ -22,7 +22,7 @@ db:
 
 proxy:
   # empty for no verification (on localhost)
-  verify-token: ${env:JWIZARD_PROXY_VERIFY_TOKEN:}
+  verification-token: ${env:JWIZARD_PROXY_VERIFICATION_TOKEN:}
 
 vault:
   kv:

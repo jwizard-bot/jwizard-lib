@@ -24,7 +24,8 @@ class VaultClient(private val environment: BaseEnvironment) {
 
 	private val rawType = environment.getProperty<String>(AppBaseProperty.VAULT_AUTHENTICATION_TYPE)
 	private val vaultUrl = environment.getProperty<String>(AppBaseProperty.VAULT_URL)
-	private val proxyVerifyToken = environment.getProperty<String>(AppBaseProperty.PROXY_VERIFY_TOKEN)
+	private val proxyVerificationToken = environment
+		.getProperty<String>(AppBaseProperty.PROXY_VERIFICATION_TOKEN)
 
 	private var isAuthenticated = false
 	private lateinit var vaultTemplate: VaultTemplate
@@ -41,8 +42,8 @@ class VaultClient(private val environment: BaseEnvironment) {
 			}
 			val interceptor = ClientHttpRequestInterceptor { request, body, execution ->
 				// add header only, if was provided
-				if (proxyVerifyToken.isNotBlank()) {
-					request.headers.add("x-cloudflare-verify-proxy", proxyVerifyToken)
+				if (proxyVerificationToken.isNotBlank()) {
+					request.headers.add("X-Proxy-Verification", proxyVerificationToken)
 				}
 				execution.execute(request, body)
 			}
