@@ -31,6 +31,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 
 	private var isAuthenticated = false
 	private lateinit var vaultTemplate: VaultTemplate
+	private lateinit var threadPoolScheduler: ThreadPoolTaskScheduler
 	private val authenticationType: VaultAuthenticationType
 
 	init {
@@ -58,7 +59,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val authentication = authenticationType.authenticator
 				.authenticate(environment, restTemplateBuilder.build())
 
-			val threadPoolScheduler = ThreadPoolTaskScheduler()
+			threadPoolScheduler = ThreadPoolTaskScheduler()
 			threadPoolScheduler.poolSize = 1
 			threadPoolScheduler.threadNamePrefix = "vault-"
 			threadPoolScheduler.initialize()
@@ -90,6 +91,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 		if (authenticationType.authenticator.canRevokeAccess) {
 			log.info("Revoked access to vault storage.")
 			vaultTemplate.destroy() // run only for dedicated session manager
+			threadPoolScheduler.destroy() // MUST destroy scheduler after revoked token
 		}
 		isAuthenticated = false
 	}
