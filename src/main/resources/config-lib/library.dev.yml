@@ -1,6 +1,6 @@
 vault:
   url: http://localhost:8761
-  token: ${env:ENV_VAULT_TOKEN}
+  token: ${env:JWIZARD_VAULT_TOKEN}
   authentication:
     type: TOKEN
 
