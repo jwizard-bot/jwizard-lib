@@ -58,10 +58,15 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val authentication = authenticationType.authenticator
 				.authenticate(environment, restTemplateBuilder.build())
 
+			val threadPoolScheduler = ThreadPoolTaskScheduler()
+			threadPoolScheduler.poolSize = 1
+			threadPoolScheduler.threadNamePrefix = "vault-"
+			threadPoolScheduler.initialize()
+
 			// automatically refresh and revoke tokens
 			val sessionManager = LifecycleAwareSessionManager(
 				authentication,
-				ThreadPoolTaskScheduler(),
+				threadPoolScheduler,
 				restTemplateBuilder.build()
 			)
 			vaultTemplate = VaultTemplate(restTemplateBuilder, sessionManager)
