@@ -22,6 +22,10 @@ services:
       V_MYSQL_DB_NAME_0: ${JWIZARD_MYSQL_DB_NAME}
       V_MYSQL_USERNAME_0: ${JWIZARD_MYSQL_USERNAME}
       V_MYSQL_PASSWORD_0: ${JWIZARD_MYSQL_PASSWORD}
+      V_RABBITMQ_AMQP_HOST_0: localhost
+      V_RABBITMQ_AMQP_PORT_0: ${JWIZARD_RABBITMQ_AMQP_PORT}
+      V_RABBITMQ_USERNAME_0: ${JWIZARD_RABBITMQ_USERNAME}
+      V_RABBITMQ_PASSWORD_0: ${JWIZARD_RABBITMQ_PASSWORD}
       # landing page
       V_SERVER_PORT_1: ${JWIZARD_LANDING_PAGE_PORT}
       # api
@@ -178,6 +182,22 @@ services:
       LOGGING_LEVEL_MOE_KYOKOBOT_KOE: DEBUG
     volumes:
       - ./.volumes/lavalink/lavalink-2-volume/plugins:/opt/Lavalink/plugins/
+    networks:
+      - jwizard-network
+
+  jwizard-rabbitmq:
+    container_name: jwizard-rabbitmq
+    image: bitnami/rabbitmq:latest
+    ports:
+      - '${JWIZARD_RABBITMQ_AMQP_PORT}:5672'
+      - '${JWIZARD_RABBITMQ_PANEL_PORT}:15672'
+    environment:
+      RABBITMQ_SECURE_PASSWORD: true
+      RABBITMQ_USERNAME: ${JWIZARD_RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${JWIZARD_RABBITMQ_PASSWORD}
+      RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS: true
+    volumes:
+      - ./.volumes/rabbitmq/rabbitmq-volume:/bitnami/rabbitmq/mnesia
     networks:
       - jwizard-network
 
