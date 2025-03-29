@@ -101,10 +101,9 @@ services:
     image: ghcr.io/lavalink-devs/lavalink:latest
     user: root
     ports:
-      - '${JWIZARD_AUDIO_NODE_1_PORT}:${JWIZARD_AUDIO_NODE_1_PORT}'
+      - '${JWIZARD_AUDIO_NODE_1_PORT}:8080'
     environment:
       _JAVA_OPTIONS: -Xmx1G
-      SERVER_PORT: ${JWIZARD_AUDIO_NODE_1_PORT}
       # plugins
       LAVALINK_PLUGINS_0_DEPENDENCY: dev.lavalink.youtube:youtube-plugin:${JWIZARD_AUDIO_YT_SOURCE_VERSION}
       # server
@@ -152,10 +151,9 @@ services:
     image: ghcr.io/lavalink-devs/lavalink:latest
     user: root
     ports:
-      - '${JWIZARD_AUDIO_NODE_2_PORT}:${JWIZARD_AUDIO_NODE_2_PORT}'
+      - '${JWIZARD_AUDIO_NODE_2_PORT}:8080'
     environment:
       _JAVA_OPTIONS: -Xmx1G
-      SERVER_PORT: ${JWIZARD_AUDIO_NODE_2_PORT}
       # server
       LAVALINK_SERVER_PASSWORD: ${JWIZARD_AUDIO_NODE_TOKEN}
       LAVALINK_SERVER_SOURCES_YOUTUBE: false
