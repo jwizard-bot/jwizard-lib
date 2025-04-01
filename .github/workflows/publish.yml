@@ -8,9 +8,9 @@ on:
       - ".github/workflows/**"
       - "gradle/libs.versions.toml"
       - "src/**"
-      - "build.gradle"
+      - "build.gradle.kts"
       - "gradle.properties"
-      - "settings.gradle"
+      - "settings.gradle.kts"
   workflow_dispatch:
 
 jobs:
