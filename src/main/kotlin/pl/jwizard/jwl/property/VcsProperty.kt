@@ -13,5 +13,6 @@ enum class VcsProperty(
 	VCS_REPOSITORY_JW_LIB("vcs.repository.jw-lib"),
 	VCS_REPOSITORY_JW_WEB("vcs.repository.jw-web"),
 	VCS_REPOSITORY_JW_TOOLS("vcs.repository.jw-tools"),
+	VCS_REPOSITORY_JW_MANAGEMENT("vcs.repository.jw-management"),
 	;
 }
