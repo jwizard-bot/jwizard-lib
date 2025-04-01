@@ -11,7 +11,7 @@ enum class AppBaseProperty(
 	// determinate, if application at start should load environment variables from .env file
 	ENV_ENABLED("env.enabled", Boolean::class),
 
-	// server port used for standalone Jetty server
+	// server port used for embed Jetty server
 	SERVER_PORT("server.port", Int::class),
 
 	// used for create links refer to online repository
