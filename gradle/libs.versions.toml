@@ -1,5 +1,5 @@
 [versions]
-commonsVfsVersion = "2.9.0"
+commonsVfsVersion = "2.10.0"
 dotenvVersion = "2.2.0"
 hikariCpVersion = "5.1.0"
 jacksonVersion = "2.18.2"
@@ -7,10 +7,10 @@ javalinVersion = "6.5.0"
 jdbiVersion = "3.47.0"
 jeeAnnotationApiVersion = "3.0.0"
 kotlinVersion = "2.0.20"
-mysqlConnectorVersion = "9.1.0"
+mysqlConnectorVersion = "9.2.0"
 slf4jApiVersion = "2.0.16"
-springVersion = "6.1.14"
 springVaultVersion = "3.1.2"
+springVersion = "6.1.14"
 
 [libraries]
 commonsVfs = { module = "org.apache.commons:commons-vfs2", version.ref = "commonsVfsVersion" }
