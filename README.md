@@ -86,12 +86,13 @@ $ docker compose up -D
 
 This command will create and run following containers:
 
-| Name                | Port(s) | Description                  |
-|---------------------|---------|------------------------------|
-| jwizard-vault       | 8761    | Secret keys storage service. |
-| jwizard-mysql-db    | 8762    | MySQL database.              |
-| jwizard-lava-node-1 | 8766    | Lavalink #1 node.            |
-| jwizard-lava-node-2 | 8767    | Lavalink #2 node.            |
+| Name                | Port(s)    | Description                           |
+|---------------------|------------|---------------------------------------|
+| jwizard-vault       | 8761       | Secret keys storage service.          |
+| jwizard-mysql-db    | 8762       | MySQL database.                       |
+| jwizard-lava-node-1 | 8767       | Lavalink #1 node.                     |
+| jwizard-lava-node-2 | 8768       | Lavalink #2 node.                     |
+| jwizard-rabbitmq    | 8771, 8772 | RabbitMQ server and management panel. |
 
 > [!TIP]
 > Alternatively, you can run single Lavalink node, but in `docker-compose.yml` file you must

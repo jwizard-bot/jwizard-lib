@@ -42,6 +42,7 @@ dependencies {
 	api(libs.jeeAnnotationApi)
 	api(libs.mysqlConnector)
 	api(libs.springContext)
+	api(libs.springRabbitMq)
 	api(libs.springVault)
 
 	// these dependencies are used only in this library

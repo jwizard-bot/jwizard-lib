@@ -36,6 +36,12 @@ enum class AppBaseProperty(
 	VAULT_KV_BACKEND("vault.kv.backend"),
 	VAULT_KV_DEFAULT_CONTEXT("vault.kv.default-context"),
 
+	// rabbitmq
+	RABBITMQ_HOST("rabbitmq.host"),
+	RABBITMQ_PORT("rabbitmq.port", Int::class),
+	RABBITMQ_USERNAME("rabbitmq.username"),
+	RABBITMQ_PASSWORD("rabbitmq.password"),
+
 	// proxy
 	PROXY_VERIFICATION_HEADER_NAME("proxy.verification.header-name"),
 	PROXY_VERIFICATION_TOKEN("proxy.verification.token"),

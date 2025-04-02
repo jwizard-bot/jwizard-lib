@@ -21,6 +21,12 @@ db:
       idle-millis: 30000
       connection-millis: 30000
 
+rabbitmq:
+  host: ${vault:V_RABBITMQ_HOST}
+  port: ${vault:V_RABBITMQ_PORT}
+  username: ${vault:V_RABBITMQ_USERNAME}
+  password: ${vault:V_RABBITMQ_PASSWORD}
+
 proxy:
   # empty for no verification (on localhost)
   verification:
