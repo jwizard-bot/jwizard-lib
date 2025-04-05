@@ -64,6 +64,9 @@ JWIZARD_VAULT_ROOT_TOKEN=<Vault root token (used in .env files in other JWizard 
 JWIZARD_MYSQL_USERNAME=<MySQL database username, by default root>
 JWIZARD_MYSQL_PASSWORD=<MySQL database password>
 JWIZARD_MYSQL_DB_NAME=<MySQL database name, by default jwizard-db>
+# rabbitmq
+JWIZARD_RABBITMQ_USERNAME=<RabbitMQ server username>
+JWIZARD_RABBITMQ_PASSWORD=<RabbitMQ server password>
 # lavalink
 JWIZARD_AUDIO_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
 JWIZARD_AUDIO_YT_SOURCE_VERSION=<yt source version>
