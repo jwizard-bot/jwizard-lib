@@ -40,6 +40,7 @@ dependencies {
 	api(libs.jdbi)
 	api(libs.jdbiKotlin)
 	api(libs.jeeAnnotationApi)
+	api(libs.log4jCore)
 	api(libs.mysqlConnector)
 	api(libs.springContext)
 	api(libs.springRabbitMq)
@@ -47,7 +48,6 @@ dependencies {
 
 	// these dependencies are used only in this library
 	implementation(libs.commonsVfs)
-	implementation(libs.log4jCore)
 	implementation(libs.kotlin)
 	implementation(libs.kotlinReflect)
 	implementation(libs.slf4jApi)
