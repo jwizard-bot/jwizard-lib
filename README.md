@@ -67,6 +67,8 @@ JWIZARD_MYSQL_DB_NAME=<MySQL database name, by default jwizard-db>
 # rabbitmq
 JWIZARD_RABBITMQ_USERNAME=<RabbitMQ server username>
 JWIZARD_RABBITMQ_PASSWORD=<RabbitMQ server password>
+# management
+JWIZARD_MANAGEMENT_DEFAULT_ADMIN_LOGIN=<Management panel default admin login>
 # lavalink
 JWIZARD_AUDIO_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
 JWIZARD_AUDIO_YT_SOURCE_VERSION=<yt source version>
