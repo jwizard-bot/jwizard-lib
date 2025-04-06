@@ -12,6 +12,7 @@ slf4jApiVersion = "2.0.16"
 springVaultVersion = "3.1.2"
 springRabbitMqVersion = "3.2.4"
 springVersion = "6.1.14"
+yauaaVersion = "7.30.0"
 
 [libraries]
 commonsVfs = { module = "org.apache.commons:commons-vfs2", version.ref = "commonsVfsVersion" }
@@ -32,6 +33,7 @@ slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContext = { module = "org.springframework:spring-context", version.ref = "springVersion" }
 springRabbitMq = { module = "org.springframework.amqp:spring-rabbit", version.ref = "springRabbitMqVersion" }
 springVault = { module = "org.springframework.vault:spring-vault-core", version.ref = "springVaultVersion" }
+yauaa = { module = "nl.basjes.parse.useragent:yauaa", version.ref = "yauaaVersion" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }

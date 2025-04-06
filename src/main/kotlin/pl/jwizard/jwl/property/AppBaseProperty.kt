@@ -46,6 +46,15 @@ enum class AppBaseProperty(
 	PROXY_VERIFICATION_HEADER_NAME("proxy.verification.header-name"),
 	PROXY_VERIFICATION_TOKEN("proxy.verification.token"),
 
+	// geolocation api
+	GEOLOCATION_API_URL("geolocation.api.url"),
+	GEOLOCATION_API_KEY("geolocation.api.key"),
+	GEOLOCATION_API_NAME("geolocation.api.name"),
+	GEOLOCATION_API_WEBSITE("geolocation.api.website"),
+
+	// yauaa
+	YAUAA_CACHE_MAX_ELEMENTS("yauaa.cache-max-elements", Int::class),
+
 	// guild default properties
 	GUILD_VOTING_PERCENTAGE_RATIO("guild.default.voting-percentage-ratio", Int::class),
 	GUILD_MAX_VOTING_TIME_SEC("guild.default.time-to-finish-voting-sec", Long::class),

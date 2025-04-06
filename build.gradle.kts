@@ -50,6 +50,7 @@ dependencies {
 	implementation(libs.kotlin)
 	implementation(libs.kotlinReflect)
 	implementation(libs.slf4jApi)
+	implementation(libs.yauaa)
 }
 
 tasks {

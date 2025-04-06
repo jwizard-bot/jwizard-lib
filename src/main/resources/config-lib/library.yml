@@ -33,6 +33,20 @@ proxy:
     header-name: X-Proxy-Verification-Token
     token: ${env:JWIZARD_PROXY_VERIFICATION_TOKEN:}
 
+geolocation:
+  api:
+    url: https://api.ipgeolocation.io/ipgeo
+    key: ${vault:V_GEOLOCATION_API_KEY}
+    name: IPGeolocation
+    website: https://ipgeolocation.io/
+    fields:
+      - country_name
+      - state_prov
+      - city
+
+yauaa:
+  cache-max-elements: 1000
+
 vault:
   kv:
     backend: jwizard

@@ -18,5 +18,8 @@ enum class AppBaseListProperty(
 
 	// handled languages
 	I18N_LANGUAGES("i18n.languages"),
+
+	// geolocation fields
+	GEOLOCATION_API_FIELDS("geolocation.api.fields"),
 	;
 }
