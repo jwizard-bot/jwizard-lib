@@ -47,6 +47,7 @@ dependencies {
 
 	// these dependencies are used only in this library
 	implementation(libs.commonsVfs)
+	implementation(libs.log4jCore)
 	implementation(libs.kotlin)
 	implementation(libs.kotlinReflect)
 	implementation(libs.slf4jApi)
