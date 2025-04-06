@@ -55,8 +55,6 @@ JWIZARD_REST_API_TOKEN=<Rest API token used in communication between JWizard API
 JWIZARD_OIDC_APP_ID=<OAuth2 application identifier>
 JWIZARD_OIDC_SECRET=<OAuth2 application secret>
 # server (api)
-JWIZARD_AES_SECRET_KEY=<16 bytes of AES-128 secret value>
-JWIZARD_GEOLOCATION_API_KEY=<geolocation api key, when is blank api is turned off>
 JWIZARD_GITHUB_TOKEN=<GitHub personal token (used for GitHub API calls)>
 # vault
 JWIZARD_VAULT_ROOT_TOKEN=<Vault root token (used in .env files in other JWizard projects>
@@ -69,6 +67,9 @@ JWIZARD_RABBITMQ_USERNAME=<RabbitMQ server username>
 JWIZARD_RABBITMQ_PASSWORD=<RabbitMQ server password>
 # management
 JWIZARD_MANAGEMENT_DEFAULT_ADMIN_LOGIN=<Management panel default admin login>
+# common
+JWIZARD_GEOLOCATION_API_KEY=<geolocation api key, when is blank api is turned off>
+JWIZARD_AES_SECRET_KEY=<16 bytes of AES-128 secret value>
 # lavalink
 JWIZARD_AUDIO_NODE_TOKEN=<Authentication token for development Lavalink nodes (all)>
 JWIZARD_AUDIO_YT_SOURCE_VERSION=<yt source version>
