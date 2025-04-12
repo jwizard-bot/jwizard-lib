@@ -1,4 +1,4 @@
-package pl.jwizard.jwl.server
+package pl.jwizard.jwl.http
 
 import java.net.URLEncoder
 

@@ -1,20 +1,14 @@
 package pl.jwizard.jwl.server.useragent
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import pl.jwizard.jwl.http.SecureHttpClientService
+import pl.jwizard.jwl.http.UrlSearchParamsBuilder
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
-import pl.jwizard.jwl.server.UrlSearchParamsBuilder
 import pl.jwizard.jwl.util.logger
-import java.io.IOException
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 
 class GeolocationProvider(
-	private val httpClient: HttpClient,
-	private val objectMapper: ObjectMapper,
+	private val secureHttpClientService: SecureHttpClientService,
 	environment: BaseEnvironment,
 ) {
 	companion object {
@@ -45,25 +39,17 @@ class GeolocationProvider(
 			.addParam("fields", apiFields.joinToString())
 			.build()
 
-		val req = HttpRequest.newBuilder()
-			.uri(URI.create(searchUrl))
-			.build()
-
-		return try {
-			val response = httpClient.send(req, HttpResponse.BodyHandlers.ofString())
-			if (response.statusCode() == 200) {
-				val parsed = objectMapper.readTree(response.body())
-				return apiFields.joinToString { parsed.get(it).asText() }
-			} else {
-				null
+		val node = secureHttpClientService.prepareAndRunSecureHttpRequest(
+			url = searchUrl,
+			silent = true,
+			onErrorCallback = {
+				log.error(
+					"Unable to fetch geolocation info for IP address: \"{}\". Cause: \"{}\".",
+					ipAddress,
+					it.message
+				)
 			}
-		} catch (ex: IOException) {
-			log.error(
-				"Unable to fetch geolocation info for IP address: \"{}\". Cause: \"{}\".",
-				ipAddress,
-				ex.message,
-			)
-			null
-		}
+		) ?: return null
+		return apiFields.joinToString { node.get(it).asText() }
 	}
 }
