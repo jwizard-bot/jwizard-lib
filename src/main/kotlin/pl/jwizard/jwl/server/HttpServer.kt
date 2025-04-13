@@ -33,16 +33,13 @@ class HttpServer(
 		}
 		javalin.events { event -> event.serverStarted { onServerStart?.let { it() } } }
 
-		val filtersLoader = FiltersLoader(ioCKtContextFactory, javalin)
-		val controllersLoader = ControllersLoader(ioCKtContextFactory, javalin)
-		val exceptionAdvisorsLoader = ExceptionAdvisorsLoader(ioCKtContextFactory, javalin)
-		val generalExceptionHandlersLoader = GeneralExceptionHandlersLoader(javalin)
-
-		filtersLoader.initComponents()
-		controllersLoader.initComponents()
-		exceptionAdvisorsLoader.initComponents()
-		generalExceptionHandlersLoader.initComponents()
-
+		val loadableComponents = listOf(
+			FiltersLoader(ioCKtContextFactory, javalin),
+			ControllersLoader(ioCKtContextFactory, javalin),
+			ExceptionAdvisorsLoader(ioCKtContextFactory, javalin),
+			GeneralExceptionHandlersLoader(javalin),
+		)
+		loadableComponents.forEach { it.initComponents() }
 		javalin.start(serverPort)
 	}
 
