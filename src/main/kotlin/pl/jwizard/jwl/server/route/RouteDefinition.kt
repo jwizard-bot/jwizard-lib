@@ -10,5 +10,5 @@ class RouteDefinition<T : Handler>(
 	val handler: T,
 	val roles: Array<FilterRole>,
 ) {
-	override fun toString() = path
+	override fun toString() = "$method: $path"
 }
