@@ -1,7 +1,7 @@
 package pl.jwizard.jwl.server.route.handler
 
 import io.javalin.http.Context
-import io.javalin.security.RouteRole
+import pl.jwizard.jwl.server.filter.FilterRole
 import pl.jwizard.jwl.server.route.RouteMethod
 
 abstract class RouteDataHandler<T> : Handler() {
@@ -9,7 +9,7 @@ abstract class RouteDataHandler<T> : Handler() {
 
 	protected abstract fun handleWithData(ctx: Context): T
 
-	override val withRoles = emptyMap<RouteRole, List<RouteMethod>>()
+	override val withRoles = emptyMap<FilterRole, List<RouteMethod>>()
 
 	final override fun handle(ctx: Context) {
 		callback(ctx, handleWithData(ctx))

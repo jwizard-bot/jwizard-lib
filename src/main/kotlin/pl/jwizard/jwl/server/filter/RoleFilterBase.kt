@@ -1,7 +1,6 @@
 package pl.jwizard.jwl.server.filter
 
 import io.javalin.http.Context
-import io.javalin.security.RouteRole
 
 abstract class RoleFilterBase : WebFilterBase() {
 	override val type = WebFilterType.BEFORE_MATCHED
@@ -12,7 +11,7 @@ abstract class RoleFilterBase : WebFilterBase() {
 		}
 	}
 
-	abstract val roles: Array<RouteRole>
+	abstract val roles: Array<FilterRole>
 
 	protected abstract fun roleFilter(ctx: Context)
 }
