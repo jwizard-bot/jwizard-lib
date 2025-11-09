@@ -26,6 +26,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "adopt"
+          cache: "gradle"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -53,8 +54,8 @@ jobs:
       - name: Setup Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          cache: 'pip'
+          python-version: "3.12"
+          cache: "pip"
 
       - name: Install requirements
         run: pip install -r requirements.txt
