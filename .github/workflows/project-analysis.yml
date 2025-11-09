@@ -19,8 +19,7 @@ jobs:
       - name: Setup Python environment
         uses: actions/setup-python@v6
         with:
-          python-version: "3.12.x"
-          architecture: "arm64"
+          python-version: "3.13"
           cache: "pip"
 
       - name: Install requirements
