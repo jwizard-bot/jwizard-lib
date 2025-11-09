@@ -16,14 +16,16 @@ jobs:
           repository: ${{ github.repository_owner }}/jwizard-tools
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Python environment
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-          cache: "pip"
+      - name: Setup Python
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
 
       - name: Install requirements
-        run: pip install -r requirements.txt
+        run: |
+          source .venv/bin/activate
+          pip install -r requirements.txt
 
       - name: Grand permissions
         run: chmod +x exec/run-with-config
