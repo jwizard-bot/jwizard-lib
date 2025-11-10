@@ -76,8 +76,8 @@ publishing {
 				url.set("https://jwizard.pl")
 				licenses {
 					license {
-						name.set("The AGPL-3.0 License")
-						url.set("https://www.gnu.org/licenses/agpl-3.0.en.html")
+						name.set("The Apache License, Version 2.0")
+						url.set("https://www.apache.org/licenses/LICENSE-2.0")
 					}
 				}
 				developers {
