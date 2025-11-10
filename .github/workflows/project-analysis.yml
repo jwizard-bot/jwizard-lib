@@ -16,25 +16,17 @@ jobs:
           repository: ${{ github.repository_owner }}/jwizard-tools
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Grand permissions to executable scripts
+        run: |
+          chmod +x exec/prepare
+          chmod +x exec/run-with-config
+
       - name: Setup Python
-        run: |
-          python3 -m venv .venv
-          source .venv/bin/activate
-          pip install --upgrade pip
-
-      - name: Install requirements
-        run: |
-          source .venv/bin/activate
-          pip install -r requirements.txt
-
-      - name: Grand permissions
-        run: chmod +x exec/run-with-config
+        run: exec/prepare
 
       - name: Run project analyzer
-        run: |
-          source .venv/bin/activate
-          exec/run-with-config project_analyzer \
-            "${{ secrets.CONFIG_FILE_CONTENT }}" \
-            --repo ${{ github.repository }}
+        run: exec/run-with-config project_analyzer \
+          "${{ secrets.CONFIG_FILE_CONTENT }}" \
+          --repo ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
