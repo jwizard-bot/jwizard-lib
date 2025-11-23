@@ -118,9 +118,10 @@ class VaultClient(private val environment: BaseEnvironment) {
 		val qualifiedKvStorePath = "$kvBackend/$kvStore"
 		val response = vaultTemplate.read(qualifiedKvStorePath)
 
-		response.data?.forEach { properties[it.key] = it.value }
-		log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
-
+		if (response != null) {
+			response.data?.forEach { properties[it.key] = it.value }
+			log.info("Load: {} secrets from: {} KV store.", response.data?.size, qualifiedKvStorePath)
+		}
 		return properties
 	}
 
