@@ -6,7 +6,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 import org.springframework.vault.VaultException
 import org.springframework.vault.authentication.LifecycleAwareSessionManager
 import org.springframework.vault.client.RestTemplateBuilder
-import org.springframework.vault.client.RestTemplateCustomizer
 import org.springframework.vault.client.VaultEndpoint
 import org.springframework.vault.core.VaultTemplate
 import pl.jwizard.jwl.IrreparableException
@@ -53,7 +52,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 			val restTemplateBuilder = RestTemplateBuilder.builder()
 				.endpoint(VaultEndpoint.from(vaultUrl))
 				.requestFactory(SimpleClientHttpRequestFactory())
-				.customizers(RestTemplateCustomizer {
+				.customizers({
 					it.interceptors.add(interceptor) // add custom proxy interceptor
 				})
 			val authentication = authenticationType.authenticator
