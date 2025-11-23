@@ -67,6 +67,7 @@ JWIZARD_RABBITMQ_USERNAME=<RabbitMQ server username>
 JWIZARD_RABBITMQ_PASSWORD=<RabbitMQ server password>
 # management
 JWIZARD_MANAGEMENT_DEFAULT_ADMIN_LOGIN=<Management panel default admin login>
+JWIZARD_MANAGEMENT_CF_CAPTCHA_SECRET_KEY=1x0000000000000000000000000000000AA
 # common
 JWIZARD_GEOLOCATION_API_KEY=<geolocation api key, when is blank api is turned off>
 JWIZARD_AES_SECRET_KEY=<16 bytes of AES-128 secret value>
