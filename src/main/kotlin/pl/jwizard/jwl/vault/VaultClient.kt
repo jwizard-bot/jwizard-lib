@@ -60,7 +60,7 @@ class VaultClient(private val environment: BaseEnvironment) {
 
 			threadPoolScheduler = ThreadPoolTaskScheduler()
 			threadPoolScheduler.poolSize = 1
-			threadPoolScheduler.threadNamePrefix = "vault-"
+			threadPoolScheduler.setThreadNamePrefix("vault-")
 			threadPoolScheduler.initialize()
 
 			// automatically refresh and revoke tokens
