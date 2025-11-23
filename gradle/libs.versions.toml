@@ -7,6 +7,7 @@ javalinVersion = "6.7.0"
 jclOverSlf4jVersion = "2.0.17"
 jdbiVersion = "3.47.0"
 jeeAnnotationApiVersion = "3.0.0"
+junitJupiterVersion = "6.0.1"
 kotlinVersion = "2.2.0"
 log4jCoreVersion = "2.24.3"
 mysqlConnectorVersion = "9.3.0"
@@ -29,6 +30,9 @@ jclOverSlf4j = { module = "org.slf4j:jcl-over-slf4j", version.ref = "jclOverSlf4
 jdbi = { module = "org.jdbi:jdbi3-core", version.ref = "jdbiVersion" }
 jdbiKotlin = { module = "org.jdbi:jdbi3-kotlin", version.ref = "jdbiVersion" }
 jeeAnnotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jeeAnnotationApiVersion" }
+junitJupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiterVersion" }
+junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterVersion" }
+junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitJupiterVersion" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
 log4jCore = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4jCoreVersion" }

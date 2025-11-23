@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -53,12 +54,22 @@ dependencies {
 	implementation(libs.kotlinReflect)
 	implementation(libs.slf4jApi)
 	implementation(libs.yauaa)
+
+	testImplementation(libs.junitJupiter)
+	testImplementation(libs.junitJupiterEngine)
+	testImplementation(libs.junitPlatformLauncher)
 }
 
 tasks {
 	register<Jar>("sourcesJar") {
 		archiveClassifier.set("sources")
 		from(sourceSets.main.get().allSource)
+	}
+	test {
+		useJUnitPlatform()
+		testLogging {
+			events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+		}
 	}
 }
 
