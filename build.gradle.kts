@@ -37,6 +37,7 @@ dependencies {
 	api(libs.jacksonKotlin)
 	api(libs.jacksonJsr310)
 	api(libs.javalin)
+	api(libs.jclOverSlf4j)
 	api(libs.jdbi)
 	api(libs.jdbiKotlin)
 	api(libs.jeeAnnotationApi)
